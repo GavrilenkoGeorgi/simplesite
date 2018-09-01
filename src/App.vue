@@ -52,6 +52,7 @@ export default {
 
 <style lang="scss">
 @import "./assets/scss/colours.scss";
+@import "./assets/animate.css";
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons');
 
 #app {
@@ -72,4 +73,5 @@ export default {
     }
   }
 }
+
 </style>

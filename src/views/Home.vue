@@ -48,7 +48,7 @@
 <!-- Training types block -->
       <v-container>
         <v-layout row wrap justify-space-around>
-          <v-flex xs12 md5>
+          <v-flex xs12 md5 v-scroll-reveal.reset>
             <h4 class="display-1">Групповые занятия</h4>
             <v-img :src="require('@/assets/img/groupOfDogs.jpg')" height="320" contain></v-img>
             <p class="simpleTextBlock">
@@ -62,7 +62,7 @@
               социализированную, контактную собаку.
             </p>
           </v-flex>
-          <v-flex xs12 md5>
+          <v-flex xs12 md5 v-scroll-reveal.reset>
             <h4 class="display-1">Индивидуальные занятия</h4>
             <v-img :src="require('@/assets/img/dogPlayingBallSmall.jpg')" height="320" contain></v-img>
             <p class="simpleTextBlock">
@@ -88,7 +88,7 @@
 <!-- Grooming section -->
   <v-container>
     <v-layout row wrap justify-space-around>
-      <v-flex xs12 md8>
+      <v-flex xs12 md8 v-scroll-reveal.reset>
         <v-img :src="require('@/assets/img/grooming/groomingTitlePhoto.png')" height="371" contain></v-img>
           <p class="simpleTextBlock">
             Здравствуй, дорогой друг, меня зовут Людмила!
@@ -105,12 +105,39 @@
       </v-flex>
     </v-layout>
   </v-container>
+
+<!-- Test Section-->
+  <v-container>
+    <v-layout>
+      <v-flex xs12 md6>
+          <div>
+            <h2>Test</h2>
+          </div>
+      </v-flex>
+    </v-layout>
+  </v-container>
+
+<main>
+    <section>
+      <h1>Scroll down!</h1>
+    </section>
+
+    <!-- This section will reveal itself each time it's scrolled into view -->
+    <section v-scroll-reveal.reset>
+      <h1>Tada!</h1>
+    </section>
+
+    <!-- Element-specific configuration options can be passed like this -->
+    <section class="bounce" v-scroll-reveal.reset="{ delay: 1250 }">
+      <h1>Slightly late tada!</h1>
+    </section>
+
+  </main>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-// import HelloWorld from '@/components/HelloWorld.vue'
 
 export default {
   name: 'home',
@@ -118,18 +145,12 @@ export default {
     return {
       title: 'MaxDog'
     }
-  },
-  computed: {
-    binding () {
-      const binding = {}
-      if (this.$vuetify.breakpoint.xs) binding.column = true
-      return binding
-    }
   }
 }
 </script>
 
 <style scoped lang="scss">
+@import "../assets/animate.css";
 @import "../assets/scss/colours.scss";
 
 #home {
@@ -150,4 +171,5 @@ export default {
   font-size: 1.5em;
   padding-top:1em;
 }
+
 </style>
