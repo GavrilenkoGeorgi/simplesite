@@ -12,6 +12,7 @@
   "dependencies": {
     "default-gateway": "^3.0.0",
     "vue": "^2.5.17",
+    "vue-observe-visibility": "^0.4.1",
     "vue-router": "^3.0.1",
     "vue-scroll-reveal": "^1.0.8",
     "vuetify": "^1.2.1",

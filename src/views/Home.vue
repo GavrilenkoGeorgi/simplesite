@@ -25,14 +25,14 @@
         </v-layout>
         <v-layout row wrap justify-space-around class="mt-4">
           <v-flex xs10 md4 class="mt-4">
-            <v-icon x-large>pets</v-icon>
+            <v-icon x-large class="animated" v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }">favorite</v-icon>
             <p class="simpleTextBlock">
               Qui cu omnes dissentias. Laoreet accumsan mea at, sea harum facilisi no. Ad eos fierent salutandi repudiare,
               ei eum sint graece, ei sanctus detraxit cum.
             </p>
           </v-flex>
           <v-flex xs10 md4 class="mt-4">
-            <v-icon x-large>favorite</v-icon>
+            <v-icon x-large class="animated" v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }">pets</v-icon>
             <p class="simpleTextBlock">
               Nam eu ferri mediocritatem, vix prodesset definitionem ut, ea usu veri urbanitas. Et elit officiis deterruisset
               per, eam at quaeque copiosae euripidis. Duo in natum nemore gubergren, ne sensibus consetetur est, cum at ipsum error.
@@ -40,7 +40,7 @@
           </v-flex>
           <v-flex xs12>
             <h2 class="display-3">Первый урок — 50%</h2>
-            <v-btn color="info" large class="mt-4">ОНЛАЙН ЗАПИСЬ</v-btn>
+            <v-btn color="info" large class="mt-4 animated" v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }">ОНЛАЙН ЗАПИСЬ</v-btn>
           </v-flex>
         </v-layout>
       </v-container>
@@ -48,7 +48,7 @@
 <!-- Training types block -->
       <v-container>
         <v-layout row wrap justify-space-around>
-          <v-flex xs12 md5 v-scroll-reveal.reset>
+          <v-flex xs12 md5 v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }" class="animated groupTraining hidden">
             <h4 class="display-1">Групповые занятия</h4>
             <v-img :src="require('@/assets/img/groupOfDogs.jpg')" height="320" contain></v-img>
             <p class="simpleTextBlock">
@@ -62,7 +62,7 @@
               социализированную, контактную собаку.
             </p>
           </v-flex>
-          <v-flex xs12 md5 v-scroll-reveal.reset>
+          <v-flex xs12 md5 v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }" class="animated individualTraining hidden">
             <h4 class="display-1">Индивидуальные занятия</h4>
             <v-img :src="require('@/assets/img/dogPlayingBallSmall.jpg')" height="320" contain></v-img>
             <p class="simpleTextBlock">
@@ -88,8 +88,8 @@
 <!-- Grooming section -->
   <v-container>
     <v-layout row wrap justify-space-around>
-      <v-flex xs12 md8 v-scroll-reveal.reset>
-        <v-img :src="require('@/assets/img/grooming/groomingTitlePhoto.png')" height="371" contain></v-img>
+      <v-flex xs12 md8>
+        <v-img :src="require('@/assets/img/grooming/groomingTitlePhoto.png')" height="371" contain v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }" class="animated hidden groomingSection"></v-img>
           <p class="simpleTextBlock">
             Здравствуй, дорогой друг, меня зовут Людмила!
             «Hairstyle animals» — Ты здесь, а это значит что провел свои пару минут не просто посетив сайт,
@@ -105,45 +105,49 @@
       </v-flex>
     </v-layout>
   </v-container>
-
-<!-- Test Section-->
-  <v-container>
-    <v-layout>
-      <v-flex xs12 md6>
-          <div>
-            <h2>Test</h2>
-          </div>
-      </v-flex>
-    </v-layout>
-  </v-container>
-
-<main>
-    <section>
-      <h1>Scroll down!</h1>
-    </section>
-
-    <!-- This section will reveal itself each time it's scrolled into view -->
-    <section v-scroll-reveal.reset>
-      <h1>Tada!</h1>
-    </section>
-
-    <!-- Element-specific configuration options can be passed like this -->
-    <section class="bounce" v-scroll-reveal.reset="{ delay: 1250 }">
-      <h1>Slightly late tada!</h1>
-    </section>
-
-  </main>
+  <Footer></Footer>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
+import Footer from '@/components/Footer.vue'
 
 export default {
   name: 'home',
   data () {
     return {
       title: 'MaxDog'
+    }
+  },
+  components: {
+    Footer
+  },
+  methods: {
+    visibilityChanged (isVisible, entry) {
+      // this.isVisible = isVisible
+      // console.log(entry.target)
+      // console.log(`Is it visible now? ${isVisible}`)
+      // console.log(entry.target.className)
+      let animationType = 'flipInY'
+
+      if (entry.target.classList.contains('groupTraining')) {
+        // console.log(`Training!`)
+        animationType = 'fadeInLeft'
+      } else if (entry.target.classList.contains('individualTraining')) {
+        animationType = 'fadeInRight'
+      } else if (entry.target.classList.contains('groomingSection')) {
+        animationType = 'fadeInUp'
+      }
+      if (isVisible) {
+        entry.target.classList.add(animationType)
+        entry.target.classList.remove('hidden')
+        console.log(`Animation added: ${animationType}`)
+      } else {
+        entry.target.classList.remove(animationType)
+        entry.target.classList.add('hidden')
+        console.log(`Animation removed: ${animationType}`)
+      }
     }
   }
 }
@@ -172,4 +176,39 @@ export default {
   padding-top:1em;
 }
 
+#box {
+  background-color: rgba(40, 40, 190, 255);
+  border: 4px solid rgb(20, 20, 120);
+  transition: background-color 1s, border 1s;
+  width: 360px;
+  height: 360px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.vertical {
+  color: white;
+  font: 32px "Arial";
+}
+
+.extra {
+  width: 350px;
+  height: 350px;
+  margin-top: 10px;
+  border: 4px solid rgb(20, 20, 120);
+  text-align: center;
+  padding: 20px;
+}
+
+.animated {
+  animation-delay: .8s;
+  // opacity: 0;
+}
+
+.hidden {
+  visibility: hidden;
+  // opacity: 0;
+}
 </style>
