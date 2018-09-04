@@ -1,7 +1,7 @@
 <template>
   <div id="home">
 <!-- Parralax image background -->
-      <v-container fluid class="pa-0 mt-5">
+      <v-container fluid class="pa-0">
         <v-layout>
           <v-flex xs12>
             <v-parallax height="500" :src="require('@/assets/dog-wallpaper.jpg')">
@@ -17,7 +17,7 @@
           <v-flex xs12>
             <h2 class="display-3">Почему именно MaxDog?</h2>
               <p class="simpleTextBlock">
-                Bla, bla, bla. Lorem ipsum dolor sit amet, solum meliore efficiendi ut quo, ex assum interesset mel,
+                Blah, blah, blah. Lorem ipsum dolor sit amet, solum meliore efficiendi ut quo, ex assum interesset mel,
                 quis eirmod in est. Ea quod verear albucius eos, an est eros insolens reprehendunt. No veritus assentior ius,
                 duo no modus paulo expetendis, est enim intellegat omittantur ut. His munere soleat verear ex, cu his diam delectus.
               </p>
@@ -90,7 +90,7 @@
     <v-layout row wrap justify-space-around>
       <v-flex xs12 md8>
         <v-img :src="require('@/assets/img/grooming/groomingTitlePhoto.png')" height="371" contain v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }" class="animated hidden groomingSection"></v-img>
-          <p class="simpleTextBlock">
+          <p class="simpleTextBlock marginBottom">
             Здравствуй, дорогой друг, меня зовут Людмила!
             «Hairstyle animals» — Ты здесь, а это значит что провел свои пару минут не просто посетив сайт,
             а нашел именно того грумера которого так долго искал, грумера-стилиста, создающего не просто
@@ -105,13 +105,11 @@
       </v-flex>
     </v-layout>
   </v-container>
-  <Footer></Footer>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import Footer from '@/components/Footer.vue'
 
 export default {
   name: 'home',
@@ -119,9 +117,6 @@ export default {
     return {
       title: 'MaxDog'
     }
-  },
-  components: {
-    Footer
   },
   methods: {
     visibilityChanged (isVisible, entry) {
@@ -137,16 +132,16 @@ export default {
       } else if (entry.target.classList.contains('individualTraining')) {
         animationType = 'fadeInRight'
       } else if (entry.target.classList.contains('groomingSection')) {
-        animationType = 'fadeInUp'
+        animationType = 'zoomIn'
       }
       if (isVisible) {
         entry.target.classList.add(animationType)
         entry.target.classList.remove('hidden')
-        console.log(`Animation added: ${animationType}`)
+        // console.log(`Animation added: ${animationType}`)
       } else {
         entry.target.classList.remove(animationType)
         entry.target.classList.add('hidden')
-        console.log(`Animation removed: ${animationType}`)
+        // console.log(`Animation removed: ${animationType}`)
       }
     }
   }
@@ -173,7 +168,11 @@ export default {
 
 .simpleTextBlock {
   font-size: 1.5em;
-  padding-top:1em;
+  padding-top: 1em;
+}
+
+.marginBottom {
+    margin-bottom: 7em;
 }
 
 #box {
@@ -202,10 +201,10 @@ export default {
   padding: 20px;
 }
 
-.animated {
-  animation-delay: .8s;
+// .animated {
+  // animation-delay: .8s;
   // opacity: 0;
-}
+// }
 
 .hidden {
   visibility: hidden;
