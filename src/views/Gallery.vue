@@ -2,7 +2,7 @@
   <v-container pa-0>
     <v-layout column xs12 lg6 xl4>
     <v-flex>
-    <v-carousel>
+    <v-carousel class="customHeight">
       <v-carousel-item
         v-for="(item,i) in items"
         :key="i"
@@ -51,4 +51,8 @@ export default {
 
 <style lang="scss">
 
+.customHeight {
+  height: 600px;
+  // margin-bottom: 6em;
+}
 </style>

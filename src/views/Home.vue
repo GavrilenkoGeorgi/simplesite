@@ -1,7 +1,7 @@
 <template>
   <div id="home">
 <!-- Parralax image background -->
-      <v-container fluid class="pa-0">
+      <v-container class="pa-0">
         <v-layout>
           <v-flex xs12>
             <v-parallax height="500" :src="require('@/assets/dog-wallpaper.jpg')">
@@ -76,7 +76,7 @@
 
 <!-- Another fancy parallax -->
       <v-container fluid class="pa-0 mt-5">
-        <v-layout>
+        <v-layout fluid>
           <v-flex xs12>
             <v-parallax :src="require('@/assets/img/dogFenceRunningSquare.jpg')">
             <h1 class="display-2 photo-overlay">Грумінг собак і кішок</h1>
@@ -151,13 +151,13 @@ export default {
 <style scoped lang="scss">
 @import "../assets/animate.css";
 @import "../assets/scss/colours.scss";
-
+/*
 #home {
   margin: 0;
   padding: 0;
   background-color: white;
 }
-
+*/
 .photo-overlay {
   position: absolute;
   // border: 1px solid lime;

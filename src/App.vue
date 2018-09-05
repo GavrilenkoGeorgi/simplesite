@@ -1,35 +1,6 @@
 <template>
-    <!--div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div-->
-    <!--router-view/-->
-    <v-app id="app">
-      <v-container fluid column pa-0>
-      <v-navigation-drawer temporary absolute right v-model="sideNav">
-        <v-list>
-          <v-list-tile>
-            <!--v-list-tile-action><v-icon>supervisor_account</v-icon></v-list-tile-action-->
-            <v-list-tile-content><router-link to="/gallery">Галерея</router-link></v-list-tile-content>
-          </v-list-tile>
-          <v-list-tile>
-            <!--v-list-tile-action><v-icon>supervisor_account</v-icon></v-list-tile-action-->
-            <v-list-tile-content>Отзывы</v-list-tile-content>
-          </v-list-tile>
-          <v-list-tile>
-            <!--v-list-tile-action><v-icon>supervisor_account</v-icon></v-list-tile-action-->
-            <v-list-tile-content><router-link to="/philosophy">Наша философия</router-link></v-list-tile-content>
-          </v-list-tile>
-          <v-list-tile>
-            <!--v-list-tile-action><v-icon>supervisor_account</v-icon></v-list-tile-action-->
-            <v-list-tile-content><router-link to="/about">О нас</router-link></v-list-tile-content>
-          </v-list-tile>
-          <v-list-tile>
-            <!--v-list-tile-action><v-icon>supervisor_account</v-icon></v-list-tile-action-->
-            <v-list-tile-content>Контакты</v-list-tile-content>
-          </v-list-tile>
-        </v-list>
-      </v-navigation-drawer>
+    <v-app id="app" class="override">
+      <!-- v-navigation-drawer temporary absolute right v-model="sideNav"-->
       <v-toolbar app>
         <v-toolbar-title><span><router-link class="logo" to="/">MaxDog</router-link></span></v-toolbar-title>
         <v-spacer></v-spacer>
@@ -50,17 +21,38 @@
           Контакты</v-btn>
         <v-toolbar-side-icon class="hidden-sm-and-up" @click="sideNav = !sideNav"></v-toolbar-side-icon>
       </v-toolbar>
-        <v-container fluid class="pa-0">
-          <v-layout row wrap>
-            <v-flex xs12>
-              <transition name="custom-classes-transition" mode="out-in" enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutRight">
-              <router-view></router-view>
-              </transition>
-            </v-flex>
-          </v-layout>
-        </v-container>
-      <Footer></Footer>
-    </v-container>
+
+      <v-navigation-drawer app right disable-resize-watcher v-model="sideNav" width="250">
+        <v-list>
+          <v-list-tile>
+          <v-list-tile-title class="navDrawerTitle">
+            {{ titleNavDrawer }}
+          </v-list-tile-title>
+          <!--v-list-tile-action @click="sideNav = !sideNav" justify-end>
+            <v-icon>{{ closeIconNavDrawer }}</v-icon>
+          </v-list-tile-action-->
+          <v-btn icon @click="sideNav = !sideNav">
+            <v-icon>{{ closeIconNavDrawer }}</v-icon>
+          </v-btn>
+        </v-list-tile>
+          <v-list-tile v-for="item in items" :key="item.title" :to="item.link">
+
+            <v-list-tile-action>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-tile-action>
+
+            <v-list-tile-content>
+              <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </v-list>
+      </v-navigation-drawer>
+      <!-- Navigation end -->
+
+        <transition name="custom-classes-transition" mode="out-in" enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutRight">
+          <router-view />
+        </transition>
+      <Footer />
     </v-app>
 </template>
 
@@ -68,17 +60,28 @@
 // @ is an alias to /src
 // import HelloWorld from '@/components/HelloWorld.vue'
 // import Main from '@/views/Main.vue'
+// import Navigation from '@/components/Navigation.vue'
 import Footer from '@/components/Footer.vue'
 
 export default {
   name: 'app',
   data () {
     return {
-      sideNav: false
+      items: [
+        { title: 'Галерея', link: '/gallery', icon: 'insert_photo' },
+        { title: 'Отзывы', link: '/', icon: 'speaker_notes' },
+        { title: 'Наша философия', link: '/philosophy', icon: 'format_quote' },
+        { title: 'О нас', link: '/about', icon: 'supervisor_account' },
+        { title: 'Контакты', link: '/', icon: 'work' }
+      ],
+      sideNav: false,
+      titleNavDrawer: 'MaxDog',
+      closeIconNavDrawer: 'arrow_forward'
     }
   },
   components: {
     Footer
+    // Navigation
   }
 }
 
@@ -98,8 +101,10 @@ export default {
   // color: #2c3e50;
   // font-size: 1em;
   background-color: white;
-  padding-top: 4em;
+  // padding-top: 4em;
+  min-height: auto;
 }
+
 /*
 #nav {
   padding: 30px;
@@ -112,6 +117,9 @@ export default {
   }
 }
 */
+.right {
+  text-align: right;
+}
 
 .logo {
   font-family: $logo-font;
@@ -119,5 +127,11 @@ export default {
   vertical-align: middle;
   text-decoration: none;
   color: $color-primary;
+}
+
+.navDrawerTitle {
+  color: $color-primary;
+  font-family: $logo-font;
+  font-size: 2em;
 }
 </style>

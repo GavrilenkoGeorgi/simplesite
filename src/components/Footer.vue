@@ -1,5 +1,5 @@
 <template>
-  <v-footer absolute>
+  <v-footer app absolute>
     <v-layout row wrap align-center justify-center class="footer">
       <v-flex d-flex xs12 md4 pt-2>
         <h2><span class="logo">MaxDog</span></h2>
@@ -42,31 +42,29 @@ export default {
 @import "../assets/scss/fonts.scss";
 
 .footer {
-  // display: flex;
   color: $color-white;
-  // width: 100%;
-  // height: 42em;
-  // margin-top: 1em;
-  // padding: 1em;
   box-shadow: inset 0px 15px 25px -10px $color-darkGray;
   background:url(
   data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAMklEQVQoU2NkwA9mMuKRn8nAwJCOSwFYEqQZmwK4JDYFKJLoCjAkkRVglYQpwCkJUgAAsT0Hos1G1a4AAAAASUVORK5CYII=
   ) repeat;
   background-color: $color-primary;
-  // transition-property: all;
-  // transition-duration: .5s;
-  // transition-timing-function: cubic-bezier(.46,.38,.89,.5);
-  // transition-timing-function: linear;
+  // position: absolute;
+  bottom: 0px;
 }
 
 .contacts {
-  // text-align: left;
   width: 20em;
   margin: 2em;;
 }
+
 .logo {
-    color: $color-white;
+  font-family: $logo-font;
+  font-size: 2em;
+  vertical-align: middle;
+  text-decoration: none;
+  color: $color-white; // wtf???
 }
+
 // social networks icons css
 @import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css);
 ul {
@@ -75,22 +73,15 @@ ul {
 }
 .footer-social-icons {
     text-align:center;
-    // width: 350px;
     display:block;
     margin: 2em 0em 0em 0em;
-    // background-color: $color-primary;
     width: 100%;
-    // padding-bottom: 2em;
 }
 .social-icon {
   font-size: 1.4em;
   color: #fff;
 }
-/*
-ul.social-icons {
-    // margin-top: 10px;
-}
-*/
+
 .social-icons li {
     vertical-align: top;
     display: inline;
