@@ -1,11 +1,11 @@
 <template>
   <div id="home">
 <!-- Parralax image background -->
-      <v-container class="pa-0">
+      <v-container fluid class="pa-0">
         <v-layout>
           <v-flex xs12>
             <v-parallax height="500" :src="require('@/assets/dog-wallpaper.jpg')">
-            <h1 class="display-2 photo-overlay">Дрессировка собак в Киеве и Киевской области</h1>
+            <h1 class="display-2 photo-overlay">{{ overlayTitle }}</h1>
             </v-parallax>
           </v-flex>
         </v-layout>
@@ -40,7 +40,7 @@
           </v-flex>
           <v-flex xs12>
             <h2 class="display-3">Первый урок — 50%</h2>
-            <v-btn color="info" large class="mt-4 animated" v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }">ОНЛАЙН ЗАПИСЬ</v-btn>
+            <v-btn to="/consultform" color="info" large class="mt-4 animated" v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }">ОНЛАЙН ЗАПИСЬ</v-btn>
           </v-flex>
         </v-layout>
       </v-container>
@@ -115,7 +115,8 @@ export default {
   name: 'home',
   data () {
     return {
-      title: 'MaxDog'
+      title: 'MaxDog',
+      overlayTitle: 'Дрессировка собак в Киеве и Киевской области'
     }
   },
   methods: {
@@ -172,7 +173,7 @@ export default {
 }
 
 .marginBottom {
-    margin-bottom: 7em;
+    margin-bottom: 9em;
 }
 
 #box {

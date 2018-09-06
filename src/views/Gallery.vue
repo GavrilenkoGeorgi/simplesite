@@ -1,6 +1,6 @@
 <template>
   <v-container pa-0>
-    <v-layout column xs12 lg6 xl4>
+    <v-layout column xs12 lg6 xl4 class="customMargins">
     <v-flex>
     <v-carousel class="customHeight">
       <v-carousel-item
@@ -52,7 +52,11 @@ export default {
 <style lang="scss">
 
 .customHeight {
-  height: 600px;
+  height: 800px;
   // margin-bottom: 6em;
+}
+
+.customMargins {
+  margin: 6em 0em 14em 0em;
 }
 </style>

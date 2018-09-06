@@ -1,7 +1,6 @@
 <template>
-    <v-app id="app" class="override">
-      <!-- v-navigation-drawer temporary absolute right v-model="sideNav"-->
-      <v-toolbar app>
+    <v-app id="app">
+      <v-toolbar app clipped-right>
         <v-toolbar-title><span><router-link class="logo" to="/">MaxDog</router-link></span></v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn to="/gallery" flat class="hidden-xs-only">
@@ -48,11 +47,35 @@
         </v-list>
       </v-navigation-drawer>
       <!-- Navigation end -->
-
         <transition name="custom-classes-transition" mode="out-in" enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutRight">
           <router-view />
         </transition>
-      <Footer />
+
+      <!--Footer -->
+      <v-footer app absolute dark height="auto">
+        <v-card flat tile width="100%" class="blue-grey lighten-1 white--text text-xs-center" >
+          <v-card-text>
+            <v-btn
+              v-for="icon in icons"
+              :key="icon"
+              class="mx-3 white--text"
+              icon
+            >
+              <v-icon size="24px">{{ icon }}</v-icon>
+            </v-btn>
+          </v-card-text>
+
+          <v-card-text class="white--text pt-0">
+            «То, что сегодня кажется невозможным, завтра станет результом».
+          </v-card-text>
+
+          <v-divider></v-divider>
+
+          <v-card-text class="white--text">
+            &copy;2018 — <strong>MaxDog</strong>
+          </v-card-text>
+        </v-card>
+      </v-footer>
     </v-app>
 </template>
 
@@ -70,9 +93,16 @@ export default {
       items: [
         { title: 'Галерея', link: '/gallery', icon: 'insert_photo' },
         { title: 'Отзывы', link: '/', icon: 'speaker_notes' },
+        { title: 'Оставить заявку', link: '/consultform', icon: 'contact_mail' },
         { title: 'Наша философия', link: '/philosophy', icon: 'format_quote' },
         { title: 'О нас', link: '/about', icon: 'supervisor_account' },
         { title: 'Контакты', link: '/', icon: 'work' }
+      ],
+      icons: [
+        'fa-facebook',
+        'fa-instagram',
+        'fa-vk',
+        'fa-youtube'
       ],
       sideNav: false,
       titleNavDrawer: 'MaxDog',
@@ -102,7 +132,7 @@ export default {
   // font-size: 1em;
   background-color: white;
   // padding-top: 4em;
-  min-height: auto;
+  // min-height: auto;
 }
 
 /*

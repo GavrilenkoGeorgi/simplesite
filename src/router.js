@@ -7,7 +7,7 @@ import Main from './views/Main.vue'
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
+  mode: 'hash',
   routes: [
     {
       path: '/',
@@ -33,7 +33,12 @@ export default new Router({
       component: () => import(/* webpackChunkName: "gallery" */ './views/Gallery.vue')
     },
     {
-      path: '*',
+      path: '/consultform',
+      name: 'consultform',
+      component: () => import(/* webpackChunkName: "consultform" */ './views/ConsultForm.vue')
+    },
+    {
+      path: '/**',
       component: Main
     }
   ]

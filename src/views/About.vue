@@ -32,6 +32,6 @@ export default {
 .simpleTextBlock {
   font-size: 1.5em;
   padding-top: 1em;
-  margin-bottom: 5em;
+  margin-bottom: 10em;
 }
 </style>
