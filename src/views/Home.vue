@@ -1,5 +1,5 @@
 <template>
-  <div id="home">
+  <div id="home" class="marginBottom">
 <!-- Parralax image background -->
       <v-container fluid class="pa-0">
         <v-layout>
@@ -79,7 +79,7 @@
         <v-layout fluid>
           <v-flex xs12>
             <v-parallax :src="require('@/assets/img/dogFenceRunningSquare.jpg')">
-            <h1 class="display-2 photo-overlay">Грумінг собак і кішок</h1>
+            <h1 class="display-2 photo-overlay">Грумінг собак та котів</h1>
             </v-parallax>
           </v-flex>
         </v-layout>
@@ -90,7 +90,7 @@
     <v-layout row wrap justify-space-around>
       <v-flex xs12 md8>
         <v-img :src="require('@/assets/img/grooming/groomingTitlePhoto.png')" height="371" contain v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }" class="animated hidden groomingSection"></v-img>
-          <p class="simpleTextBlock marginBottom">
+          <p class="simpleTextBlock">
             Здравствуй, дорогой друг, меня зовут Людмила!
             «Hairstyle animals» — Ты здесь, а это значит что провел свои пару минут не просто посетив сайт,
             а нашел именно того грумера которого так долго искал, грумера-стилиста, создающего не просто
@@ -103,7 +103,108 @@
             себя вести.
           </p>
       </v-flex>
+      <v-flex xs12 md8>
+        <h2>Груминг кошек</h2>
+        <v-img :src="require('@/assets/img/grooming/groomingCat.jpg')" height="500" contain v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }" class="animated hidden groomingSection"></v-img>
+        <p class="simpleTextBlock">
+          Вычесывание, стрижка, гигиена, купание, сушка.
+        </p>
+      </v-flex>
+      <v-flex xs12 md8>
+        <h2>Груминг собак</h2>
+        <v-img :src="require('@/assets/img/grooming/groomingDog.jpg')" height="500" contain v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }" class="animated hidden groomingSection"></v-img>
+        <p class="simpleTextBlock">
+          Вычесывание, удаление колтунов, гигиена, стрижки, тримминг, стрипинг, купание, сушка.
+        </p>
+      </v-flex>
+      <v-flex xs12 md8>
+        <h2>Дополнительные услуги</h2>
+        <v-img :src="require('@/assets/img/grooming/groomingOther.jpg')" height="500" contain v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }" class="animated hidden groomingSection"></v-img>
+        <p class="simpleTextBlock">
+          Выставочный груминг, креативная стрижка и окрашивание, чистка зубов, оформление коготков.
+        </p>
+      </v-flex>
     </v-layout>
+    <v-layout column>
+      <h2>SPA комплекс</h2>
+      <h3>Банные услуги и гигиена</h3>
+    </v-layout>
+      <h2>Коты</h2>
+        <div class="serviceItem">
+          <div class="serviceItemPhoto">
+            <div class="item animatedGrooming">
+              <img src="../assets/img/grooming/groomingSlimCat.jpg" alt="Black and white cat">
+            </div>
+          </div>
+          <div class="serviceItemDescr">
+            <div class="itemPricing">
+              <p class="serviceName">Породы до 5 кг</p>
+                <div class="pricingDivider"></div>
+              <p class="servicePrice">250 грн</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="serviceItem">
+          <div class="serviceItemPhoto">
+            <div class="item animatedGrooming">
+              <img src="../assets/img/grooming/groomingFatCat.jpg" alt="Fat ginger cat">
+            </div>
+          </div>
+          <div class="serviceItemDescr">
+            <div class="itemPricing">
+              <p class="serviceName">Больше 5 кг</p>
+                <div class="pricingDivider"></div>
+              <p class="servicePrice">300 грн</p>
+            </div>
+          </div>
+        </div>
+
+        <h2>Собаки</h2>
+        <div class="serviceItem">
+          <div class="serviceItemPhoto">
+            <div class="item animatedGrooming">
+              <img src="../assets/img/grooming/groomingSmallBreed.jpg" alt="Small dog barking">
+            </div>
+          </div>
+          <div class="serviceItemDescr">
+            <div class="itemPricing">
+              <p class="serviceName">Мелкие породы</p>
+                <div class="pricingDivider"></div>
+              <p class="servicePrice">250-350 грн</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="serviceItem">
+          <div class="serviceItemPhoto">
+            <div class="item animatedGrooming">
+              <img src="../assets/img/grooming/groomingMediumBreed.jpg" alt="Small dog barking">
+            </div>
+          </div>
+          <div class="serviceItemDescr">
+            <div class="itemPricing">
+              <p class="serviceName">Средние породы</p>
+                <div class="pricingDivider"></div>
+              <p class="servicePrice">400-450 грн</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="serviceItem marginBottom">
+          <div class="serviceItemPhoto">
+            <div class="item animatedGrooming">
+              <img src="../assets/img/grooming/groomingLargeBreed.jpg" alt="Small dog barking">
+            </div>
+          </div>
+          <div class="serviceItemDescr">
+            <div class="itemPricing">
+              <p class="serviceName">Крупные породы</p>
+                <div class="pricingDivider"></div>
+              <p class="servicePrice">500-650 грн</p>
+            </div>
+          </div>
+        </div>
   </v-container>
   </div>
 </template>
@@ -210,5 +311,81 @@ export default {
 .hidden {
   visibility: hidden;
   // opacity: 0;
+}
+
+hr.divider {
+    border: 0;
+    height: 1px;
+    margin-bottom: 1em;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
+.groomingServiceItem {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+// prices styling
+.serviceItem {
+  width: 96%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.serviceItemPhoto {
+  width: 25%;
+}
+
+.serviceItemPhoto img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.serviceItemDescr {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 75%;
+}
+
+.serviceName {
+  width: 100%;
+  font-size: 1em;
+  margin: 0;
+}
+
+.servicePrice {
+  width: 100%;
+  font-size: 1em;
+  margin: 0;
+}
+
+.horizontalRuler {
+  height: 1px;
+  width: 15%;
+  margin-right: auto;
+  padding: 0;
+  border: 0;
+  background-image: linear-gradient(to right, rgba(255, 0, 0, 0.025), rgba(255, 0, 0, .5), rgba(255, 0, 0, .025));
+}
+
+.itemPricing {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.pricingDivider {
+  height: 1px;
+  margin: .2em 0em .2em 0em;
+  background-image: linear-gradient(to right, rgba(4, 25, 77, .025), rgba(4, 25, 77, .5), rgba(4, 25, 77, .025));
+  width: 100%;
+  margin-left: 1.2em;
 }
 </style>
