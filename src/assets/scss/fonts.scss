@@ -1,11 +1,18 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat|Playfair+Display+SC:900|Yeseva+One');
+// @import url('https://fonts.googleapis.com/css?family=Montserrat|Playfair+Display+SC:900|Yeseva+One');
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons');
 // @import url('https://fonts.googleapis.com/css?family=Playfair+Display+SC:900');
+@import url('https://fonts.googleapis.com/css?family=Cardo|Poiret+One');
 
-$header-font: 'Playfair Display SC', serif;
+// $header-font: 'Poiret One', cursive;
+$header-font: 'Cardo', serif;
 // $logo-font: 'Yeseva One', cursive;
-$logo-font: 'Playfair Display SC', serif;
-$text-font: 'Montserrat', sans-serif;
+$logo-font: 'Cardo', serif;
+$text-font: 'Poiret One', cursive;
+
+/*
+font-family: 'Cardo', serif;
+font-family: 'Poiret One', cursive;
+*/
 
 /*
 font-family: 'Montserrat', sans-serif;

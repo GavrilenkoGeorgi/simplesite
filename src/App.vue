@@ -45,6 +45,39 @@
             </v-list-tile-content>
           </v-list-tile>
         </v-list>
+        <!-- Checkboxes -->
+        <v-container fluid class="menuHeader pa-0 mt-4">
+          <span class="hardcodedFont">Шрифты</span>
+        </v-container>
+        <v-container fluid pa-0>
+          <v-layout row>
+            <v-flex xs4>Лого</v-flex>
+            <v-flex xs4>Заголовки</v-flex>
+            <v-flex xs4>Текст</v-flex>
+          </v-layout>
+          <v-layout row fluid justify-space-around>
+            <v-flex xs2>
+              <v-checkbox input-value="true" value></v-checkbox>
+            </v-flex>
+            <v-flex xs2>
+              <v-checkbox value></v-checkbox>
+            </v-flex>
+            <v-flex xs2>
+              <v-checkbox value></v-checkbox>
+            </v-flex>
+          </v-layout>
+        </v-container>
+        <v-container fluid class="mt-0 pt-0">
+          <v-radio-group v-model="radioGroup">
+            <v-radio class="hardcodedFont ma-0"
+              v-for="name in fonts"
+              :key="name"
+              :label="name.name"
+              :value="name"
+            ></v-radio>
+          </v-radio-group>
+        </v-container>
+        <!-- Theirs end -->
       </v-navigation-drawer>
       <!-- Navigation end -->
         <transition name="custom-classes-transition" mode="out-in" enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutRight">
@@ -90,6 +123,16 @@ export default {
   name: 'app',
   data () {
     return {
+      checkbox: true,
+      radioGroup: 1,
+      switch1: true,
+      fonts: [
+        { name: 'Cardo' },
+        { name: 'Poiret One' },
+        { name: 'Happy Monkey' },
+        { name: 'Elsie' },
+        { name: 'Life Savers' }
+      ],
       items: [
         { title: 'Галерея', link: '/gallery', icon: 'insert_photo' },
         { title: 'Отзывы', link: '/', icon: 'speaker_notes' },
@@ -133,6 +176,18 @@ export default {
   background-color: white;
   // padding-top: 4em;
   // min-height: auto;
+}
+
+.application {
+  // font-family: $text-font !important;
+  font-size: 1.3em;
+}
+
+.hardcodedFont { // Meh...
+  font-family: sans-serif;
+}
+.container {
+  font-family: $text-font !important;
 }
 
 /*

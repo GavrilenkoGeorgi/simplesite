@@ -5,7 +5,7 @@
         <v-layout>
           <v-flex xs12>
             <v-parallax height="500" :src="require('@/assets/dog-wallpaper.jpg')">
-            <h1 class="display-2 photo-overlay">{{ overlayTitle }}</h1>
+            <h1 class="photo-overlay">{{ overlayTitle }}</h1>
             </v-parallax>
           </v-flex>
         </v-layout>
@@ -15,7 +15,7 @@
       <v-container>
         <v-layout>
           <v-flex xs12>
-            <h2 class="display-3">Почему именно MaxDog?</h2>
+            <h2 class="largeHeader">Почему именно MaxDog?</h2>
               <p class="simpleTextBlock">
                 Blah, blah, blah. Lorem ipsum dolor sit amet, solum meliore efficiendi ut quo, ex assum interesset mel,
                 quis eirmod in est. Ea quod verear albucius eos, an est eros insolens reprehendunt. No veritus assentior ius,
@@ -39,7 +39,7 @@
             </p>
           </v-flex>
           <v-flex xs12>
-            <h2 class="display-3">Первый урок — 50%</h2>
+            <h2 class="">Первый урок — 50%</h2>
             <v-btn to="/consultform" color="info" large class="mt-4 animated" v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }">ОНЛАЙН ЗАПИСЬ</v-btn>
           </v-flex>
         </v-layout>
@@ -49,7 +49,7 @@
       <v-container>
         <v-layout row wrap justify-space-around>
           <v-flex xs12 md5 v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }" class="animated groupTraining hidden">
-            <h4 class="display-1">Групповые занятия</h4>
+            <h4 class="">Групповые занятия</h4>
             <v-img :src="require('@/assets/img/groupOfDogs.jpg')" height="320" contain></v-img>
             <p class="simpleTextBlock">
               На групповых занятиях дважды в неделю вы получаете практический
@@ -63,7 +63,7 @@
             </p>
           </v-flex>
           <v-flex xs12 md5 v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }" class="animated individualTraining hidden">
-            <h4 class="display-1">Индивидуальные занятия</h4>
+            <h4>Индивидуальные занятия</h4>
             <v-img :src="require('@/assets/img/dogPlayingBallSmall.jpg')" height="320" contain></v-img>
             <p class="simpleTextBlock">
               При индивидуальных занятиях мы тренируем собаку тет-а-тет с вами или
@@ -79,7 +79,7 @@
         <v-layout fluid>
           <v-flex xs12>
             <v-parallax :src="require('@/assets/img/dogFenceRunningSquare.jpg')">
-            <h1 class="display-2 photo-overlay">Грумінг собак та котів</h1>
+            <h1 class="photo-overlay">Грумінг собак та котів</h1>
             </v-parallax>
           </v-flex>
         </v-layout>
@@ -253,6 +253,7 @@ export default {
 <style scoped lang="scss">
 @import "../assets/animate.css";
 @import "../assets/scss/colours.scss";
+@import "../assets/scss/fonts.scss";
 /*
 #home {
   margin: 0;
@@ -266,6 +267,10 @@ export default {
   bottom: 1em;
   background-color: $photo-overlay;
   padding: .3em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $text-font;
 }
 
 .simpleTextBlock {
