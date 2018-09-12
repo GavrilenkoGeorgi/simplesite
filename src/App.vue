@@ -1,7 +1,7 @@
 <template>
     <v-app id="app">
       <v-toolbar app clipped-right>
-        <v-toolbar-title><span><router-link class="logo" to="/">MaxDog</router-link></span></v-toolbar-title>
+        <v-toolbar-title><span><router-link class="logo logoFont" to="/">MaxDog</router-link></span></v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn to="/gallery" flat class="hidden-xs-only">
           <!--v-icon left>supervisor_account</v-icon-->
@@ -51,33 +51,35 @@
         </v-container>
         <v-container fluid pa-0>
           <v-layout row>
-            <v-flex xs4>Лого</v-flex>
-            <v-flex xs4>Заголовки</v-flex>
-            <v-flex xs4>Текст</v-flex>
+          <v-radio-group class="hardcodedFont pl-3" v-model="whatToChange" :mandatory="false">
+            <v-radio label="Лого" value="Logo"></v-radio>
+            <v-radio label="Заголовки" value="Header"></v-radio>
+            <v-radio label="Текст" value="Text"></v-radio>
+          </v-radio-group>
           </v-layout>
-          <v-layout row fluid justify-space-around>
+          <!--v-layout row fluid justify-space-around>
             <v-flex xs2>
-              <v-checkbox input-value="true" value></v-checkbox>
+              <v-checkbox v-model="logoSelected"></v-checkbox>
             </v-flex>
             <v-flex xs2>
-              <v-checkbox value></v-checkbox>
+              <v-checkbox v-model="headerSelected"></v-checkbox>
             </v-flex>
             <v-flex xs2>
-              <v-checkbox value></v-checkbox>
+              <v-checkbox v-model="textSelected"></v-checkbox>
             </v-flex>
-          </v-layout>
+          </v-layout-->
         </v-container>
         <v-container fluid class="mt-0 pt-0">
-          <v-radio-group v-model="radioGroup">
+          <v-radio-group v-model="selectedFont" :mandatory="false">
             <v-radio class="hardcodedFont ma-0"
-              v-for="name in fonts"
-              :key="name"
-              :label="name.name"
-              :value="name"
+              v-for="font in fonts"
+              :key="font.name"
+              :label="font.name"
+              :value="font.name"
             ></v-radio>
           </v-radio-group>
         </v-container>
-        <!-- Theirs end -->
+        <!-- Theirs end :label="font.selected" -->
       </v-navigation-drawer>
       <!-- Navigation end -->
         <transition name="custom-classes-transition" mode="out-in" enter-active-class="animated fadeInLeft" leave-active-class="animated fadeOutRight">
@@ -105,7 +107,7 @@
           <v-divider></v-divider>
 
           <v-card-text class="white--text">
-            &copy;2018 — <strong>MaxDog</strong>
+            &copy;2018 — MaxDog
           </v-card-text>
         </v-card>
       </v-footer>
@@ -123,15 +125,16 @@ export default {
   name: 'app',
   data () {
     return {
-      checkbox: true,
-      radioGroup: 1,
-      switch1: true,
+      selectedFont: 'Cardo',
+      whatToChange: '',
+      checkBox: '',
+      // switch1: true,
       fonts: [
-        { name: 'Cardo' },
-        { name: 'Poiret One' },
-        { name: 'Happy Monkey' },
-        { name: 'Elsie' },
-        { name: 'Life Savers' }
+        { name: 'Cardo', label: '"Cardo", serif;', selected: true, logoFont: false, headerFont: false, textFont: false },
+        { name: 'Poiret One', label: '"Poiret One", cursive;', selected: false, logoFont: false, headerFont: false, textFont: false },
+        { name: 'Happy Monkey', label: '"Happy Monkey", cursive;', selected: false, logoFont: false, headerFont: false, textFont: false },
+        { name: 'Elsie', label: '"Elsie", cursive;', selected: false, logoFont: false, headerFont: false, textFont: false },
+        { name: 'Life Savers', label: '"Life Savers", cursive;', selected: false, logoFont: false, headerFont: false, textFont: false }
       ],
       items: [
         { title: 'Галерея', link: '/gallery', icon: 'insert_photo' },
@@ -155,6 +158,67 @@ export default {
   components: {
     Footer
     // Navigation
+  },
+  mounted: function () {
+    this.$nextTick(function () {
+      console.log(`Mounted`)
+    // Code that will run only after the
+    // entire view has been rendered
+    })
+  },
+  watch: {
+    logoSelected: function () {
+      this.whatToChange = 'Logo'
+      // this.logoSelected = true
+      // console.log(event.target)
+      console.log(`Changing logos`)
+    },
+    headerSelected: function () {
+      this.whatToChange = 'Headers'
+      // this.headerSelected = true
+      console.log(`Changing headers`)
+      // elementsToChange = document.querySelectorAll('h1, h2, h3, h4, h5, h6')
+    },
+    textSelected: function () {
+      // this.textSelected = true
+      this.whatToChange = 'Text'
+      console.log(`Changing text`)
+    },
+    selectedFont: function () {
+      if (this.whatToChange !== '') {
+        let elementsToChange
+        switch (this.whatToChange) {
+          case 'Logo':
+            elementsToChange = document.querySelector('.logo')
+            break
+          case 'Header':
+            elementsToChange = document.querySelectorAll('h1, h2, h3, h4, h5, h6')
+            break
+          case 'Text':
+            elementsToChange = document.querySelectorAll('.container')
+            break
+          default:
+            console.log('Nothing to change')
+        }
+        this.changeElementsFont(elementsToChange)
+      } else {
+        console.log('Select something to change')
+      }
+    }
+  },
+  methods: {
+    changeElementsFont: function (elementsToChange) {
+      // let elementsToChange = this.elementsToChange
+      console.log(`Elements to change in change elements ${elementsToChange.length}`)
+      if (elementsToChange.length) {
+        for (let element of elementsToChange) {
+          console.log(`${element}`)
+          element.style.fontFamily = this.selectedFont // which is written on a label
+        }
+      } else {
+        elementsToChange.style.fontFamily = this.selectedFont
+      }
+    }
   }
 }
 
@@ -187,7 +251,7 @@ export default {
   font-family: sans-serif;
 }
 .container {
-  font-family: $text-font !important;
+  font-family: $text-font;
 }
 
 /*
@@ -206,12 +270,21 @@ export default {
   text-align: right;
 }
 
-.logo {
+.logoFont {
   font-family: $logo-font;
+}
+
+.logo{
   font-size: 2em;
   vertical-align: middle;
   text-decoration: none;
   color: $color-primary;
+}
+
+.footerLogo {
+  font-size: 1.3em;
+  color: $color-white;
+  text-decoration: none;
 }
 
 .navDrawerTitle {
