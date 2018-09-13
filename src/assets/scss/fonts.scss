@@ -1,23 +1,29 @@
-// @import url('https://fonts.googleapis.com/css?family=Montserrat|Playfair+Display+SC:900|Yeseva+One');
+@import url('https://fonts.googleapis.com/css?family=Montserrat|Playfair+Display+SC:900|Yeseva+One');
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons');
-// @import url('https://fonts.googleapis.com/css?family=Playfair+Display+SC:900');
+@import url('https://fonts.googleapis.com/css?family=Playfair+Display+SC:900');
 @import url('https://fonts.googleapis.com/css?family=Cardo|Poiret+One');
 @import url('https://fonts.googleapis.com/css?family=Elsie|Happy+Monkey|Life+Savers');
+@import url('https://fonts.googleapis.com/css?family=Russo+One');
+@import url('https://fonts.googleapis.com/css?family=Caveat');
 
 // default settings
 
-$header-font: 'Cardo', serif;
-$logo-font: 'Cardo', serif;
-$text-font: 'Poiret One', cursive;
+$logo-font: 'Playfair Display SC', serif;
+$header-font: 'Montserrat', sans-serif;
+$text-font: 'Montserrat', sans-serif;
+$quote-font: 'Caveat', cursive;
 
 /*
 font-family: 'Cardo', serif;
 font-family: 'Poiret One', cursive;
+font-family: 'Roboto', sans-serif;
+font-family: 'Russo One', sans-serif;
+font-family: 'Caveat', cursive;
 */
 
 /*
 font-family: 'Montserrat', sans-serif;
-font-family: 'Playfair Display', serif;
+font-family: 'Playfair Display SC', serif;
 font-family: 'Yeseva One', cursive;
 */
 

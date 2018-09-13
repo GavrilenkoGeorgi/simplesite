@@ -1,7 +1,7 @@
 <template>
-  <v-container pa-0>
+  <!--v-container class="pa-0 ma-0">
     <v-layout column xs12 lg6 xl4 class="customMargins">
-    <v-flex>
+    <v-flex-->
     <v-carousel class="customHeight">
       <v-carousel-item
         v-for="(item,i) in items"
@@ -9,9 +9,9 @@
         :src="item.src"
       ></v-carousel-item>
     </v-carousel>
-    </v-flex>
+    <!--/v-flex>
     </v-layout>
-  </v-container>
+  </v-container-->
 </template>
 
 <script>

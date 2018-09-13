@@ -1,7 +1,7 @@
 <template>
     <v-app id="app">
-      <v-toolbar app clipped-right>
-        <v-toolbar-title><span><router-link class="logo logoFont" to="/">MaxDog</router-link></span></v-toolbar-title>
+      <v-toolbar clipped-right>
+        <v-toolbar-title><span><router-link class="logo" to="/">MaxDog</router-link></span></v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn to="/gallery" flat class="hidden-xs-only">
           <!--v-icon left>supervisor_account</v-icon-->
@@ -18,18 +18,19 @@
         <v-btn flat class="hidden-xs-only">
           <!--v-icon left>supervisor_account</v-icon-->
           Контакты</v-btn>
-        <v-toolbar-side-icon class="hidden-sm-and-up" @click="sideNav = !sideNav"></v-toolbar-side-icon>
+        <v-toolbar-side-icon @click="sideNav = !sideNav"></v-toolbar-side-icon> <!--class="hidden-sm-and-up" -->
       </v-toolbar>
 
-      <v-navigation-drawer app right disable-resize-watcher v-model="sideNav" width="250">
+      <v-navigation-drawer app right disable-resize-watcher v-model="sideNav" width="300">
         <v-list>
           <v-list-tile>
-          <v-list-tile-title class="navDrawerTitle">
-            {{ titleNavDrawer }}
+          <v-list-tile-title>
+            <v-layout align-center justify-center fill-height>
+              <v-flex class="navDrawerTitle">
+              {{ titleNavDrawer }}
+              </v-flex>
+            </v-layout>
           </v-list-tile-title>
-          <!--v-list-tile-action @click="sideNav = !sideNav" justify-end>
-            <v-icon>{{ closeIconNavDrawer }}</v-icon>
-          </v-list-tile-action-->
           <v-btn icon @click="sideNav = !sideNav">
             <v-icon>{{ closeIconNavDrawer }}</v-icon>
           </v-btn>
@@ -47,28 +48,32 @@
         </v-list>
         <!-- Checkboxes -->
         <v-container fluid class="menuHeader pa-0 mt-4">
-          <span class="hardcodedFont">Шрифты</span>
+          <span class="hardcodedFont"><strong>Шрифты</strong></span>
         </v-container>
-        <v-container fluid pa-0>
+
+        <v-container row>
           <v-layout row>
-          <v-radio-group class="hardcodedFont pl-3" v-model="whatToChange" :mandatory="false">
-            <v-radio label="Лого" value="Logo"></v-radio>
-            <v-radio label="Заголовки" value="Header"></v-radio>
-            <v-radio label="Текст" value="Text"></v-radio>
-          </v-radio-group>
+            <v-flex xs6>
+              <v-radio-group class="hardcodedFont ma-0 pa-0" v-model="whatToChange" :mandatory="false">
+                <v-radio class="hardcodedFont ma-0 pa-0" label="Лого:" value="Logo"></v-radio>
+                <v-radio class="hardcodedFont ma-0 pa-0" label="Заголовки:" value="Header"></v-radio>
+                <v-radio class="hardcodedFont ma-0 pa-0" label="Текст:" value="Text"></v-radio>
+              </v-radio-group>
+            </v-flex>
+            <v-flex xs6 class="hardcodedFont ml-3 pa-0">
+              <v-flex>
+                {{ currentLogoFont }}
+              </v-flex>
+              <v-flex>
+                {{ currentHeaderFont }}
+              </v-flex>
+              <v-flex>
+                {{ currentTextFont }}
+              </v-flex>
+            </v-flex>
           </v-layout>
-          <!--v-layout row fluid justify-space-around>
-            <v-flex xs2>
-              <v-checkbox v-model="logoSelected"></v-checkbox>
-            </v-flex>
-            <v-flex xs2>
-              <v-checkbox v-model="headerSelected"></v-checkbox>
-            </v-flex>
-            <v-flex xs2>
-              <v-checkbox v-model="textSelected"></v-checkbox>
-            </v-flex>
-          </v-layout-->
         </v-container>
+
         <v-container fluid class="mt-0 pt-0">
           <v-radio-group v-model="selectedFont" :mandatory="false">
             <v-radio class="hardcodedFont ma-0"
@@ -87,8 +92,9 @@
         </transition>
 
       <!--Footer -->
-      <v-footer app absolute dark height="auto">
-        <v-card flat tile width="100%" class="blue-grey lighten-1 white--text text-xs-center" >
+      <v-footer dark height="auto" class="footerColor">
+        <!--v-card flat tile width="100%" class="blue-grey lighten-1 white--text text-xs-center"-->
+        <v-card flat tile width="100%" class="indigo white--text text-xs-center">
           <v-card-text>
             <v-btn
               v-for="icon in icons"
@@ -101,7 +107,9 @@
           </v-card-text>
 
           <v-card-text class="white--text pt-0">
-            «То, что сегодня кажется невозможным, завтра станет результом».
+            <p class="quote">
+            «То, что сегодня кажется невозможным, завтра станет результатом».
+            </p>
           </v-card-text>
 
           <v-divider></v-divider>
@@ -125,7 +133,10 @@ export default {
   name: 'app',
   data () {
     return {
-      selectedFont: 'Cardo',
+      selectedFont: '',
+      currentLogoFont: 'Default',
+      currentHeaderFont: 'Default',
+      currentTextFont: 'Default',
       whatToChange: '',
       checkBox: '',
       // switch1: true,
@@ -134,7 +145,11 @@ export default {
         { name: 'Poiret One', label: '"Poiret One", cursive;', selected: false, logoFont: false, headerFont: false, textFont: false },
         { name: 'Happy Monkey', label: '"Happy Monkey", cursive;', selected: false, logoFont: false, headerFont: false, textFont: false },
         { name: 'Elsie', label: '"Elsie", cursive;', selected: false, logoFont: false, headerFont: false, textFont: false },
-        { name: 'Life Savers', label: '"Life Savers", cursive;', selected: false, logoFont: false, headerFont: false, textFont: false }
+        { name: 'Life Savers', label: '"Life Savers", cursive;', selected: false, logoFont: false, headerFont: false, textFont: false },
+        { name: 'Playfair Display SC', label: '"Playfair Display SC", serif;', selected: false, logoFont: false, headerFont: false, textFont: false },
+        { name: 'Roboto', label: '"Roboto", sans-serif;', selected: false, logoFont: false, headerFont: false, textFont: false },
+        { name: 'Montserrat', label: '"Montserrat", sans-serif;', selected: false, logoFont: false, headerFont: false, textFont: false },
+        { name: 'Russo One', label: '"Russo One", sans-serif;', selected: false, logoFont: false, headerFont: false, textFont: false }
       ],
       items: [
         { title: 'Галерея', link: '/gallery', icon: 'insert_photo' },
@@ -189,13 +204,16 @@ export default {
         let elementsToChange
         switch (this.whatToChange) {
           case 'Logo':
-            elementsToChange = document.querySelector('.logo')
+            elementsToChange = document.querySelectorAll('.logo, .navDrawerTitle')
+            this.currentLogoFont = this.selectedFont
             break
           case 'Header':
             elementsToChange = document.querySelectorAll('h1, h2, h3, h4, h5, h6')
+            this.currentHeaderFont = this.selectedFont
             break
           case 'Text':
             elementsToChange = document.querySelectorAll('.container')
+            this.currentTextFont = this.selectedFont
             break
           default:
             console.log('Nothing to change')
@@ -242,13 +260,10 @@ export default {
   // min-height: auto;
 }
 
-.application {
-  // font-family: $text-font !important;
-  font-size: 1.3em;
-}
-
 .hardcodedFont { // Meh...
+  text-align: left;
   font-family: sans-serif;
+  font-size: 16px;
 }
 .container {
   font-family: $text-font;
@@ -270,15 +285,13 @@ export default {
   text-align: right;
 }
 
-.logoFont {
-  font-family: $logo-font;
-}
-
 .logo{
   font-size: 2em;
   vertical-align: middle;
   text-decoration: none;
-  color: $color-primary;
+  // color: $color-primary;
+  color: $indigo;
+  font-family: $logo-font;
 }
 
 .footerLogo {
@@ -290,6 +303,10 @@ export default {
 .navDrawerTitle {
   color: $color-primary;
   font-family: $logo-font;
+  font-size: 1.4em;
+}
+.quote {
+  font-family: $quote-font;
   font-size: 2em;
 }
 </style>

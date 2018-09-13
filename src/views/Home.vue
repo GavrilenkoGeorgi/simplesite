@@ -5,7 +5,7 @@
         <v-layout>
           <v-flex xs12>
             <v-parallax height="500" :src="require('@/assets/dog-wallpaper.jpg')">
-            <h1 class="photo-overlay">{{ overlayTitle }}</h1>
+              <h1 class="photo-overlay">{{ overlayTitle }}</h1>
             </v-parallax>
           </v-flex>
         </v-layout>
@@ -15,7 +15,7 @@
       <v-container>
         <v-layout>
           <v-flex xs12>
-            <h2 class="largeHeader">Почему именно MaxDog?</h2>
+            <h2 class="largeHeader indigo--text">Почему именно MaxDog?</h2>
               <p class="simpleTextBlock">
                 Blah, blah, blah. Lorem ipsum dolor sit amet, solum meliore efficiendi ut quo, ex assum interesset mel,
                 quis eirmod in est. Ea quod verear albucius eos, an est eros insolens reprehendunt. No veritus assentior ius,
@@ -25,21 +25,21 @@
         </v-layout>
         <v-layout row wrap justify-space-around class="mt-4">
           <v-flex xs10 md4 class="mt-4">
-            <v-icon x-large class="animated" v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }">favorite</v-icon>
+            <v-icon x-large class="animated indigo--text" v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }">favorite</v-icon>
             <p class="simpleTextBlock">
               Qui cu omnes dissentias. Laoreet accumsan mea at, sea harum facilisi no. Ad eos fierent salutandi repudiare,
               ei eum sint graece, ei sanctus detraxit cum.
             </p>
           </v-flex>
           <v-flex xs10 md4 class="mt-4">
-            <v-icon x-large class="animated" v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }">pets</v-icon>
+            <v-icon x-large class="animated indigo--text" v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }">pets</v-icon>
             <p class="simpleTextBlock">
               Nam eu ferri mediocritatem, vix prodesset definitionem ut, ea usu veri urbanitas. Et elit officiis deterruisset
               per, eam at quaeque copiosae euripidis. Duo in natum nemore gubergren, ne sensibus consetetur est, cum at ipsum error.
             </p>
           </v-flex>
           <v-flex xs12>
-            <h2 class="">Первый урок — 50%</h2>
+            <h2 class="indigo--text">Первый урок — 50%</h2>
             <v-btn to="/consultform" color="info" large class="mt-4 animated" v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }">ОНЛАЙН ЗАПИСЬ</v-btn>
           </v-flex>
         </v-layout>
@@ -49,7 +49,7 @@
       <v-container>
         <v-layout row wrap justify-space-around>
           <v-flex xs12 md5 v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }" class="animated groupTraining hidden">
-            <h4 class="">Групповые занятия</h4>
+            <h3>Групповые занятия</h3>
             <v-img :src="require('@/assets/img/groupOfDogs.jpg')" height="320" contain></v-img>
             <p class="simpleTextBlock">
               На групповых занятиях дважды в неделю вы получаете практический
@@ -63,7 +63,7 @@
             </p>
           </v-flex>
           <v-flex xs12 md5 v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }" class="animated individualTraining hidden">
-            <h4>Индивидуальные занятия</h4>
+            <h3>Индивидуальные занятия</h3>
             <v-img :src="require('@/assets/img/dogPlayingBallSmall.jpg')" height="320" contain></v-img>
             <p class="simpleTextBlock">
               При индивидуальных занятиях мы тренируем собаку тет-а-тет с вами или
@@ -104,41 +104,44 @@
           </p>
       </v-flex>
       <v-flex xs12 md8>
-        <h2>Груминг кошек</h2>
+        <h3 class="indigo--text">Груминг кошек</h3>
         <v-img :src="require('@/assets/img/grooming/groomingCat.jpg')" height="500" contain v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }" class="animated hidden groomingSection"></v-img>
         <p class="simpleTextBlock">
           Вычесывание, стрижка, гигиена, купание, сушка.
         </p>
       </v-flex>
       <v-flex xs12 md8>
-        <h2>Груминг собак</h2>
+        <h3 class="indigo--text">Груминг собак</h3>
         <v-img :src="require('@/assets/img/grooming/groomingDog.jpg')" height="500" contain v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }" class="animated hidden groomingSection"></v-img>
         <p class="simpleTextBlock">
           Вычесывание, удаление колтунов, гигиена, стрижки, тримминг, стрипинг, купание, сушка.
         </p>
       </v-flex>
       <v-flex xs12 md8>
-        <h2>Дополнительные услуги</h2>
+        <h3 class="indigo--text">Дополнительные услуги</h3>
         <v-img :src="require('@/assets/img/grooming/groomingOther.jpg')" height="500" contain v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }" class="animated hidden groomingSection"></v-img>
         <p class="simpleTextBlock">
           Выставочный груминг, креативная стрижка и окрашивание, чистка зубов, оформление коготков.
         </p>
       </v-flex>
     </v-layout>
-    <v-layout column>
-      <h2>SPA комплекс</h2>
-      <h3>Банные услуги и гигиена</h3>
-    </v-layout>
-      <h2>Коты</h2>
+    <v-container class="my-4 pa-0">
+      <v-layout column>
+        <h2 class="indigo--text">SPA комплекс</h2>
+        <h3>Банные услуги и гигиена</h3>
+      </v-layout>
+    </v-container>
+    <v-container class="my-4 pa-0">
+      <h4 class="indigo--text">Коты</h4>
         <div class="serviceItem">
           <div class="serviceItemPhoto">
             <div class="item animatedGrooming">
-              <img src="../assets/img/grooming/groomingSlimCat.jpg" alt="Black and white cat">
+              <img src="../assets/img/grooming/groomingSlimCat.jpg" alt="Black and white cat" v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }" class="animated hidden serviceItems">
             </div>
           </div>
           <div class="serviceItemDescr">
             <div class="itemPricing">
-              <p class="serviceName">Породы до 5 кг</p>
+              <p class="serviceName indogo--text">Породы до 5 кг</p>
                 <div class="pricingDivider"></div>
               <p class="servicePrice">250 грн</p>
             </div>
@@ -148,28 +151,29 @@
         <div class="serviceItem">
           <div class="serviceItemPhoto">
             <div class="item animatedGrooming">
-              <img src="../assets/img/grooming/groomingFatCat.jpg" alt="Fat ginger cat">
+              <img src="../assets/img/grooming/groomingFatCat.jpg" alt="Fat ginger cat" v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }" class="animated hidden serviceItems">
             </div>
           </div>
           <div class="serviceItemDescr">
             <div class="itemPricing">
-              <p class="serviceName">Больше 5 кг</p>
+              <p class="serviceName indogo--text">Больше 5 кг</p>
                 <div class="pricingDivider"></div>
               <p class="servicePrice">300 грн</p>
             </div>
           </div>
         </div>
-
-        <h2>Собаки</h2>
+    </v-container>
+    <v-container class="my-4 pa-0">
+        <h4 class="indigo--text">Собаки</h4>
         <div class="serviceItem">
           <div class="serviceItemPhoto">
             <div class="item animatedGrooming">
-              <img src="../assets/img/grooming/groomingSmallBreed.jpg" alt="Small dog barking">
+              <img src="../assets/img/grooming/groomingSmallBreed.jpg" alt="Small dog barking" v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }" class="animated hidden serviceItems">
             </div>
           </div>
           <div class="serviceItemDescr">
             <div class="itemPricing">
-              <p class="serviceName">Мелкие породы</p>
+              <p class="serviceName indogo--text">Мелкие породы</p>
                 <div class="pricingDivider"></div>
               <p class="servicePrice">250-350 грн</p>
             </div>
@@ -179,32 +183,33 @@
         <div class="serviceItem">
           <div class="serviceItemPhoto">
             <div class="item animatedGrooming">
-              <img src="../assets/img/grooming/groomingMediumBreed.jpg" alt="Small dog barking">
+              <img src="../assets/img/grooming/groomingMediumBreed.jpg" alt="Medium size dog" v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }" class="animated hidden serviceItems">
             </div>
           </div>
           <div class="serviceItemDescr">
             <div class="itemPricing">
-              <p class="serviceName">Средние породы</p>
+              <p class="serviceName indogo--text">Средние породы</p>
                 <div class="pricingDivider"></div>
               <p class="servicePrice">400-450 грн</p>
             </div>
           </div>
         </div>
 
-        <div class="serviceItem marginBottom">
+        <div class="serviceItem">
           <div class="serviceItemPhoto">
             <div class="item animatedGrooming">
-              <img src="../assets/img/grooming/groomingLargeBreed.jpg" alt="Small dog barking">
+              <img src="../assets/img/grooming/groomingLargeBreed.jpg" alt="Large dog sitting" v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }" class="animated hidden serviceItems">
             </div>
           </div>
           <div class="serviceItemDescr">
             <div class="itemPricing">
-              <p class="serviceName">Крупные породы</p>
+              <p class="serviceName indogo--text">Крупные породы</p>
                 <div class="pricingDivider"></div>
               <p class="servicePrice">500-650 грн</p>
             </div>
           </div>
         </div>
+    </v-container>
   </v-container>
   </div>
 </template>
@@ -233,6 +238,8 @@ export default {
         animationType = 'fadeInLeft'
       } else if (entry.target.classList.contains('individualTraining')) {
         animationType = 'fadeInRight'
+      } else if (entry.target.classList.contains('serviceItems')) {
+        animationType = 'fadeInLeft'
       } else if (entry.target.classList.contains('groomingSection')) {
         animationType = 'zoomIn'
       }
@@ -263,14 +270,26 @@ export default {
 */
 .photo-overlay {
   position: absolute;
+  margin: 0 auto;
+  // width: 100%;
   // border: 1px solid lime;
   bottom: 1em;
   background-color: $photo-overlay;
-  padding: .3em;
+  padding: 0em .3em 0em .3em;
+  font-size: 2em;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: $text-font;
+  font-family: $header-font;
+}
+h2 {
+  font-size: 2.5em;
+}
+h3 {
+  font-size: 1.8em;
+}
+h4 {
+  font-size: 1.5em;
 }
 
 .simpleTextBlock {
@@ -359,13 +378,13 @@ hr.divider {
 
 .serviceName {
   width: 100%;
-  font-size: 1em;
+  font-size: 1.4em;
   margin: 0;
 }
 
 .servicePrice {
   width: 100%;
-  font-size: 1em;
+  font-size: 1.2em;
   margin: 0;
 }
 
