@@ -1,7 +1,7 @@
 <template>
   <div id="home" class="marginBottom">
 <!-- Parralax image background -->
-      <v-container fluid class="pa-0">
+      <v-container fluid class="pa-0 mt-5">
         <v-layout>
           <v-flex xs12>
             <v-parallax height="500" :src="require('@/assets/dog-wallpaper.jpg')">

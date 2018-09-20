@@ -24,7 +24,7 @@
           </v-list-tile>
         </v-list>
       </v-navigation-drawer>
-      <v-toolbar app>
+      <v-toolbar fixed app>
         <v-toolbar-title><span><router-link class="logo" to="/">MaxDog</router-link></span></v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn to="/gallery" flat class="hidden-xs-only">

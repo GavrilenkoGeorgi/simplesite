@@ -1,6 +1,6 @@
 <template>
     <v-app id="app">
-      <v-toolbar clipped-right>
+      <v-toolbar clipped-right app>
         <v-toolbar-title><span><router-link class="logo" to="/">MaxDog</router-link></span></v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn to="/gallery" flat class="hidden-xs-only">
@@ -21,7 +21,7 @@
         <v-toolbar-side-icon @click="sideNav = !sideNav"></v-toolbar-side-icon> <!--class="hidden-sm-and-up" -->
       </v-toolbar>
 
-      <v-navigation-drawer app right disable-resize-watcher v-model="sideNav" width="300">
+      <v-navigation-drawer app right disable-resize-watcher v-model="sideNav" width="450">
         <v-list>
           <v-list-tile>
           <v-list-tile-title>
@@ -50,7 +50,19 @@
         <v-container fluid class="menuHeader pa-0 mt-4">
           <span class="hardcodedFont"><strong>Шрифты</strong></span>
         </v-container>
-
+            <v-container fluid grid-list-lg >
+              <v-layout row wrap >
+                <v-flex xs9>
+                  <v-slider
+                    v-model="fontSize"
+                    :min="16"
+                    :max="32"
+                    label="Размер текста"
+                    thumb-label="always"
+                  ></v-slider>
+                </v-flex>
+              </v-layout>
+            </v-container>
         <v-container row>
           <v-layout row>
             <v-flex xs6>
@@ -58,6 +70,7 @@
                 <v-radio class="hardcodedFont ma-0 pa-0" label="Лого:" value="Logo"></v-radio>
                 <v-radio class="hardcodedFont ma-0 pa-0" label="Заголовки:" value="Header"></v-radio>
                 <v-radio class="hardcodedFont ma-0 pa-0" label="Текст:" value="Text"></v-radio>
+                <v-radio class="hardcodedFont ma-0 pa-0" label="Цитата внизу:" value="Quote"></v-radio>
               </v-radio-group>
             </v-flex>
             <v-flex xs6 class="hardcodedFont ml-3 pa-0">
@@ -69,6 +82,9 @@
               </v-flex>
               <v-flex>
                 {{ currentTextFont }}
+              </v-flex>
+              <v-flex>
+                {{ currentQuoteFont }}
               </v-flex>
             </v-flex>
           </v-layout>
@@ -133,23 +149,29 @@ export default {
   name: 'app',
   data () {
     return {
+      fontSize: 16,
       selectedFont: '',
       currentLogoFont: 'Default',
       currentHeaderFont: 'Default',
       currentTextFont: 'Default',
+      currentQuoteFont: 'Default',
       whatToChange: '',
       checkBox: '',
       // switch1: true,
       fonts: [
         { name: 'Cardo', label: '"Cardo", serif;', selected: true, logoFont: false, headerFont: false, textFont: false },
-        { name: 'Poiret One', label: '"Poiret One", cursive;', selected: false, logoFont: false, headerFont: false, textFont: false },
         { name: 'Happy Monkey', label: '"Happy Monkey", cursive;', selected: false, logoFont: false, headerFont: false, textFont: false },
         { name: 'Elsie', label: '"Elsie", cursive;', selected: false, logoFont: false, headerFont: false, textFont: false },
         { name: 'Life Savers', label: '"Life Savers", cursive;', selected: false, logoFont: false, headerFont: false, textFont: false },
         { name: 'Playfair Display SC', label: '"Playfair Display SC", serif;', selected: false, logoFont: false, headerFont: false, textFont: false },
         { name: 'Roboto', label: '"Roboto", sans-serif;', selected: false, logoFont: false, headerFont: false, textFont: false },
         { name: 'Montserrat', label: '"Montserrat", sans-serif;', selected: false, logoFont: false, headerFont: false, textFont: false },
-        { name: 'Russo One', label: '"Russo One", sans-serif;', selected: false, logoFont: false, headerFont: false, textFont: false }
+        { name: 'Russo One', label: '"Russo One", sans-serif;', selected: false, logoFont: false, headerFont: false, textFont: false },
+        { name: 'Open Sans Condensed', label: '"Open Sans Condensed", sans-serif;', selected: false, logoFont: false, headerFont: false, textFont: false },
+        { name: 'Comfortaa', label: '"Comfortaa", cursive;', selected: false, logoFont: false, headerFont: false, textFont: false },
+        { name: 'Amatic SC', label: '"Amatic SC", cursive;', selected: false, logoFont: false, headerFont: false, textFont: false },
+        { name: 'Cormorant Garamond', label: '"Cormorant Garamond", serif;', selected: false, logoFont: false, headerFont: false, textFont: false },
+        { name: 'Poiret One', label: '"Poiret One", cursive;', selected: false, logoFont: false, headerFont: false, textFont: false }
       ],
       items: [
         { title: 'Галерея', link: '/gallery', icon: 'insert_photo' },
@@ -182,6 +204,12 @@ export default {
     })
   },
   watch: {
+    fontSize: function () {
+      console.log(this.fontSize)
+      let bodyElem = document.getElementsByTagName('BODY')[0]
+      console.log(bodyElem)
+      bodyElem.style.fontSize = this.fontSize + 'px'
+    },
     logoSelected: function () {
       this.whatToChange = 'Logo'
       // this.logoSelected = true
@@ -213,6 +241,10 @@ export default {
             break
           case 'Text':
             elementsToChange = document.querySelectorAll('.container')
+            this.currentTextFont = this.selectedFont
+            break
+          case 'Quote':
+            elementsToChange = document.querySelectorAll('.quote')
             this.currentTextFont = this.selectedFont
             break
           default:
@@ -247,6 +279,10 @@ export default {
 @import "./assets/scss/colours.scss";
 @import "./assets/scss/fonts.scss";
 // @import "./assets/animate.css";
+
+body {
+  font-size: 16px;
+}
 
 #app {
   // font-family: 'Avenir', Helvetica, Arial, sans-serif;

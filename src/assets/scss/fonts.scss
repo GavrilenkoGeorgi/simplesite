@@ -1,10 +1,13 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat|Playfair+Display+SC:900|Yeseva+One');
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons');
 @import url('https://fonts.googleapis.com/css?family=Playfair+Display+SC:900');
-@import url('https://fonts.googleapis.com/css?family=Cardo|Poiret+One');
+@import url('https://fonts.googleapis.com/css?family=Cardo');
 @import url('https://fonts.googleapis.com/css?family=Elsie|Happy+Monkey|Life+Savers');
 @import url('https://fonts.googleapis.com/css?family=Russo+One');
 @import url('https://fonts.googleapis.com/css?family=Caveat');
+
+//new ones
+@import url('https://fonts.googleapis.com/css?family=Amatic+SC|Comfortaa|Cormorant+Garamond|Open+Sans+Condensed:300|Poiret+One');
 
 // default settings
 
@@ -14,8 +17,15 @@ $text-font: 'Montserrat', sans-serif;
 $quote-font: 'Caveat', cursive;
 
 /*
-font-family: 'Cardo', serif;
+ont-family: 'Open Sans Condensed', sans-serif;
+font-family: 'Comfortaa', cursive;
+font-family: 'Amatic SC', cursive;
+font-family: 'Cormorant Garamond', serif;
 font-family: 'Poiret One', cursive;
+*/
+
+/*
+font-family: 'Cardo', serif;
 font-family: 'Roboto', sans-serif;
 font-family: 'Russo One', sans-serif;
 font-family: 'Caveat', cursive;
