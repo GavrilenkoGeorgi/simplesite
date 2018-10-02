@@ -38,7 +38,12 @@ export default new Router({
       component: () => import(/* webpackChunkName: "consultform" */ './views/ConsultForm.vue')
     },
     {
-      path: '/**',
+      path: '/grooming',
+      name: 'grooming',
+      component: () => import(/* webpackChunkName: "grooming" */ './views/Grooming.vue')
+    },
+    {
+      path: '/*',
       component: Main
     }
   ]

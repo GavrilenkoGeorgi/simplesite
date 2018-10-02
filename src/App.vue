@@ -1,6 +1,6 @@
 <template>
     <v-app id="app">
-      <v-toolbar clipped-right app>
+      <v-toolbar app scroll-off-screen>
         <v-toolbar-title><span><router-link class="logo" to="/">MaxDog</router-link></span></v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn to="/gallery" flat class="hidden-xs-only">
@@ -21,12 +21,12 @@
         <v-toolbar-side-icon @click="sideNav = !sideNav"></v-toolbar-side-icon> <!--class="hidden-sm-and-up" -->
       </v-toolbar>
 
-      <v-navigation-drawer app right disable-resize-watcher v-model="sideNav" width="450">
+      <v-navigation-drawer app right disable-resize-watcher v-model="sideNav">
         <v-list>
           <v-list-tile>
           <v-list-tile-title>
             <v-layout align-center justify-center fill-height>
-              <v-flex class="navDrawerTitle">
+              <v-flex class="nav-drawer-title">
               {{ titleNavDrawer }}
               </v-flex>
             </v-layout>
@@ -47,7 +47,7 @@
           </v-list-tile>
         </v-list>
         <!-- Checkboxes -->
-        <v-container fluid class="menuHeader pa-0 mt-4">
+        <!--v-container fluid class="menuHeader pa-0 mt-4">
           <span class="hardcodedFont"><strong>Шрифты</strong></span>
         </v-container>
             <v-container fluid grid-list-lg >
@@ -99,7 +99,7 @@
               :value="font.name"
             ></v-radio>
           </v-radio-group>
-        </v-container>
+        </v-container-->
         <!-- Theirs end :label="font.selected" -->
       </v-navigation-drawer>
       <!-- Navigation end -->
@@ -108,9 +108,9 @@
         </transition>
 
       <!--Footer -->
-      <v-footer dark height="auto" class="footerColor">
+      <!--v-footer dark height="auto" class="footerColor"-->
         <!--v-card flat tile width="100%" class="blue-grey lighten-1 white--text text-xs-center"-->
-        <v-card flat tile width="100%" class="indigo white--text text-xs-center">
+        <!--v-card flat tile width="100%" class="indigo white--text text-xs-center">
           <v-card-text>
             <v-btn
               v-for="icon in icons"
@@ -134,7 +134,7 @@
             &copy;2018 — MaxDog
           </v-card-text>
         </v-card>
-      </v-footer>
+      </v-footer-->
     </v-app>
 </template>
 
@@ -174,6 +174,7 @@ export default {
         { name: 'Poiret One', label: '"Poiret One", cursive;', selected: false, logoFont: false, headerFont: false, textFont: false }
       ],
       items: [
+        { title: 'Груминг', link: '/grooming', icon: 'waves' },
         { title: 'Галерея', link: '/gallery', icon: 'insert_photo' },
         { title: 'Отзывы', link: '/', icon: 'speaker_notes' },
         { title: 'Оставить заявку', link: '/consultform', icon: 'contact_mail' },
@@ -232,7 +233,7 @@ export default {
         let elementsToChange
         switch (this.whatToChange) {
           case 'Logo':
-            elementsToChange = document.querySelectorAll('.logo, .navDrawerTitle')
+            elementsToChange = document.querySelectorAll('.logo, .nav-drawer-title')
             this.currentLogoFont = this.selectedFont
             break
           case 'Header':
@@ -278,10 +279,25 @@ export default {
 @import "./assets/animate.css";
 @import "./assets/scss/colours.scss";
 @import "./assets/scss/fonts.scss";
-// @import "./assets/animate.css";
+// @import "./assets/scss/index.css";
 
 body {
   font-size: 16px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  // margin-top: 1em;
+  font-family: $quote-font;
+  letter-spacing: .07em;
+  font-weight: 100;
+  // font-size: .2em;
+}
+
+p {
+  font-family: $text-font;
+  // font-weight: 500;
+  // font-size: 1.9em;
+  // font-size-adjust: 9;
 }
 
 #app {
@@ -301,9 +317,11 @@ body {
   font-family: sans-serif;
   font-size: 16px;
 }
+
+/*
 .container {
   font-family: $text-font;
-}
+}*/
 
 /*
 #nav {
@@ -328,21 +346,22 @@ body {
   // color: $color-primary;
   color: $indigo;
   font-family: $logo-font;
+  font-weight: 700;
 }
-
+/*
 .footerLogo {
   font-size: 1.3em;
   color: $color-white;
   text-decoration: none;
 }
-
-.navDrawerTitle {
+*/
+.nav-drawer-title {
   color: $color-primary;
-  font-family: $logo-font;
+  // font-family: $logo-font;
   font-size: 1.4em;
 }
 .quote {
-  font-family: $quote-font;
+  // font-family: $quote-font;
   font-size: 2em;
 }
 </style>
