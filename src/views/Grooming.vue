@@ -1,19 +1,10 @@
 <template>
   <div id="groomingPage">
-    <!--v-container mt-4 pt-4>
-      <v-layout>
-        <v-flex mt-4>
-          <h1>{{ title }}</h1>
-        </v-flex>
-      </v-layout>
-    </v-container-->
-
     <v-container fluid pa-0>
       <v-layout fluid>
         <v-flex xs12>
           <v-parallax :src="require('@/assets/img/dogFenceRunningSquare.jpg')" height="350">
-          <!--h1 class="photo-overlay">Грумінг собак та котів</h1-->
-          <div class="photo-overlay">{{getParagraphText.groomingText.photoOverlayText}}</div>
+          <div class="photo-overlay">{{getContent.groomingText.photoOverlayText}}</div>
           </v-parallax>
         </v-flex>
       </v-layout>
@@ -23,7 +14,7 @@
     <v-container>
       <v-layout justify-center>
         <v-flex md10 xl8>
-          <p>{{ getParagraphText.groomingText.paragraphValue}}</p>
+          <p>{{ getContent.groomingText.paragraphValue }}</p>
         </v-flex>
       </v-layout>
     </v-container>
@@ -58,94 +49,21 @@
         <h3>Банные услуги и гигиена</h3>
       </v-layout>
     </v-container>
-    <!--v-container class="my-4 pa-0">
-      <h4 class="indigo--text">Коты</h4>
-        <div class="serviceItem">
-          <div class="serviceItemPhoto">
-            <div class="item animatedGrooming">
-              <img src="../assets/img/grooming/groomingSlimCat.jpg" alt="Black and white cat" v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }" class="animated hidden serviceItems">
-            </div>
-          </div>
-          <div class="serviceItemDescr">
-            <div class="itemPricing">
-              <p class="serviceName indogo--text">Породы до 5 кг</p>
-                <div class="pricingDivider"></div>
-              <p class="servicePrice">250 грн</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="serviceItem">
-          <div class="serviceItemPhoto">
-            <div class="item animatedGrooming">
-              <img src="../assets/img/grooming/groomingFatCat.jpg" alt="Fat ginger cat" v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }" class="animated hidden serviceItems">
-            </div>
-          </div>
-          <div class="serviceItemDescr">
-            <div class="itemPricing">
-              <p class="serviceName indogo--text">Больше 5 кг</p>
-                <div class="pricingDivider"></div>
-              <p class="servicePrice">300 грн</p>
-            </div>
-          </div>
-        </div>
-    </v-container-->
-    <!--v-container class="my-4 pa-0">
-        <h4 class="indigo--text">Собаки</h4>
-        <div class="serviceItem">
-          <div class="serviceItemPhoto">
-            <div class="item animatedGrooming">
-              <img src="../assets/img/grooming/groomingSmallBreed.jpg" alt="Small dog barking" v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }" class="animated hidden serviceItems">
-            </div>
-          </div>
-          <div class="serviceItemDescr">
-            <div class="itemPricing">
-              <p class="serviceName indogo--text">Мелкие породы</p>
-                <div class="pricingDivider"></div>
-              <p class="servicePrice">250-350 грн</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="serviceItem">
-          <div class="serviceItemPhoto">
-            <div class="item animatedGrooming">
-              <img src="../assets/img/grooming/groomingMediumBreed.jpg" alt="Medium size dog" v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }" class="animated hidden serviceItems">
-            </div>
-          </div>
-          <div class="serviceItemDescr">
-            <div class="itemPricing">
-              <p class="serviceName indogo--text">Средние породы</p>
-                <div class="pricingDivider"></div>
-              <p class="servicePrice">400-450 грн</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="serviceItem">
-          <div class="serviceItemPhoto">
-            <div class="item animatedGrooming">
-              <img src="../assets/img/grooming/groomingLargeBreed.jpg" alt="Large dog sitting" v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }" class="animated hidden serviceItems">
-            </div>
-          </div>
-          <div class="serviceItemDescr">
-            <div class="itemPricing">
-              <p class="serviceName indogo--text">Крупные породы</p>
-                <div class="pricingDivider"></div>
-              <p class="servicePrice">500-650 грн</p>
-            </div>
-          </div>
-        </div>
-    </v-container-->
   </v-container>
+  <prices />
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import Prices from '@/components/Prices.vue'
 
 export default {
-  name: 'Grooming',
+  name: 'grooming',
+  components: {
+    Prices
+    // Navigation
+  },
   data () {
     return {
       title: 'Груминг'
@@ -153,7 +71,7 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'getParagraphText'
+      'getContent'
     ])
   },
   methods: {
