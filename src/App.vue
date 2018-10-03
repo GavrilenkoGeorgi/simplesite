@@ -110,15 +110,6 @@ export default {
         { name: 'Cormorant Garamond', label: '"Cormorant Garamond", serif;', selected: false, logoFont: false, headerFont: false, textFont: false },
         { name: 'Poiret One', label: '"Poiret One", cursive;', selected: false, logoFont: false, headerFont: false, textFont: false }
       ],
-      items: [
-        { title: 'Груминг', link: '/grooming', icon: 'waves' },
-        { title: 'Галерея', link: '/gallery', icon: 'insert_photo' },
-        { title: 'Отзывы', link: '/', icon: 'speaker_notes' },
-        { title: 'Оставить заявку', link: '/consultform', icon: 'contact_mail' },
-        { title: 'Наша философия', link: '/philosophy', icon: 'format_quote' },
-        { title: 'О нас', link: '/about', icon: 'supervisor_account' }
-        /* { title: 'Контакты', link: '/', icon: 'work' } */
-      ],
       icons: [
         'fa-facebook',
         'fa-instagram',
@@ -305,5 +296,15 @@ p {
 .quote {
   // font-family: $quote-font;
   font-size: 2em;
+}
+
+@media (-webkit-min-device-pixel-ratio: 1.88) and (min-width:768px) {
+  h1, h2, h3, h4, h5, h6 {
+    // margin-top: 1em;
+    font-family: $quote-font;
+    letter-spacing: .07em;
+    font-weight: 100;
+    font-size: 3em;
+  }
 }
 </style>

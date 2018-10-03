@@ -113,6 +113,21 @@ export default {
 @import "../assets/scss/colours.scss";
 @import "../assets/scss/fonts.scss";
 
+@media (-webkit-min-device-pixel-ratio: 1.88) and (min-width:768px) {
+  #groomingPage {
+    h1, h2, h3 {
+      color: $color-primary-bright;
+      font-family: $header-font;
+    }
+    p {
+      font-size: 1.8em;
+    }
+    .hidden {
+    visibility: hidden;
+    }
+  }
+}
+
 #groomingPage {
   h1, h2, h3 {
     color: $color-primary-bright;
