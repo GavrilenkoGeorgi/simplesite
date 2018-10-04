@@ -1,6 +1,6 @@
 <template>
   <div id="groomingPage">
-    <v-container fluid pa-0>
+    <v-container class="parralax-box" fluid pa-0>
       <v-layout fluid>
         <v-flex xs12>
           <v-parallax :src="require('@/assets/img/dogFenceRunningSquare.jpg')" height="350">
@@ -23,21 +23,21 @@
       <v-layout row wrap justify-space-around>
         <v-flex xs12 md8>
           <h2>Груминг кошек</h2>
-          <v-img :src="require('@/assets/img/grooming/groomingCat.jpg')" height="500" contain v-observe-visibility="{ callback: visibilityChanged, throttle: 500 }" class="animated"></v-img>
+          <v-img :src="require('@/assets/img/grooming/groomingCat.jpg')" contain v-observe-visibility="{ callback: visibilityChanged, throttle: 500 }" class="animated hidden grooming-type-photo"></v-img>
           <p class="simple-text-block">
             Вычесывание, стрижка, гигиена, купание, сушка.
           </p>
         </v-flex>
       <v-flex xs12 md8>
         <h2>Груминг собак</h2>
-        <v-img :src="require('@/assets/img/grooming/groomingDog.jpg')" height="500" contain v-observe-visibility="{ callback: visibilityChanged, throttle: 500 }" class="animated hidden groomingSection"></v-img>
+        <v-img :src="require('@/assets/img/grooming/groomingDog.jpg')" contain v-observe-visibility="{ callback: visibilityChanged, throttle: 500 }" class="animated hidden grooming-type-photo"></v-img>
         <p class="simple-text-block">
           Вычесывание, удаление колтунов, гигиена, стрижки, тримминг, стрипинг, купание, сушка.
         </p>
       </v-flex>
       <v-flex xs12 md8>
         <h2>Дополнительные услуги</h2>
-        <v-img :src="require('@/assets/img/grooming/groomingOther.jpg')" height="500" contain v-observe-visibility="{ callback: visibilityChanged, throttle: 500 }" class="animated hidden groomingSection"></v-img>
+        <v-img :src="require('@/assets/img/grooming/groomingOther.jpg')" contain v-observe-visibility="{ callback: visibilityChanged, throttle: 500 }" class="animated hidden grooming-type-photo"></v-img>
         <p class="simple-text-block">
           Выставочный груминг, креативная стрижка и окрашивание, чистка зубов, оформление коготков.
         </p>
@@ -50,7 +50,7 @@
       </v-layout>
     </v-container>
   </v-container>
-  <prices />
+  <prices class="animated hidden" v-observe-visibility="{ callback: visibilityChanged, throttle: 500 }"/>
   </div>
 </template>
 
@@ -81,7 +81,7 @@ export default {
       // console.log(`Is it visible now? ${isVisible}`)
       // entry.target.classList.add('bounceInUp')
       // console.log(entry.target.className)
-      let animationType = 'fadeInUp'
+      let animationType = 'fadeInLeft'
       /*
       if (entry.target.classList.contains('groupTraining')) {
         // console.log(`Training!`)
@@ -113,17 +113,55 @@ export default {
 @import "../assets/scss/colours.scss";
 @import "../assets/scss/fonts.scss";
 
+@media (min-resolution: 96dpi) {
+  #groomingPage {
+    .grooming-type-photo {
+      height: 20em;
+    }
+    .parralax-box {
+      margin-bottom: 3em;
+    }
+    h2 {
+      font-size: 2.4em;
+    }
+    h3 {
+      font-size: 2em;
+    }
+    p {
+      font-size: 2.2em;
+      // color: red;
+    }
+    .photo-overlay {
+      bottom: .3em;
+      font-size: 3.3em;
+    }
+  }
+}
+
 @media (-webkit-min-device-pixel-ratio: 1.88) and (min-width:768px) {
   #groomingPage {
-    h1, h2, h3 {
+    h2 {
+      font-size: 3.3em;
+    }
+    h2, h3 {
       color: $color-primary-bright;
       font-family: $header-font;
     }
     p {
-      font-size: 1.8em;
+      font-size: 2.5em;
+      // color: red;
     }
-    .hidden {
-    visibility: hidden;
+  }
+}
+
+@media (-webkit-min-device-pixel-ratio: 1.88) and (max-width:360px) {
+  #groomingPage {
+    h2 {
+      font-size: 2.1em;
+    }
+    p {
+      font-size: 1.9em;
+      // color: red;
     }
   }
 }
@@ -132,9 +170,6 @@ export default {
   h1, h2, h3 {
     color: $color-primary-bright;
     font-family: $header-font;
-  }
-  p {
-    font-size: 1.8em;
   }
   .hidden {
   visibility: hidden;

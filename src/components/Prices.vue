@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+  <v-container fluid id="prices">
     <v-layout d-flex justify-center fill-height>
       <v-flex xs12 sm8>
       <v-expansion-panel>
@@ -56,6 +56,38 @@ export default {
 <style scoped lang="scss">
 @import "../assets/scss/index.scss";
 
+@media (min-resolution: 96dpi) {
+  #prices {
+    .price-header {
+      // color:red;
+      font-size: 1.6em;
+    }
+    .price-descr {
+      font-size: 1.5em;
+    }
+  }
+}
+
+@media (-webkit-min-device-pixel-ratio: 1.88) and (min-width:768px) {
+
+}
+
+@media (-webkit-min-device-pixel-ratio: 1.88) and (max-width:360px) {
+  #prices {
+    .price-header {
+      font-size: 1.2em;
+      // color:red;
+    }
+    .price-descr {
+      font-size: .8em;
+    }
+    .price-icon-container {
+      font-size: .8em;
+    }
+  }
+
+}
+
 .price-header {
   color: $color-primary-2;
   font-size: 1em;
@@ -65,6 +97,7 @@ export default {
 }
 .price-header:hover {
   color: $color-link-hover;
+  text-decoration: underline;
 }
 .price-descr {
   display: flex;
@@ -79,17 +112,4 @@ export default {
   font-weight: 500;
   // border: 1px solid red;
 }
-
-@media (-webkit-min-device-pixel-ratio: 1.88) and (min-width:768px) {
-  .price-header {
-    font-size: 1.5em;
-  }
-  .price-descr {
-    font-size: 1.5em;
-    // padding-left: 7em;
-    // color: pink;
-    // border: 1px solid red;
-  }
-}
-
 </style>
