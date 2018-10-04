@@ -50,7 +50,7 @@
         <v-layout row wrap justify-space-around>
           <v-flex xs12 md5 v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }" class="animated groupTraining hidden">
             <h3>Групповые занятия</h3>
-            <v-img :src="require('@/assets/img/groupOfDogs.jpg')" height="320" contain></v-img>
+            <v-img :src="require('@/assets/img/group_training-h500-96dpi.jpg')" class="training-section-image" contain></v-img>
             <p class="simple-text-block">
               На групповых занятиях дважды в неделю вы получаете практический
               и теоретический инструктаж как проводить воспитание и дрессировку поэтапно далее в домашних
@@ -64,7 +64,7 @@
           </v-flex>
           <v-flex xs12 md5 v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }" class="animated individualTraining hidden">
             <h3>Индивидуальные занятия</h3>
-            <v-img :src="require('@/assets/img/dogPlayingBallSmall.jpg')" height="320" contain></v-img>
+            <v-img :src="require('@/assets/img/ind_training-h500-96dpi.jpg')" class="training-section-image" contain></v-img>
             <p class="simple-text-block">
               При индивидуальных занятиях мы тренируем собаку тет-а-тет с вами или
               самостоятельно там, где, когда и во сколько вам удобно. Тренировка ориентирована на потребности
@@ -258,26 +258,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "../assets/scss/index.scss";
 @import "../assets/animate.css";
-@import "../assets/scss/colours.scss";
-@import "../assets/scss/fonts.scss";
-/*
-#home {
-  margin: 0;
-  padding: 0;
-  background-color: white;
-}
-*/
-.photo-overlay {
-  position: absolute;
-  margin: 0 auto;
-  // width: 100%;
-  // border: 1px solid lime;
-  bottom: 1em;
-  background-color: $photo-overlay;
-  padding: 0em .3em 0em .3em;
-  font-size: 2em;
-}
+// @import "../assets/scss/fonts.scss";
 
 h1, h2, h3, h4, h5, h6 {
   font-family: $header-font;
@@ -292,10 +275,6 @@ h4 {
   font-size: 1.5em;
 }
 
-p {
-  font-size: 1.5em;
-  padding-top: 1em;
-}
 /*
 .simple-text-block {
   font-size: 1.5em;
@@ -349,72 +328,9 @@ hr.divider {
     background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
 }
 
-.groomingServiceItem {
-  display: flex;
-  flex-flow: row;
-  justify-content: space-between;
-  align-items: center;
+.training-section-image {
+  box-shadow: 0px 0px 19px 3px rgba(163,163,163,1);
+  margin: 2em 0em 2em 0em;
 }
 
-// prices styling
-.serviceItem {
-  width: 96%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-}
-
-.serviceItemPhoto {
-  width: 25%;
-}
-
-.serviceItemPhoto img {
-  max-width: 100%;
-  max-height: 100%;
-}
-
-.serviceItemDescr {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 75%;
-}
-
-.serviceName {
-  width: 100%;
-  font-size: 1.4em;
-  margin: 0;
-}
-
-.servicePrice {
-  width: 100%;
-  font-size: 1.2em;
-  margin: 0;
-}
-
-.horizontalRuler {
-  height: 1px;
-  width: 15%;
-  margin-right: auto;
-  padding: 0;
-  border: 0;
-  background-image: linear-gradient(to right, rgba(255, 0, 0, 0.025), rgba(255, 0, 0, .5), rgba(255, 0, 0, .025));
-}
-
-.itemPricing {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-}
-
-.pricingDivider {
-  height: 1px;
-  margin: .2em 0em .2em 0em;
-  background-image: linear-gradient(to right, rgba(4, 25, 77, .025), rgba(4, 25, 77, .5), rgba(4, 25, 77, .025));
-  width: 100%;
-  margin-left: 1.2em;
-}
 </style>

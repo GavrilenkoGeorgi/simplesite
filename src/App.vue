@@ -209,29 +209,10 @@ export default {
 </script>
 
 <style lang="scss">
+@import "./assets/scss/index.scss";
 @import "./assets/animate.css";
-@import "./assets/scss/colours.scss";
-@import "./assets/scss/fonts.scss";
-// @import "./assets/scss/index.css";
-
-body {
-  font-size: 16px;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  // margin-top: 1em;
-  font-family: $quote-font;
-  letter-spacing: .07em;
-  font-weight: 100;
-  // font-size: .2em;
-}
-
-p {
-  font-family: $text-font;
-  // font-weight: 500;
-  // font-size: 1.9em;
-  // font-size-adjust: 9;
-}
+// @import "./assets/scss/colours.scss";
+// @import "./assets/scss/fonts.scss";
 
 #app {
   // font-family: 'Avenir', Helvetica, Arial, sans-serif;
@@ -296,15 +277,5 @@ p {
 .quote {
   // font-family: $quote-font;
   font-size: 2em;
-}
-
-@media (-webkit-min-device-pixel-ratio: 1.88) and (min-width:768px) {
-  h1, h2, h3, h4, h5, h6 {
-    // margin-top: 1em;
-    font-family: $quote-font;
-    letter-spacing: .07em;
-    font-weight: 100;
-    font-size: 3em;
-  }
 }
 </style>

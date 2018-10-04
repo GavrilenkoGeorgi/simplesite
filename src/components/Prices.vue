@@ -56,20 +56,6 @@ export default {
 <style scoped lang="scss">
 @import "../assets/scss/index.scss";
 
-// nokia iphone
-@media screen and (-webkit-min-device-pixel-ratio: 1.88) and (max-width: 415px){
-  #prices {
-    .price-header {
-      font-size: 1.1em;
-      // color: blueviolet;
-    }
-    .price-descr {
-      font-size: .8em;
-      // color: blueviolet;
-    }
-  }
-}
-
 .price-header {
   color: $color-primary-2;
   font-size: 1.6em;
@@ -92,5 +78,19 @@ export default {
   color: $color-primary-bright;
   font-weight: 500;
   // border: 1px solid red;
+}
+
+// nokia iphone
+@media screen and (-webkit-min-device-pixel-ratio: 1.88) and (max-width: 415px) {
+  #prices {
+    .price-header {
+      font-size: 1.1em;
+      // color: blueviolet;
+    }
+    .price-descr {
+      font-size: .8em;
+      // color: blueviolet;
+    }
+  }
 }
 </style>

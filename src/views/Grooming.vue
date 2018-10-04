@@ -3,8 +3,8 @@
     <v-container class="parralax-box" fluid pa-0>
       <v-layout fluid>
         <v-flex xs12>
-          <v-parallax :src="require('@/assets/img/dogFenceRunningSquare.jpg')" height="350">
-          <div class="photo-overlay">{{getContent.groomingText.photoOverlayText}}</div>
+          <v-parallax :src="require('@/assets/img/dogFenceRunningSquare.jpg')" height="500">
+          <h1 class="photo-overlay">{{getContent.groomingText.photoOverlayText}}</h1>
           </v-parallax>
         </v-flex>
       </v-layout>
@@ -108,71 +108,18 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
+@import "../assets/scss/index.scss";
 @import "../assets/animate.css";
-@import "../assets/scss/colours.scss";
-@import "../assets/scss/fonts.scss";
-
-@media (min-resolution: 96dpi) {
-  #groomingPage {
-    .grooming-type-photo {
-      height: 20em;
-    }
-    .parralax-box {
-      margin-bottom: 3em;
-    }
-    h2 {
-      font-size: 2.4em;
-    }
-    h3 {
-      font-size: 2em;
-    }
-    p {
-      font-size: 2.2em;
-      // color: red;
-    }
-    .photo-overlay {
-      bottom: .3em;
-      font-size: 3.3em;
-    }
-  }
-}
-
-@media (-webkit-min-device-pixel-ratio: 1.88) and (min-width:768px) {
-  #groomingPage {
-    h2 {
-      font-size: 3.3em;
-    }
-    h2, h3 {
-      color: $color-primary-bright;
-      font-family: $header-font;
-    }
-    p {
-      font-size: 2.5em;
-      // color: red;
-    }
-  }
-}
-
-@media (-webkit-min-device-pixel-ratio: 1.88) and (max-width:360px) {
-  #groomingPage {
-    h2 {
-      font-size: 2.1em;
-    }
-    p {
-      font-size: 1.9em;
-      // color: red;
-    }
-  }
-}
 
 #groomingPage {
-  h1, h2, h3 {
-    color: $color-primary-bright;
-    font-family: $header-font;
-  }
   .hidden {
   visibility: hidden;
+  }
+}
+@media screen and (-webkit-min-device-pixel-ratio: 1.88) and (max-width: 415px) {
+  h2 {
+    font-size: 2em;
   }
 }
 /*
@@ -183,17 +130,4 @@ export default {
   // letter-spacing: .07em;
 }
 */
-
-.photo-overlay {
-  position: absolute;
-  margin: 0 auto;
-  font-family: $header-font;
-  // max-width: 93%;
-  // border: 1px solid lime;
-  text-align: left;
-  bottom: 1em;
-  background-color: $photo-overlay;
-  padding: 0em .3em 0em .3em;
-  font-size: 2em;
-}
 </style>
