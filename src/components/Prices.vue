@@ -1,7 +1,7 @@
 <template>
   <v-container fluid id="prices">
     <v-layout d-flex justify-center fill-height>
-      <v-flex xs12 sm8>
+      <v-flex xs12 sm10 md8 lg7>
       <v-expansion-panel>
         <v-expansion-panel-content v-for="(serviceItem, index) in getPrices.serviceItems" :key="index">
           <div slot="header" class="price-header">{{ serviceItem.header }}</div>
@@ -56,41 +56,23 @@ export default {
 <style scoped lang="scss">
 @import "../assets/scss/index.scss";
 
-@media (min-resolution: 96dpi) {
+// nokia iphone
+@media screen and (-webkit-min-device-pixel-ratio: 1.88) and (max-width: 415px){
   #prices {
     .price-header {
-      // color:red;
-      font-size: 1.6em;
-    }
-    .price-descr {
-      font-size: 1.5em;
-    }
-  }
-}
-
-@media (-webkit-min-device-pixel-ratio: 1.88) and (min-width:768px) {
-
-}
-
-@media (-webkit-min-device-pixel-ratio: 1.88) and (max-width:360px) {
-  #prices {
-    .price-header {
-      font-size: 1.2em;
-      // color:red;
+      font-size: 1.1em;
+      // color: blueviolet;
     }
     .price-descr {
       font-size: .8em;
-    }
-    .price-icon-container {
-      font-size: .8em;
+      // color: blueviolet;
     }
   }
-
 }
 
 .price-header {
   color: $color-primary-2;
-  font-size: 1em;
+  font-size: 1.6em;
   // text-align: center;
   font-weight: 700;
   transition: color 500ms;
@@ -101,14 +83,13 @@ export default {
 }
 .price-descr {
   display: flex;
-  font-size: .8em;
+  font-size: 1.5em;
   // align-items: center;
   // justify-content: center;
   color: $color-primaryDarkest;
 }
 .price-value {
   color: $color-primary-bright;
-  font-size: 1.05em;
   font-weight: 500;
   // border: 1px solid red;
 }

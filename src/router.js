@@ -48,5 +48,8 @@ export default new Router({
       path: '/*',
       component: Main
     } */
-  ]
+  ],
+  scrollBehavior (to, from, savedPosition) {
+    return { x: 0, y: 0 }
+  }
 })
