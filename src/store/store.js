@@ -116,23 +116,20 @@ const getDefaultState = () => {
         ]
       }
       ]
-    }
+    },
+    trainingTypeLinks: {
+      links: [
+        { text: `Помощь и консультации`, path: `/`, image: 'help-h500-96dpi.jpg' },
+        { text: `Защита`, path: `/`, image: 'protection-h500-96dpi.jpg' },
+        { text: `Социализация`, path: `/`, image: 'socialisation-h500-96dpi.jpg' },
+        { text: `Трюковая дрессировка`, path: `/`, image: 'tricks-h500-96dpi.jpg' },
+        { text: `Послушание`, path: `/`, image: 'obedience-h500-96dpi.jpg' }
+      ] }
   }
 }
-
 // initial state
 const state = getDefaultState()
 export default new Vuex.Store({
   state,
   getters
 })
-
-/*
-const getters = {
-  getContent: function (state) {
-    return state.content
-  },
-  getPrices: function (state) {
-    return state.prices
-  }
-} */

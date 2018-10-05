@@ -1,7 +1,11 @@
 <template>
     <v-app id="app">
       <v-toolbar app scroll-off-screen>
-        <v-toolbar-title><span><router-link class="logo" to="/">{{ getContent.logo.text }}</router-link></span></v-toolbar-title>
+        <v-toolbar-title class="toolbar-logo"><span><router-link class="logo" to="/">{{ getContent.logo.text }}</router-link></span>
+        <!--span class="lower-logo-text">
+        Дрессировка собак
+        </span-->
+        </v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items class="hidden-sm-and-down">
           <v-btn flat v-for="link in getContent.navLinks" :key="link.path" :to="link.path">
@@ -15,7 +19,7 @@
         <v-list>
           <v-list-tile>
           <v-list-tile-title class="logo">
-            {{ getContent.logo.text }}
+            <router-link to="/"> {{ getContent.logo.text }} </router-link>
           </v-list-tile-title>
           <v-btn icon @click="sideNav = !sideNav">
             <v-icon>{{ closeIconNavDrawer }}</v-icon>
@@ -42,6 +46,50 @@
                   leave-active-class="animated fadeOutRight">
         <router-view />
       </transition>
+
+      <v-footer dark height="auto" class="mt-4">
+        <v-card width="100%" class="indigo lighten-1 white--text text-xs-center">
+            <v-card-text>
+              <v-btn
+                v-for="icon in icons" :key="icon" class="mx-3 white--text" icon>
+                <v-icon size="24px">{{ icon }}</v-icon>
+              </v-btn>
+            </v-card-text>
+
+            <v-card-text class="white--text pt-0">
+              «То, что сегодня кажется невозможным, завтра станет результатом».
+            </v-card-text>
+
+            <v-divider></v-divider>
+
+            <v-card-text class="white--text">
+              &copy;2018 — <strong>MaxDog</strong>
+            </v-card-text>
+          </v-card>
+      </v-footer>
+
+      <!--v-footer dark height="auto" >
+        <v-layout flex>
+          <v-card flat tile class="indigo lighten-1 white--text text-xs-center">
+            <v-card-text>
+              <v-btn
+                v-for="icon in icons" :key="icon" class="mx-3 white--text" icon>
+                <v-icon size="24px">{{ icon }}</v-icon>
+              </v-btn>
+            </v-card-text>
+
+            <v-card-text class="white--text pt-0">
+              «То, что сегодня кажется невозможным, завтра станет результатом».
+            </v-card-text>
+
+            <v-divider></v-divider>
+
+            <v-card-text class="white--text">
+              &copy;2018 — <strong>MaxDog</strong>
+            </v-card-text>
+          </v-card>
+        </v-layout>
+      </v-footer-->
 
       <!--Footer -->
       <!--v-footer dark height="auto" class="footerColor"-->
@@ -253,14 +301,30 @@ export default {
   text-align: right;
 }
 
+.toolbar-logo {
+  display: flex;
+  // flex-direction: column;
+  // align-items: center;
+  // justify-content: start;
+  // border: 1px solid lime;
+  // height: 2.5em;
+
+}
+
 .logo{
   font-size: 2em;
-  vertical-align: middle;
+  // vertical-align: middle;
   text-decoration: none;
   // color: $color-primary;
   color: $indigo;
   font-family: $logo-font;
   font-weight: 700;
+  // border: 1px solid green;
+}
+
+.lower-logo-text {
+  // border: 1px solid red;
+  font-size: .7em;
 }
 /*
 .footerLogo {

@@ -1,8 +1,11 @@
 export default {
-  getContent: function (state) {
+  getContent (state) {
     return state.content
   },
-  getPrices: function (state) {
+  getPrices (state) {
     return state.prices
+  },
+  getTrainingTypeLinks (state) {
+    return state.trainingTypeLinks
   }
 }

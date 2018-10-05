@@ -21,21 +21,21 @@
 
     <v-container>
       <v-layout row wrap justify-space-around>
-        <v-flex xs12 md8>
+        <v-flex xs12 md5>
           <h2>Груминг кошек</h2>
           <v-img :src="require('@/assets/img/grooming/groomingCat.jpg')" contain v-observe-visibility="{ callback: visibilityChanged, throttle: 500 }" class="animated hidden grooming-type-photo"></v-img>
           <p class="simple-text-block">
             Вычесывание, стрижка, гигиена, купание, сушка.
           </p>
         </v-flex>
-      <v-flex xs12 md8>
+      <v-flex xs12 md5>
         <h2>Груминг собак</h2>
         <v-img :src="require('@/assets/img/grooming/groomingDog.jpg')" contain v-observe-visibility="{ callback: visibilityChanged, throttle: 500 }" class="animated hidden grooming-type-photo"></v-img>
         <p class="simple-text-block">
           Вычесывание, удаление колтунов, гигиена, стрижки, тримминг, стрипинг, купание, сушка.
         </p>
       </v-flex>
-      <v-flex xs12 md8>
+      <v-flex xs12 md5>
         <h2>Дополнительные услуги</h2>
         <v-img :src="require('@/assets/img/grooming/groomingOther.jpg')" contain v-observe-visibility="{ callback: visibilityChanged, throttle: 500 }" class="animated hidden grooming-type-photo"></v-img>
         <p class="simple-text-block">
@@ -51,6 +51,7 @@
     </v-container>
   </v-container>
   <prices class="animated hidden" v-observe-visibility="{ callback: visibilityChanged, throttle: 500 }"/>
+  <v-btn to="/consultform" color="info" large class="mb-4 animated" v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }">ОНЛАЙН ЗАПИСЬ</v-btn>
   </div>
 </template>
 
