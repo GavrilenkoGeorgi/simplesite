@@ -119,11 +119,11 @@ const getDefaultState = () => {
     },
     trainingTypeLinks: {
       links: [
-        { text: `Помощь и консультации`, path: `/`, image: 'help-h500-96dpi.jpg' },
-        { text: `Защита`, path: `/`, image: 'protection-h500-96dpi.jpg' },
-        { text: `Социализация`, path: `/`, image: 'socialisation-h500-96dpi.jpg' },
-        { text: `Трюковая дрессировка`, path: `/`, image: 'tricks-h500-96dpi.jpg' },
-        { text: `Послушание`, path: `/`, image: 'obedience-h500-96dpi.jpg' }
+        { text: `Помощь и консультации`, path: `/`, image: 'help-h500-96dpi.jpg', name: 'help' },
+        { text: `Защита`, path: `/`, image: 'protection-h500-96dpi.jpg', name: 'protection' },
+        { text: `Социализация`, path: `/`, image: 'socialisation-h500-96dpi.jpg', name: 'socialisation' },
+        { text: `Трюковая дрессировка`, path: `/`, image: 'tricks-h500-96dpi.jpg', name: 'tricks' },
+        { text: `Послушание`, path: `/`, image: 'obedience-h500-96dpi.jpg', name: 'obedience' }
       ] }
   }
 }

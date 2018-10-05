@@ -43,12 +43,12 @@
       <v-container>
         <h2 class="indigo--text">Первое занятие — 50%</h2>
       </v-container>
-      <v-container fluid grid-list-md>
-        <v-layout row wrap align-center justify-center>
-          <v-flex xs12 md3 ma-4 v-for="(link, index) in getTrainingTypeLinks.links" :key="index" v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }" class="animated hidden">
-            <v-card>
+      <v-container fluid grid-list-md ma-0 pa-0>
+        <v-layout row wrap align-start justify-center>
+          <v-flex xs12 md3 my-3 mx-1 v-for="(link, index) in getTrainingTypeLinks.links" :key="index" v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }" class="animated hidden">
+            <v-card hover>
               <v-img :src="getLinkImage(link.image)" contain>
-                <v-card-title class="training-link-title ma-2 pa-2">{{ link.text }}</v-card-title>
+                <!--v-card-title class="training-link-title ma-2 pa-2">{{ link.text }}</v-card-title-->
               </v-img>
               <v-card-actions>
                 <!--v-btn flat>Share</v-btn-->
@@ -57,15 +57,18 @@
                 <v-btn icon @click="trainingDescrShow = !trainingDescrShow">
                   <v-icon>{{ trainingDescrShow ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</v-icon>
                 </v-btn-->
+                <v-card-title class="training-link-title">{{ link.text }}</v-card-title>
                 <v-spacer></v-spacer>
-                <v-btn icon>
-                  <v-icon>keyboard_arrow_right</v-icon>
+                <v-btn icon v-on:click="openTrainingDescr" v-bind:name="link.name">
+                  <v-icon>{{ trainLinkToShow === link.name ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</v-icon>
+                  <!--v-icon>keyboard_arrow_right</v-icon-->
                 </v-btn>
               </v-card-actions>
               <v-slide-y-transition>
-                <!--v-card-text v-show="trainingDescrShow">
-                  I'm a thing. But, like most politicians, he promised more than he could deliver. You won't have time for sleeping, soldier, not with all the bed making you'll be doing. Then we'll go with that data file! Hey, you add a one and two zeros to that or we walk! You're going to do his laundry? I've got to find a way to escape.
-                </v-card-text-->
+                <v-card-text v-bind:name="link.name" v-show="trainLinkToShow === link.name" class="training-card-descr-text hight-transition">
+                  Какое-нибудь краткое описание тренировки или занятия, примерная цена, продолжительность, или ограничения для каких-либо
+                  животных, понятно, что тойчика не будут учить кусать людей, но всё таки.
+                </v-card-text>
               </v-slide-y-transition>
             </v-card>
       </v-flex>
@@ -84,7 +87,7 @@ export default {
   data () {
     return {
       title: 'MaxDog',
-      trainingDescrShow: false,
+      trainLinkToShow: '',
       overlayTitle: 'Дрессировка собак в Киеве и Киевской области'
     }
   },
@@ -124,6 +127,15 @@ export default {
     getLinkImage (image) {
       // return require('../../assets/img/' + image)
       return require('../assets/img/' + image)
+    },
+    openTrainingDescr (event) {
+      // console.log(`Opening training descr`)
+      // console.log(event.currentTarget.name)
+      if (this.trainLinkToShow === event.currentTarget.name) {
+        this.trainLinkToShow = ''
+      } else {
+        this.trainLinkToShow = event.currentTarget.name
+      }
     }
   }
 }
@@ -159,13 +171,6 @@ h4 {
   padding: 20px;
 }
 
-.training-link-title {
-  position: absolute;
-  color: $color-white;
-  background-color: $color-black-overlay;
-  bottom: 0;
-  font-size: 1.2em;
-}
 .vertical {
   color: white;
   font: 32px "Arial";
@@ -202,5 +207,31 @@ hr.divider {
   margin: 2em 0em 2em 0em;
   // font-size: 1.4em;
 }
-
+.training-link-title {
+  // position: absolute;
+  color: $color-primary-bright;
+  font-family: $header-font;
+  font-weight: 500;
+  // background-color: $color-black-overlay;
+  // bottom: 0;
+  font-size: 1em;
+}
+.training-card-title {
+  text-align: left;
+  font-family: $text-font;
+  font-size: 1em;
+}
+.training-card-descr-text {
+  text-align: left;
+  text-indent: 1em;
+  font-family: $text-font;
+  font-size: 1.3em;
+  font-weight: 700;
+  letter-spacing: .01em;
+}
+/*
+.hight-transition {
+  transition: height 1s ease-out;
+}
+*/
 </style>
