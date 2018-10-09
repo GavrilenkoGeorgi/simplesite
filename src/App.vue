@@ -1,11 +1,15 @@
 <template>
     <v-app id="app">
       <v-toolbar app scroll-off-screen>
-        <v-toolbar-title class="toolbar-logo"><span><router-link class="logo" to="/">{{ getContent.logo.text }}</router-link></span>
+        <!--v-toolbar-title class="toolbar-logo"><span><router-link class="logo" to="/">{{ getContent.logo.text }}</router-link></span-->
+        <div class='toolbar-logo'>
+          <span class="logo">{{ getContent.logo.text }}</span>
+          <span class="lower-logo-text">ДРЕССИРОВКА СОБАК</span>
+        </div>
         <!--span class="lower-logo-text">
         Дрессировка собак
         </span-->
-        </v-toolbar-title>
+        <!--/v-toolbar-title-->
         <v-spacer></v-spacer>
         <v-toolbar-items class="hidden-sm-and-down">
           <v-btn flat v-for="link in getContent.navLinks" :key="link.path" :to="link.path">
@@ -303,16 +307,17 @@ export default {
 
 .toolbar-logo {
   display: flex;
-  // flex-direction: column;
-  // align-items: center;
-  // justify-content: start;
+  flex-direction: column;
+  // align-content: center;
+  // justify-content: center;
   // border: 1px solid lime;
   // height: 2.5em;
 
 }
 
 .logo{
-  font-size: 2em;
+  font-size: 1.8em;
+  line-height: 1em;
   // vertical-align: middle;
   text-decoration: none;
   // color: $color-primary;
@@ -324,7 +329,8 @@ export default {
 
 .lower-logo-text {
   // border: 1px solid red;
-  font-size: .7em;
+  font-size: .73em;
+  font-weight: 700;
 }
 /*
 .footerLogo {

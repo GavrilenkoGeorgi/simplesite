@@ -26,6 +26,7 @@
       </v-navigation-drawer>
       <v-toolbar fixed app>
         <v-toolbar-title><span><router-link class="logo" to="/">MaxDog</router-link></span></v-toolbar-title>
+        <!--div>MaxDog</div-->
         <v-spacer></v-spacer>
         <v-btn to="/gallery" flat class="hidden-xs-only">
           <!--v-icon left>supervisor_account</v-icon-->

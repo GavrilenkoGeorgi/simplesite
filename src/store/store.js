@@ -85,8 +85,8 @@ const getDefaultState = () => {
       {
         header: `Породы свыше 15 кг`,
         services: [
-          { serviceDescr: `Бернский зенненхунд`, price: `600—650` },
-          { serviceDescr: `Голден ретривер`, price: `600—650` },
+          { serviceDescr: `Бернский зенненхунд`, price: `1100—1300` },
+          { serviceDescr: `Голден ретривер`, price: `700—800` },
           { serviceDescr: `Самоедская лайка`, price: `900—1000` },
           { serviceDescr: `Сеттеры`, price: `1000—1100` }
         ]
