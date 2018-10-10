@@ -261,6 +261,21 @@ export default {
 // @import "./assets/scss/colours.scss";
 // @import "./assets/scss/fonts.scss";
 
+h1, h2, h3, h4, h5, h6 {
+  font-family: $header-font;
+  // letter-spacing: -.09em;
+  color: black;
+}
+h2 {
+  font-size: 2.5em;
+}
+h3 {
+  font-size: 1.8em;
+}
+h4 {
+  font-size: 1.5em;
+}
+
 #app {
   // font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

@@ -74,6 +74,7 @@ export default {
 // @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons');
 h1 {
   font-family: $alt-font-1;
+  $color: $alt-color-1;
 }
 .simpleTextBlock {
   font-size: 1.5em;

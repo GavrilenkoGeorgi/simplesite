@@ -10,7 +10,7 @@
       </v-layout>
     </v-container>
 
-    <v-img :src="require('@/assets/img/grooming/groomingTitlePhoto.png')" height="371" contain></v-img>
+    <v-img class="mt-4 pt-4" :src="require('@/assets/img/grooming/groomingTitlePhoto.png')" height="371" contain></v-img>
     <v-container>
       <v-layout justify-center>
         <v-flex md10 xl8>
@@ -36,7 +36,7 @@
         </p>
       </v-flex>
       <v-flex xs12 md5>
-        <h2>Дополнительные услуги</h2>
+        <h3>Дополнительные услуги</h3>
         <v-img :src="require('@/assets/img/grooming/groomingOther.jpg')" contain v-observe-visibility="{ callback: visibilityChanged, throttle: 500 }" class="animated hidden grooming-type-photo"></v-img>
         <p class="simple-text-block">
           Выставочный груминг, креативная стрижка и окрашивание, чистка зубов, оформление коготков.
@@ -45,7 +45,7 @@
     </v-layout>
     <v-container class="my-4 pa-0">
       <v-layout column>
-        <h2 class="indigo--text">SPA комплекс</h2>
+        <h2>SPA комплекс</h2>
         <h3>Банные услуги и гигиена</h3>
       </v-layout>
     </v-container>
@@ -115,13 +115,30 @@ export default {
 @import "../assets/scss/index.scss";
 h1 {
   font-family: $alt-font-1;
-  // letter-spacing: -1em;
 }
 
 #groomingPage {
   .hidden {
   visibility: hidden;
   }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  // font-family: $header-font;
+  // letter-spacing: -.09em;
+  color: black;
+}
+h2 {
+  // font-size: 2em;
+}
+h3 {
+  // font-size: 1.5em;
+  font-family: $alt-font-1;
+  color: $color-primaryPale2;
+  // line-height: 6em;
+}
+h4 {
+  font-size: 1.5em;
 }
 
 /*

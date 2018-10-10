@@ -18,7 +18,7 @@
       <v-container py-0>
         <v-layout row wrap justify-space-around>
           <v-flex xs12 md5 v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }" class="animated groupTraining hidden">
-            <h3>{{ getContent.homePageText.groupTraining.header }}</h3>
+            <h3 class="double">{{ getContent.homePageText.groupTraining.header }}</h3>
             <v-img :src="require('@/assets/img/group_training-h500-96dpi.jpg')" class="training-section-image" contain></v-img>
             <p class="simple-text-block"> {{ getContent.homePageText.groupTraining.text }} </p>
           </v-flex>
@@ -30,7 +30,7 @@
         </v-layout>
       </v-container>
       <v-container>
-        <h2 class="indigo--text">{{ getContent.homePageText.lessonsHeader }}</h2>
+        <h2>{{ getContent.homePageText.lessonsHeader }}</h2>
       </v-container>
       <v-container fluid grid-list-md ma-0 pa-0>
         <v-layout row wrap align-start justify-center>
@@ -137,12 +137,12 @@ export default {
 
 <style scoped lang="scss">
 @import "../assets/scss/index.scss";
-@import "../assets/animate.css";
+// @import "../assets/animate.css";
 // @import "../assets/scss/fonts.scss";
-
 h1, h2, h3, h4, h5, h6 {
   font-family: $header-font;
   // letter-spacing: -.09em;
+  color: black;
 }
 h2 {
   font-size: 2.5em;
@@ -150,9 +150,11 @@ h2 {
 h3 {
   font-size: 1.8em;
 }
+
 h4 {
   font-size: 1.5em;
 }
+
 /*
 #box {
   background-color: rgba(40, 40, 190, 255);
@@ -238,7 +240,13 @@ hr.divider {
   padding-top: 3.5em;
 }
 
-@media (max-width: 48em) {
+@media screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 1024px) { // iPadPro
 
+}
+
+@media screen and (max-resolution: 96dpi) and (min-width: 1024px) { // desktop
+  .double {
+    line-height: 3em;
+  }
 }
 </style>
