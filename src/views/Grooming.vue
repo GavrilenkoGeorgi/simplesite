@@ -111,18 +111,19 @@ export default {
 
 <style scoped lang="scss">
 @import "../assets/scss/index.scss";
-@import "../assets/animate.css";
+// @import "../assets/animate.css";
+@import "../assets/scss/index.scss";
+h1 {
+  font-family: $alt-font-1;
+  // letter-spacing: -1em;
+}
 
 #groomingPage {
   .hidden {
   visibility: hidden;
   }
 }
-@media screen and (-webkit-min-device-pixel-ratio: 1.88) and (max-width: 415px) {
-  h2 {
-    font-size: 2em;
-  }
-}
+
 /*
 .title {
   margin-top: 4em;

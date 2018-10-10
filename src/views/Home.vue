@@ -1,7 +1,9 @@
 <template>
   <div id="home">
+<!-- Video background -->
+    <VideoBackground />
 <!-- Parralax image background -->
-      <v-container fluid class="pa-0 mt-5">
+      <!--v-container fluid class="pa-0 mt-5">
         <v-layout>
           <v-flex xs12>
             <v-parallax height="500" :src="require('@/assets/dog-wallpaper.jpg')">
@@ -9,67 +11,54 @@
             </v-parallax>
           </v-flex>
         </v-layout>
-      </v-container>
+      </v-container-->
       <!--v-icon x-large class="animated indigo--text" v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }">favorite</v-icon-->
 
 <!-- Training types block -->
-      <v-container>
+      <v-container py-0>
         <v-layout row wrap justify-space-around>
           <v-flex xs12 md5 v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }" class="animated groupTraining hidden">
-            <h3>Групповые занятия</h3>
+            <h3>{{ getContent.homePageText.groupTraining.header }}</h3>
             <v-img :src="require('@/assets/img/group_training-h500-96dpi.jpg')" class="training-section-image" contain></v-img>
-            <p class="simple-text-block">
-              На групповых занятиях дважды в неделю вы получаете практический
-              и теоретический инструктаж как проводить воспитание и дрессировку поэтапно далее в домашних
-              условиях.
-              Мы постараемся ответить на все ваши вопросы. Вы, ежедневно в быту, закрепляете со
-              щенком домашнее задание — полученную на занятиях базу знаний и навыков.
-              При этом варианте обучения требуется несколько больше времени, но терпение и труд обернутся
-              — хорошим выполнением всех необходимых базовых команд. Вы получите послушную,
-              социализированную, контактную собаку.
-            </p>
+            <p class="simple-text-block"> {{ getContent.homePageText.groupTraining.text }} </p>
           </v-flex>
           <v-flex xs12 md5 v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }" class="animated individualTraining hidden">
-            <h3>Индивидуальные занятия</h3>
+            <h3>{{ getContent.homePageText.individualTraining.header }}</h3>
             <v-img :src="require('@/assets/img/ind_training-h500-96dpi.jpg')" class="training-section-image" contain></v-img>
-            <p class="simple-text-block">
-              При индивидуальных занятиях мы тренируем собаку тет-а-тет с вами или
-              самостоятельно там, где, когда и во сколько вам удобно. Тренировка ориентирована на потребности
-              сугубо вашей собаки и соответственно обучение дает максимальный результат в сжатые сроки.
-            </p>
+            <p class="simple-text-block">{{ getContent.homePageText.individualTraining.text }}</p>
           </v-flex>
         </v-layout>
       </v-container>
       <v-container>
-        <h2 class="indigo--text">Первое занятие — 50%</h2>
+        <h2 class="indigo--text">{{ getContent.homePageText.lessonsHeader }}</h2>
       </v-container>
       <v-container fluid grid-list-md ma-0 pa-0>
         <v-layout row wrap align-start justify-center>
           <v-flex xs12 md3 my-3 mx-1 v-for="(link, index) in getTrainingTypeLinks.links" :key="index" v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }" class="animated hidden">
             <v-card hover>
               <v-img :src="getLinkImage(link.image)" contain>
-                <!--v-card-title class="training-link-title ma-2 pa-2">{{ link.text }}</v-card-title-->
+                <v-card-title class="training-link-title ma-2 pa-2">{{ link.text }}</v-card-title>
               </v-img>
-              <v-card-actions>
+              <!--v-card-actions-->
                 <!--v-btn flat>Share</v-btn-->
                 <!--v-btn flat color="purple">Explore</v-btn-->
                 <!--v-spacer></v-spacer>
                 <v-btn icon @click="trainingDescrShow = !trainingDescrShow">
                   <v-icon>{{ trainingDescrShow ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</v-icon>
                 </v-btn-->
-                <v-card-title class="training-link-title">{{ link.text }}</v-card-title>
+                <!--v-card-title class="training-link-title">{{ link.text }}</v-card-title>
                 <v-spacer></v-spacer>
-                <v-btn icon v-on:click="openTrainingDescr" v-bind:name="link.name">
-                  <v-icon>{{ trainLinkToShow === link.name ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</v-icon>
+                <v-btn icon v-on:click="openTrainingDescr" v-bind:name="link.name"-->
+                  <!--v-icon>{{ trainLinkToShow === link.name ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</v-icon-->
                   <!--v-icon>keyboard_arrow_right</v-icon-->
-                </v-btn>
-              </v-card-actions>
-              <v-slide-y-transition>
+                <!--/v-btn-->
+              <!--/v-card-actions-->
+              <!--v-slide-y-transition>
                 <v-card-text v-bind:name="link.name" v-show="trainLinkToShow === link.name" class="training-card-descr-text hight-transition">
                   Какое-нибудь краткое описание тренировки или занятия, примерная цена, продолжительность, или ограничения для каких-либо
                   животных, понятно, что тойчика не будут учить кусать людей, но всё таки.
                 </v-card-text>
-              </v-slide-y-transition>
+              </v-slide-y-transition-->
             </v-card>
       </v-flex>
     </v-layout>
@@ -81,6 +70,7 @@
 <script>
 // @ is an alias to /src
 import { mapGetters } from 'vuex'
+import VideoBackground from '../components/VideoBackground'
 
 export default {
   name: 'home',
@@ -91,9 +81,13 @@ export default {
       overlayTitle: 'Дрессировка собак в Киеве и Киевской области'
     }
   },
+  components: {
+    VideoBackground
+  },
   computed: {
     ...mapGetters([
-      'getTrainingTypeLinks'
+      'getTrainingTypeLinks',
+      'getContent'
     ])
   },
   methods: {
@@ -148,6 +142,7 @@ export default {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: $header-font;
+  // letter-spacing: -.09em;
 }
 h2 {
   font-size: 2.5em;
@@ -158,7 +153,7 @@ h3 {
 h4 {
   font-size: 1.5em;
 }
-
+/*
 #box {
   background-color: rgba(40, 40, 190, 255);
   border: 4px solid rgb(20, 20, 120);
@@ -170,7 +165,10 @@ h4 {
   justify-content: center;
   padding: 20px;
 }
-
+*/
+.simple-text-block {
+  font-size: 1.6em;
+}
 .vertical {
   color: white;
   font: 32px "Arial";
@@ -208,12 +206,13 @@ hr.divider {
   // font-size: 1.4em;
 }
 .training-link-title {
-  // position: absolute;
-  color: $color-primary-bright;
-  font-family: $header-font;
-  font-weight: 500;
-  // background-color: $color-black-overlay;
-  // bottom: 0;
+  position: absolute;
+  color: white;
+  font-family: $alt-font-1;
+  // font-weight: 700;
+  background-color: $color-black-overlay;
+  bottom: 0;
+  line-height: .8;
   font-size: 1em;
 }
 .training-card-title {
@@ -234,4 +233,12 @@ hr.divider {
   transition: height 1s ease-out;
 }
 */
+// new
+#home {
+  padding-top: 3.5em;
+}
+
+@media (max-width: 48em) {
+
+}
 </style>

@@ -2,9 +2,9 @@
   <v-container mt-4>
     <v-layout row wrap justify-space-around mt-4>
       <v-flex xs12 md6>
-        <h1>О нас</h1>
+        <h1 class="mt-4">О нас</h1>
         <v-card flat>
-          <v-img :src="require('@/assets/img/about.png')" max-height="420" contain></v-img>
+          <v-img class="mt-2 animated fadeIn" :src="require('@/assets/img/about.png')" max-height="420" contain></v-img>
         </v-card>
         <p class="simpleTextBlock">
           {{ card_text }}
@@ -28,7 +28,12 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons');
+@import "../assets/scss/index.scss";
+// @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons');
+  h1 {
+  font-family: $alt-font-1;
+}
+
 .simpleTextBlock {
   font-size: 1.5em;
   padding-top: 1em;

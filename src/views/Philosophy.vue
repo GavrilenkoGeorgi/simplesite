@@ -2,7 +2,7 @@
   <v-container mt-4>
     <v-layout row wrap justify-space-around mt-4>
       <v-flex xs12 md8>
-        <h1>Наша философия</h1>
+        <h1 class="mt-4">Наша философия</h1>
       <p class="simpleTextBlock">
         В процессе дрессировки вы не только научите собаку базовому послушанию, вы достигнете взаимопонимания с собакой.
         Мы гарантируем результат!</p>
@@ -70,7 +70,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons');
+@import "../assets/scss/index.scss";
+// @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons');
+h1 {
+  font-family: $alt-font-1;
+}
 .simpleTextBlock {
   font-size: 1.5em;
   padding-top: 1em;

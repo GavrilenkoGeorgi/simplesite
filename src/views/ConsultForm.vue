@@ -96,9 +96,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "../assets/scss/index.scss";
 
 h1 {
   margin-top: 1em;
+  font-family: $alt-font-1;
 }
 
 </style>

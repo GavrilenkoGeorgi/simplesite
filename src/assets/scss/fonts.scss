@@ -1,7 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Cormorant+Garamond|Playfair+Display+SC:400,700|Russo+One');
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons');
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+$alt-font-1: 'Montserrat', sans-serif;
 $logo-font: 'Playfair Display SC', serif;
-$header-font: 'Russo One', sans-serif;
+// $header-font: 'Russo One', sans-serif;
+$header-font: 'Playfair Display SC', serif;
 $text-font: 'Cormorant Garamond', serif;
 $quote-font: 'Cormorant Garamond', serif;
 

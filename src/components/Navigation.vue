@@ -25,7 +25,7 @@
         </v-list>
       </v-navigation-drawer>
       <v-toolbar fixed app>
-        <v-toolbar-title><span><router-link class="logo" to="/">MaxDog</router-link></span></v-toolbar-title>
+        <v-toolbar-title><span><router-link class="logo" to="/"> {{ logoTextName }} </router-link></span></v-toolbar-title>
         <!--div>MaxDog</div-->
         <v-spacer></v-spacer>
         <v-btn to="/gallery" flat class="hidden-xs-only">
@@ -53,7 +53,8 @@ export default {
   name: 'Navigation',
   data () {
     return {
-      sideNav: false
+      sideNav: false,
+      logoTextName: maxdog
     }
   },
   props: {
@@ -68,8 +69,9 @@ export default {
 @import "../assets/scss/fonts.scss";
 
 .logo {
-    font-family: $logo-font;
+  font-family: $logo-font;
   font-size: 2em;
+  text-transform: capitalize;
   vertical-align: middle;
   text-decoration: none;
   color: $color-primary;

@@ -17,6 +17,7 @@
     "vue-observe-visibility": "^0.4.1",
     "vue-router": "^3.0.1",
     "vue-scroll-reveal": "^1.0.8",
+    "vue-videobg": "^2.0.0",
     "vuetify": "^1.2.1",
     "vuex": "^3.0.1"
   },

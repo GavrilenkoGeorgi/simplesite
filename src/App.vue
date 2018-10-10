@@ -1,15 +1,12 @@
 <template>
     <v-app id="app">
       <v-toolbar app scroll-off-screen>
-        <!--v-toolbar-title class="toolbar-logo"><span><router-link class="logo" to="/">{{ getContent.logo.text }}</router-link></span-->
         <div class='toolbar-logo'>
-          <span class="logo">{{ getContent.logo.text }}</span>
-          <span class="lower-logo-text">ДРЕССИРОВКА СОБАК</span>
+          <router-link to="/">
+            <span class="logo">{{ getContent.logo.text }}</span>
+          </router-link>
+          <span class="lower-logo-text">{{ getContent.logo.lowerText }}</span>
         </div>
-        <!--span class="lower-logo-text">
-        Дрессировка собак
-        </span-->
-        <!--/v-toolbar-title-->
         <v-spacer></v-spacer>
         <v-toolbar-items class="hidden-sm-and-down">
           <v-btn flat v-for="link in getContent.navLinks" :key="link.path" :to="link.path">
@@ -32,9 +29,7 @@
           <v-list-tile v-for="link in getContent.navLinks" :key="link.path" :to="link.path">
 
             <v-list-tile-action>
-              <!--v-layout justify-center-->
               <v-icon>{{ link.icon }}</v-icon>
-              <!--/v-layout-->
             </v-list-tile-action>
 
             <v-list-tile-content>
@@ -147,7 +142,7 @@ export default {
       whatToChange: '',
       checkBox: '',
       // switch1: true,
-      fonts: [
+      /* fonts: [
         { name: 'Cardo', label: '"Cardo", serif;', selected: true, logoFont: false, headerFont: false, textFont: false },
         { name: 'Happy Monkey', label: '"Happy Monkey", cursive;', selected: false, logoFont: false, headerFont: false, textFont: false },
         { name: 'Elsie', label: '"Elsie", cursive;', selected: false, logoFont: false, headerFont: false, textFont: false },
@@ -161,7 +156,7 @@ export default {
         { name: 'Amatic SC', label: '"Amatic SC", cursive;', selected: false, logoFont: false, headerFont: false, textFont: false },
         { name: 'Cormorant Garamond', label: '"Cormorant Garamond", serif;', selected: false, logoFont: false, headerFont: false, textFont: false },
         { name: 'Poiret One', label: '"Poiret One", cursive;', selected: false, logoFont: false, headerFont: false, textFont: false }
-      ],
+      ], */
       icons: [
         'fa-facebook',
         'fa-instagram',
@@ -308,17 +303,21 @@ export default {
 .toolbar-logo {
   display: flex;
   flex-direction: column;
-  // align-content: center;
+  // align-items: center;
   // justify-content: center;
   // border: 1px solid lime;
   // height: 2.5em;
-
+  a {
+    text-decoration: none;
+  }
 }
 
 .logo{
-  font-size: 1.8em;
+  font-size: 1.9em;
   line-height: 1em;
-  // vertical-align: middle;
+  height: .1em;
+  text-transform: uppercase;
+  vertical-align: middle;
   text-decoration: none;
   // color: $color-primary;
   color: $indigo;
@@ -328,8 +327,9 @@ export default {
 }
 
 .lower-logo-text {
+  text-transform: uppercase;
   // border: 1px solid red;
-  font-size: .73em;
+  font-size: .79em;
   font-weight: 700;
 }
 /*
