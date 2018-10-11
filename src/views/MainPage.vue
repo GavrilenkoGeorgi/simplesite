@@ -1,5 +1,5 @@
 <template>
-  <div id="home">
+  <div id="mainPage">
 <!-- Video background -->
     <VideoBackground />
 <!-- Parralax image background -->
@@ -18,27 +18,27 @@
       <v-container py-0>
         <v-layout row wrap justify-space-around>
           <v-flex xs12 md5 v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }" class="animated groupTraining hidden">
-            <h3 class="double">{{ getContent.homePageText.groupTraining.header }}</h3>
+            <h3 class="double">{{ getContent.mainPageText.groupTraining.header }}</h3>
             <v-img :src="require('@/assets/img/group_training-h500-96dpi.jpg')" class="training-section-image" contain></v-img>
-            <p class="simple-text-block"> {{ getContent.homePageText.groupTraining.text }} </p>
+            <p class="simple-text-block"> {{ getContent.mainPageText.groupTraining.text }} </p>
           </v-flex>
           <v-flex xs12 md5 v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }" class="animated individualTraining hidden">
-            <h3>{{ getContent.homePageText.individualTraining.header }}</h3>
+            <h3>{{ getContent.mainPageText.individualTraining.header }}</h3>
             <v-img :src="require('@/assets/img/ind_training-h500-96dpi.jpg')" class="training-section-image" contain></v-img>
-            <p class="simple-text-block">{{ getContent.homePageText.individualTraining.text }}</p>
+            <p class="simple-text-block">{{ getContent.mainPageText.individualTraining.text }}</p>
           </v-flex>
         </v-layout>
       </v-container>
       <v-container>
-        <h2>{{ getContent.homePageText.lessonsHeader }}</h2>
+        <h2>{{ getContent.mainPageText.lessonsHeader }}</h2>
       </v-container>
-      <v-container fluid grid-list-md ma-0 pa-0>
+      <!--v-container fluid grid-list-md ma-0 pa-0>
         <v-layout row wrap align-start justify-center>
           <v-flex xs12 md3 my-3 mx-1 v-for="(link, index) in getTrainingTypeLinks.links" :key="index" v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }" class="animated hidden">
             <v-card hover>
               <v-img :src="getLinkImage(link.image)" contain>
                 <v-card-title class="training-link-title ma-2 pa-2">{{ link.text }}</v-card-title>
-              </v-img>
+              </v-img-->
               <!--v-card-actions-->
                 <!--v-btn flat>Share</v-btn-->
                 <!--v-btn flat color="purple">Explore</v-btn-->
@@ -59,10 +59,11 @@
                   животных, понятно, что тойчика не будут учить кусать людей, но всё таки.
                 </v-card-text>
               </v-slide-y-transition-->
-            </v-card>
+            <!--/v-card>
       </v-flex>
     </v-layout>
-    </v-container>
+    </v-container-->
+    <Slider />
     <v-btn to="/consultform" color="info" large class="mt-4 animated" v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }">ОНЛАЙН ЗАПИСЬ</v-btn>
           </div>
 </template>
@@ -71,9 +72,10 @@
 // @ is an alias to /src
 import { mapGetters } from 'vuex'
 import VideoBackground from '../components/VideoBackground'
+import Slider from '../components/Slider'
 
 export default {
-  name: 'home',
+  name: 'mainPage',
   data () {
     return {
       title: 'MaxDog',
@@ -82,7 +84,8 @@ export default {
     }
   },
   components: {
-    VideoBackground
+    VideoBackground,
+    Slider
   },
   computed: {
     ...mapGetters([
@@ -236,7 +239,7 @@ hr.divider {
 }
 */
 // new
-#home {
+#mainPage {
   padding-top: 3.5em;
 }
 

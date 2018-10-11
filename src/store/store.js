@@ -7,7 +7,7 @@ Vue.use(Vuex)
 const getDefaultState = () => {
   return {
     content: {
-      homePageText: {
+      mainPageText: {
         groupTraining: {
           header: `Групповые занятия`,
           text: `На групповых занятиях дважды в неделю вы получаете практический
