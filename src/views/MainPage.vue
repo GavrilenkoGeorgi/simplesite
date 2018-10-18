@@ -1,75 +1,43 @@
 <template>
-  <div id="mainPage">
+  <main id="mainPage">
 <!-- Video background -->
     <VideoBackground />
-<!-- Parralax image background -->
-      <!--v-container fluid class="pa-0 mt-5">
-        <v-layout>
-          <v-flex xs12>
-            <v-parallax height="500" :src="require('@/assets/dog-wallpaper.jpg')">
-              <h1 class="photo-overlay">{{ overlayTitle }}</h1>
-            </v-parallax>
-          </v-flex>
-        </v-layout>
-      </v-container-->
-      <!--v-icon x-large class="animated indigo--text" v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }">favorite</v-icon-->
-
-<!-- Training types block -->
-      <v-container py-0>
-        <v-layout row wrap justify-space-around>
-          <v-flex xs12 md5 v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }" class="animated groupTraining hidden">
-            <h3 class="double">{{ getContent.mainPageText.groupTraining.header }}</h3>
-            <v-img :src="require('@/assets/img/group_training-h500-96dpi.jpg')" class="training-section-image" contain></v-img>
-            <p class="simple-text-block"> {{ getContent.mainPageText.groupTraining.text }} </p>
-          </v-flex>
-          <v-flex xs12 md5 v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }" class="animated individualTraining hidden">
-            <h3>{{ getContent.mainPageText.individualTraining.header }}</h3>
-            <v-img :src="require('@/assets/img/ind_training-h500-96dpi.jpg')" class="training-section-image" contain></v-img>
-            <p class="simple-text-block">{{ getContent.mainPageText.individualTraining.text }}</p>
-          </v-flex>
-        </v-layout>
-      </v-container>
-      <v-container>
-        <h2>{{ getContent.mainPageText.lessonsHeader }}</h2>
-      </v-container>
-      <!--v-container fluid grid-list-md ma-0 pa-0>
-        <v-layout row wrap align-start justify-center>
-          <v-flex xs12 md3 my-3 mx-1 v-for="(link, index) in getTrainingTypeLinks.links" :key="index" v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }" class="animated hidden">
-            <v-card hover>
-              <v-img :src="getLinkImage(link.image)" contain>
-                <v-card-title class="training-link-title ma-2 pa-2">{{ link.text }}</v-card-title>
-              </v-img-->
-              <!--v-card-actions-->
-                <!--v-btn flat>Share</v-btn-->
-                <!--v-btn flat color="purple">Explore</v-btn-->
-                <!--v-spacer></v-spacer>
-                <v-btn icon @click="trainingDescrShow = !trainingDescrShow">
-                  <v-icon>{{ trainingDescrShow ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</v-icon>
-                </v-btn-->
-                <!--v-card-title class="training-link-title">{{ link.text }}</v-card-title>
-                <v-spacer></v-spacer>
-                <v-btn icon v-on:click="openTrainingDescr" v-bind:name="link.name"-->
-                  <!--v-icon>{{ trainLinkToShow === link.name ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</v-icon-->
-                  <!--v-icon>keyboard_arrow_right</v-icon-->
-                <!--/v-btn-->
-              <!--/v-card-actions-->
-              <!--v-slide-y-transition>
-                <v-card-text v-bind:name="link.name" v-show="trainLinkToShow === link.name" class="training-card-descr-text hight-transition">
-                  Какое-нибудь краткое описание тренировки или занятия, примерная цена, продолжительность, или ограничения для каких-либо
-                  животных, понятно, что тойчика не будут учить кусать людей, но всё таки.
-                </v-card-text>
-              </v-slide-y-transition-->
-            <!--/v-card>
+    <v-container pa-0 fluid>
+    <v-layout row wrap justify-center>
+      <v-flex xs12 sm8 md4 class="image-container">
+          <v-img :src="require('@/assets/img/mainPage/main-photo-1024px300dpi.jpg')"></v-img>
       </v-flex>
+        <v-flex xs12 md8>
+          <v-card flat class="quote" color="#ecf6ff">
+            <v-card-text class="quote-font">"Вы подобны художнику, пишите этот мир собаке!"</v-card-text>
+          </v-card>
+        </v-flex>
     </v-layout>
-    </v-container-->
+    </v-container>
+<!-- Training types block -->
+    <v-container py-0>
+      <v-layout row wrap justify-space-around>
+        <v-flex xs12 md5 v-observe-visibility="{ callback: visibilityChanged, throttle: 500 }" class="animated groupTraining hidden">
+          <h3 class="double">{{ getContent.mainPageText.groupTraining.header }}</h3>
+          <v-img :src="require('@/assets/img/group_training-h500-96dpi.jpg')" class="training-section-image" contain></v-img>
+          <p class="simple-text-block"> {{ getContent.mainPageText.groupTraining.text }} </p>
+        </v-flex>
+        <v-flex xs12 md5 v-observe-visibility="{ callback: visibilityChanged, throttle: 500 }" class="animated individualTraining hidden">
+          <h3>{{ getContent.mainPageText.individualTraining.header }}</h3>
+          <v-img :src="require('@/assets/img/ind_training-h500-96dpi.jpg')" class="training-section-image" contain></v-img>
+          <p class="simple-text-block">{{ getContent.mainPageText.individualTraining.text }}</p>
+        </v-flex>
+      </v-layout>
+    </v-container>
+    <v-container>
+      <h2>{{ getContent.mainPageText.lessonsHeader }}</h2>
+    </v-container>
     <Slider />
     <v-btn to="/consultform" color="info" large class="mt-4 animated" v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }">ОНЛАЙН ЗАПИСЬ</v-btn>
-          </div>
+  </main>
 </template>
 
 <script>
-// @ is an alias to /src
 import { mapGetters } from 'vuex'
 import VideoBackground from '../components/VideoBackground'
 import Slider from '../components/Slider'
@@ -79,8 +47,7 @@ export default {
   data () {
     return {
       title: 'MaxDog',
-      trainLinkToShow: '',
-      overlayTitle: 'Дрессировка собак в Киеве и Киевской области'
+      trainLinkToShow: ''
     }
   },
   components: {
@@ -193,6 +160,18 @@ h4 {
   // opacity: 0;
 // }
 
+.quote {
+  border: 1px solid red;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  // background-color: #ecf6ff;
+  background-color: red;
+}
+.quote-font {
+  font-family: $text-font;
+  font-size: 2em;
+}
 .hidden {
   visibility: hidden;
   // opacity: 0;
@@ -243,13 +222,13 @@ hr.divider {
   padding-top: 3.5em;
 }
 
-@media screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 1024px) { // iPadPro
+@media screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 768px) { // iPadPro
 
 }
 
 @media screen and (max-resolution: 96dpi) and (min-width: 1024px) { // desktop
   .double {
-    line-height: 3em;
+    // line-height: 3em;
   }
 }
 </style>

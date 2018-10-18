@@ -1,12 +1,12 @@
 <template>
     <v-app id="app">
       <v-toolbar app scroll-off-screen>
-        <div class='toolbar-logo'>
+        <header class='toolbar-logo'>
           <router-link to="/">
             <span class="logo">{{ getContent.logo.text }}</span>
           </router-link>
           <span class="lower-logo-text">{{ getContent.logo.lowerText }}</span>
-        </div>
+        </header>
         <v-spacer></v-spacer>
         <v-toolbar-items class="hidden-sm-and-down">
           <v-btn flat v-for="link in getContent.navLinks" :key="link.path" :to="link.path">
@@ -66,66 +66,10 @@
             </v-card-text>
           </v-card>
       </v-footer>
-
-      <!--v-footer dark height="auto" >
-        <v-layout flex>
-          <v-card flat tile class="indigo lighten-1 white--text text-xs-center">
-            <v-card-text>
-              <v-btn
-                v-for="icon in icons" :key="icon" class="mx-3 white--text" icon>
-                <v-icon size="24px">{{ icon }}</v-icon>
-              </v-btn>
-            </v-card-text>
-
-            <v-card-text class="white--text pt-0">
-              «То, что сегодня кажется невозможным, завтра станет результатом».
-            </v-card-text>
-
-            <v-divider></v-divider>
-
-            <v-card-text class="white--text">
-              &copy;2018 — <strong>MaxDog</strong>
-            </v-card-text>
-          </v-card>
-        </v-layout>
-      </v-footer-->
-
-      <!--Footer -->
-      <!--v-footer dark height="auto" class="footerColor"-->
-        <!--v-card flat tile width="100%" class="blue-grey lighten-1 white--text text-xs-center"-->
-        <!--v-card flat tile width="100%" class="indigo white--text text-xs-center">
-          <v-card-text>
-            <v-btn
-              v-for="icon in icons"
-              :key="icon"
-              class="mx-3 white--text"
-              icon
-            >
-              <v-icon size="24px">{{ icon }}</v-icon>
-            </v-btn>
-          </v-card-text>
-
-          <v-card-text class="white--text pt-0">
-            <p class="quote">
-            «То, что сегодня кажется невозможным, завтра станет результатом».
-            </p>
-          </v-card-text>
-
-          <v-divider></v-divider>
-
-          <v-card-text class="white--text">
-            &copy;2018 — MaxDog
-          </v-card-text>
-        </v-card>
-      </v-footer-->
     </v-app>
 </template>
 
 <script>
-// @ is an alias to /src
-// import HelloWorld from '@/components/HelloWorld.vue'
-// import Main from '@/views/Main.vue'
-// import Navigation from '@/components/Navigation.vue'
 import { mapGetters } from 'vuex'
 import Footer from '@/components/Footer.vue'
 
@@ -141,22 +85,6 @@ export default {
       currentQuoteFont: 'Default',
       whatToChange: '',
       checkBox: '',
-      // switch1: true,
-      /* fonts: [
-        { name: 'Cardo', label: '"Cardo", serif;', selected: true, logoFont: false, headerFont: false, textFont: false },
-        { name: 'Happy Monkey', label: '"Happy Monkey", cursive;', selected: false, logoFont: false, headerFont: false, textFont: false },
-        { name: 'Elsie', label: '"Elsie", cursive;', selected: false, logoFont: false, headerFont: false, textFont: false },
-        { name: 'Life Savers', label: '"Life Savers", cursive;', selected: false, logoFont: false, headerFont: false, textFont: false },
-        { name: 'Playfair Display SC', label: '"Playfair Display SC", serif;', selected: false, logoFont: false, headerFont: false, textFont: false },
-        { name: 'Roboto', label: '"Roboto", sans-serif;', selected: false, logoFont: false, headerFont: false, textFont: false },
-        { name: 'Montserrat', label: '"Montserrat", sans-serif;', selected: false, logoFont: false, headerFont: false, textFont: false },
-        { name: 'Russo One', label: '"Russo One", sans-serif;', selected: false, logoFont: false, headerFont: false, textFont: false },
-        { name: 'Open Sans Condensed', label: '"Open Sans Condensed", sans-serif;', selected: false, logoFont: false, headerFont: false, textFont: false },
-        { name: 'Comfortaa', label: '"Comfortaa", cursive;', selected: false, logoFont: false, headerFont: false, textFont: false },
-        { name: 'Amatic SC', label: '"Amatic SC", cursive;', selected: false, logoFont: false, headerFont: false, textFont: false },
-        { name: 'Cormorant Garamond', label: '"Cormorant Garamond", serif;', selected: false, logoFont: false, headerFont: false, textFont: false },
-        { name: 'Poiret One', label: '"Poiret One", cursive;', selected: false, logoFont: false, headerFont: false, textFont: false }
-      ], */
       icons: [
         'fa-facebook',
         'fa-instagram',
@@ -170,7 +98,6 @@ export default {
   },
   components: {
     Footer
-    // Navigation
   },
   computed: {
     ...mapGetters([
@@ -258,8 +185,6 @@ export default {
 <style lang="scss">
 @import "./assets/scss/index.scss";
 @import "./assets/animate.css";
-// @import "./assets/scss/colours.scss";
-// @import "./assets/scss/fonts.scss";
 
 h1, h2, h3, h4, h5, h6 {
   font-family: $header-font;

@@ -58,6 +58,7 @@ $color-darkGray: hsl(0, 0%, 33%);
 
 #videoBackground {
   width: 100%;
+  background-color: #ecf6ff;
 }
 .video-container-box {
   // border: 1px solid green;
@@ -102,23 +103,6 @@ $color-darkGray: hsl(0, 0%, 33%);
   // padding-left: 1em;
   // font-weight: 500;
 }
-
-/*
-#myBtn {
-    width: 200px;
-    font-size: 18px;
-    padding: 10px;
-    border: none;
-    background: #000;
-    color: #fff;
-    cursor: pointer;
-}
-
-#myBtn:hover {
-    background: #ddd;
-    color: black;
-}
-*/
 
 .play-pause-button {
   // border: 1px solid red;
