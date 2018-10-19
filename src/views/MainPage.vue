@@ -1,21 +1,25 @@
 <template>
-  <main id="mainPage">
+  <v-container fluid id="mainPage" pa-0 ma-0>
 <!-- Video background -->
     <VideoBackground />
-    <v-container pa-0 fluid>
-    <v-layout row wrap justify-center>
-      <v-flex xs12 sm8 md4 class="image-container">
-          <v-img :src="require('@/assets/img/mainPage/main-photo-1024px300dpi.jpg')"></v-img>
-      </v-flex>
-        <v-flex xs12 md8>
-          <v-card flat class="quote" color="#ecf6ff">
+    <!-- v-container pa-0 fluid -->
+    <v-layout row wrap>
+      <v-flex xs12 sm12 md4 class="image-container">
+          <v-img :src="require('@/assets/img/mainPage/main-photo-1024px300dpi.jpg')" contain max-height="500px"></v-img>
+        </v-flex>
+        <v-flex xs12 sm12 md8>
+          <p class="quote">"Вы подобны художнику, пишите этот мир собаке!"</p>
+          <!--v-card flat class="quote">
             <v-card-text class="quote-font">"Вы подобны художнику, пишите этот мир собаке!"</v-card-text>
-          </v-card>
+          </v-card-->
         </v-flex>
     </v-layout>
-    </v-container>
+    <v-flex xs12 mb-4>
+    <hr class="divider" />
+    </v-flex>
+    <!-- /v-container -->
 <!-- Training types block -->
-    <v-container py-0>
+    <!-- v-container py-0 -->
       <v-layout row wrap justify-space-around>
         <v-flex xs12 md5 v-observe-visibility="{ callback: visibilityChanged, throttle: 500 }" class="animated groupTraining hidden">
           <h3 class="double">{{ getContent.mainPageText.groupTraining.header }}</h3>
@@ -28,13 +32,13 @@
           <p class="simple-text-block">{{ getContent.mainPageText.individualTraining.text }}</p>
         </v-flex>
       </v-layout>
-    </v-container>
-    <v-container>
+    <!-- /v-container-->
+    <!--v-container-->
       <h2>{{ getContent.mainPageText.lessonsHeader }}</h2>
-    </v-container>
+    <!--/v-container -->
     <Slider />
     <v-btn to="/consultform" color="info" large class="mt-4 animated" v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }">ОНЛАЙН ЗАПИСЬ</v-btn>
-  </main>
+  </v-container>
 </template>
 
 <script>
@@ -107,12 +111,11 @@ export default {
 
 <style scoped lang="scss">
 @import "../assets/scss/index.scss";
-// @import "../assets/animate.css";
-// @import "../assets/scss/fonts.scss";
+
 h1, h2, h3, h4, h5, h6 {
   font-family: $header-font;
   // letter-spacing: -.09em;
-  color: black;
+  color: $color-primaryDarkest;
 }
 h2 {
   font-size: 2.5em;
@@ -161,17 +164,19 @@ h4 {
 // }
 
 .quote {
-  border: 1px solid red;
+  // border: 1px solid red;
+  font-family: $text-font;
+  padding: .6em;
+  font-size: 2.5em;
   height: 100%;
+  // color: red;
   display: flex;
   align-items: center;
-  // background-color: #ecf6ff;
-  background-color: red;
+  justify-content: center;
+  // color: red;
+  // background-color: red;
 }
-.quote-font {
-  font-family: $text-font;
-  font-size: 2em;
-}
+
 .hidden {
   visibility: hidden;
   // opacity: 0;
@@ -179,15 +184,17 @@ h4 {
 
 hr.divider {
     border: 0;
-    height: 1px;
-    margin-bottom: 1em;
+    height: .05em;
+    margin: 0em;
+    padding: 0em;
     background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
 }
 
 .training-section-image {
-  box-shadow: 0px 0px 19px 3px rgba(163,163,163,1);
+  box-shadow: 0em 0em .15em .06em rgba(163,163,163,1);
   margin: 2em 0em 2em 0em;
   // font-size: 1.4em;
+  // border: 1px solid pink;
 }
 .training-link-title {
   position: absolute;
@@ -222,13 +229,25 @@ hr.divider {
   padding-top: 3.5em;
 }
 
-@media screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 768px) { // iPadPro
+.image-container {
+  background-color: #ecf6ff;
+  // border: 1px solid red;
+  // width: 100%;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 414px) { // iPadPro
 
 }
 
-@media screen and (max-resolution: 96dpi) and (min-width: 1024px) { // desktop
-  .double {
-    // line-height: 3em;
+@media screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 768px) { // iPadPro
+  .quote {
+    background-color: #ecf6ff;
+  }
+}
+
+@media screen and (max-resolution: 96dpi) and (min-width: 960px) { // desktop
+  .quote {
+    background-color: #ecf6ff;
   }
 }
 </style>

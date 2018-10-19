@@ -41,8 +41,8 @@
       <!-- Navigation end -->
       <transition name="custom-classes-transition"
                   mode="out-in"
-                  enter-active-class="animated fadeInLeft"
-                  leave-active-class="animated fadeOutRight">
+                  enter-active-class="animated fadeInRight"
+                  leave-active-class="animated fadeOutLeft">
         <router-view />
       </transition>
 
@@ -184,12 +184,11 @@ export default {
 
 <style lang="scss">
 @import "./assets/scss/index.scss";
-@import "./assets/animate.css";
 
 h1, h2, h3, h4, h5, h6 {
   font-family: $header-font;
   // letter-spacing: -.09em;
-  color: black;
+  color: $color-primaryDarkest;
 }
 h2 {
   font-size: 2.5em;
@@ -211,6 +210,7 @@ h4 {
   background-color: white;
   // padding-top: 4em;
   // min-height: auto;
+  padding-top: 3.5em;
 }
 
 .hardcodedFont { // Meh...
@@ -287,5 +287,11 @@ h4 {
 .quote {
   // font-family: $quote-font;
   font-size: 2em;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 1024px) {
+  #app {
+    padding-top: 4em;
+  }
 }
 </style>

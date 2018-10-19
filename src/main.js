@@ -8,9 +8,6 @@ import Vuetify from 'vuetify'
 import '../node_modules/vuetify/dist/vuetify.min.css'
 import './assets/animate.css'
 import VueObserveVisibility from 'vue-observe-visibility'
-import VideoBg from 'vue-videobg'
-
-Vue.component('video-bg', VideoBg)
 
 Vue.use(VueAxios, axios)
 

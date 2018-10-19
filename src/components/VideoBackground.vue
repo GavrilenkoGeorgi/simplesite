@@ -1,17 +1,21 @@
 <template>
-  <div id="videoBackground">
-    <div class="video-container-box">
+  <v-container id="videoBackground" pa-0 ma-0 fluid>
+    <!--div class="video-container-box"-->
+    <v-layout row fill-height>
+      <v-flex class="manual">
       <video autoplay muted loop id="doggyVideo" poster="../assets/video/maxdogAdBg-1200x720p.jpg">
         <source src="../assets/video/maxdogAd-1200x720p.mp4" type="video/mp4" media="all and (max-width: 768px)">
         <!--source src="../assets/video/Puppy1280.mp4" type="video/mp4" media="all and (min-width: 768px)"-->
         <!--source src="../assets/video/Puppy640.webm" type="video/webm"-->
       </video>
+        <!-- button class="play-pause-button paused" v-on:click="playPauseVideo"></button-->
         <h1 class="video-overlay">Дрессировка собак в Киеве и Киевской области</h1>
-        <button class="play-pause-button paused" v-on:click="playPauseVideo"></button>
+      </v-flex>
         <!-- Use a button to pause/play the video with JavaScript -->
         <!--button id="myBtn" onclick="myFunction()">1</button-->
-    </div>
-  </div>
+    <!--/div-->
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
@@ -47,7 +51,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 @import "../assets/scss/index.scss";
-@import "../assets/animate.css";
+// @import "../assets/animate.css";
 // @import "../assets/scss/fonts.scss";
 $color-white: hsl(0, 0%, 100%);
 $color-red: hsl(0, 100%, 41%);
@@ -58,12 +62,12 @@ $color-darkGray: hsl(0, 0%, 33%);
 
 #videoBackground {
   width: 100%;
+  // height: 98%;
   background-color: #ecf6ff;
-}
-.video-container-box {
-  // border: 1px solid green;
-  // margin: 0em 0em 0em 0em;
-  // margin-bottom: -3em;
+  // height: 240px;
+  // object-fit: contain;
+  // object-position: center;
+  // border: 1px solid pink;
 }
 
 #doggyVideo {
@@ -72,36 +76,10 @@ $color-darkGray: hsl(0, 0%, 33%);
     // bottom: 0;
     // margin-top:.3em;
     width: 100%;
+    // height: 240px;
     // border: 1px solid red;
     // min-width: 100%;
     // min-height: 100%;
-}
-
-/* Add some content at the bottom of the video/page */
-
-.video-container-box:hover {
-  .video-overlay {
-    opacity: 0;
-  }
-}
-
-.video-overlay {
-  // font-size: 1em;
-  // letter-spacing: .1em;
-  // padding: .4em;
-  // z-index: 1;
-  //border: 1px solid lime;
-  font-family: $alt-font-1;
-  position: relative;
-  color: white;
-  text-align: center;
-  transition: opacity 500ms ease-in;
-  // padding-left: 1em;
-  // font-size: .6em;
-  // text-align: left;
-  // bottom: 2.8em;
-  // padding-left: 1em;
-  // font-weight: 500;
 }
 
 .play-pause-button {
@@ -154,32 +132,40 @@ $color-darkGray: hsl(0, 0%, 33%);
 @media screen and (-webkit-min-device-pixel-ratio: 1.4) and (min-width: 250px) { // fly iq4415 iphone5Se
   .video-overlay {
     // color: red;
-    font-size: .65em;
-    bottom: 2em;
+    // font-size: .65em;
+    // bottom: 2em;
   }
 }
 
 @media screen and (-webkit-min-device-pixel-ratio: 1.88) and (min-width: 360px) { // nokia5
   .video-overlay {
     // color: pink;
-    font-size: .75em;
-    bottom: 2.7em;
+    // font-size: .75em;
+    // bottom: 2.7em;
     // padding-left: .75em;
+  }
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 414px) {
+  .video-overlay {
+    // color: orange;
+    // font-size: 1em;
+    // bottom: 2.2em;
   }
 }
 
 @media screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 768px) {
   .video-overlay {
     // color: orange;
-    font-size: 1.55em;
-    bottom: 2.2em;
+    // font-size: 1.55em;
+    // bottom: 2.2em;
   }
 }
 
 @media screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 1024px) { // iPadPro
   .video-overlay {
     // color: lime;
-    font-size: 2em;
+    // font-size: 2em;
   }
   .play-pause-button {
     left: 3em;
@@ -190,7 +176,7 @@ $color-darkGray: hsl(0, 0%, 33%);
   .video-overlay {
     // color: powderblue;
     // font-size: 2em;
-    bottom: 2.3em;
+    // bottom: 2.3em;
   }
   .play-pause-button {
     left: 3em;
@@ -220,4 +206,75 @@ $color-darkGray: hsl(0, 0%, 33%);
   color: green;
 }
 */
+
+.manual {
+  display: flex;
+  flex-direction: column;
+  // align-items: center;
+  // justify-content: center;
+  box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.75);
+  z-index: 1;
+}
+.video-overlay {
+  position: absolute;
+  top: .4em;
+  left: .4em;
+  color: white;
+  font-size: .8em;
+  text-align: left;
+  // background-color: $color-black-overlay;
+  padding: 0em .3em 0em .5em;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 1.4) and (min-width: 250px) { // fly iq4415 iphone5Se
+  .video-overlay {
+    // color: red;
+    // font-size: .65em;
+    // bottom: 2em;
+  }
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 1.88) and (min-width: 360px) { // nokia5
+  .video-overlay {
+    // color: pink;
+    // font-size: .75em;
+    // bottom: 2.7em;
+    // padding-left: .75em;
+  }
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 414px) {
+  .video-overlay {
+    font-size: 1em;
+  }
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 768px) {
+  .video-overlay {
+    font-size: 1.4em;
+    top: .6em;
+    left: .6em;
+  }
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 1024px) { // iPadPro
+  .video-overlay {
+    font-size: 1.8em;
+  }
+  .play-pause-button {
+    left: 3em;
+    top: 7em;
+  }
+}
+@media screen and (max-resolution: 96dpi) and (min-width: 1024px) { // desktop
+  .video-overlay {
+    font-size: 2em;
+    top: 1em;
+    left: .6em;
+  }
+  .play-pause-button {
+    left: 3em;
+    top: 7em;
+  }
+}
 </style>
