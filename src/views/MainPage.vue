@@ -19,7 +19,7 @@
     <v-layout row wrap justify-space-around>
       <v-flex xs12 sm8 md5 v-observe-visibility="{ callback: visibilityChanged, throttle: 500 }"
         class="animated groupTraining hidden">
-        <h3>{{ getContent.mainPageText.groupTraining.header }}</h3>
+        <h3 class="mb-4">{{ getContent.mainPageText.groupTraining.header }}</h3>
         <v-img :src="require('@/assets/img/mainPage/SAA_3426_1024x678.jpg')" class="training-section-image" contain></v-img>
         <p class="simple-text-block"> {{ getContent.mainPageText.groupTraining.text }} </p>
       </v-flex>
@@ -27,7 +27,7 @@
         class="animated individualTraining hidden">
         <v-layout column>
           <v-flex d-flex justify-center>
-            <h3>{{ getContent.mainPageText.individualTraining.header }}</h3>
+            <h3 class="mb-4">{{ getContent.mainPageText.individualTraining.header }}</h3>
           </v-flex>
           <v-flex d-flex>
           <v-img :src="require('@/assets/img/mainPage/SAA_3096_1024x678.jpg')"
@@ -43,7 +43,7 @@
 <!-- next thingy -->
     <v-layout justify-center column>
       <v-flex>
-      <h2>{{ getContent.mainPageText.lessonsHeader }}</h2>
+      <span class="ad">{{ getContent.mainPageText.lessonsHeader }}</span>
       </v-flex>
 
       <v-flex>
@@ -51,11 +51,11 @@
       </v-flex>
 
       <v-layout align-center column>
-        <v-flex>
+        <v-flex ma-4>
           <v-flex>
           <v-btn to="/consultform"
             color="info"
-            class="mt-4 animated"
+            class="ma-4 animated"
             v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }">
             ОНЛАЙН ЗАПИСЬ
           </v-btn>
@@ -136,125 +136,41 @@ export default {
 
 <style scoped lang="scss">
 @import "../assets/scss/index.scss";
-@import "../assets/scss/colours.scss";
 
-h1, h2, h3 {
-  font-family: $header-font;
-  // font-family: 'Courier New', Courier, monospace;
-  // letter-spacing: -.09em;
-  color: $alt-color-primary-darkest;
+#mainPage {
+  padding-top: 3.5em;
 }
-
-/*
-#box {
-  background-color: rgba(40, 40, 190, 255);
-  border: 4px solid rgb(20, 20, 120);
-  transition: background-color 1s, border 1s;
-  width: 360px;
-  height: 360px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
+.image-container {
+  background-color: #ecf6ff;
+  // border: 1px solid red;
 }
-*/
-
-.vertical {
-  color: white;
-  font: 32px "Arial";
-}
-
-.extra {
-  width: 350px;
-  height: 350px;
-  margin-top: 10px;
-  border: 4px solid rgb(20, 20, 120);
-  text-align: center;
-  padding: 20px;
-}
-
-// .animated {
-  // animation-delay: .8s;
-  // opacity: 0;
-// }
-
 .quote {
   // border: 1px solid red;
   font-family: $text-font;
   padding: .6em;
   font-size: 2.5em;
   height: 100%;
-  // color: red;
   display: flex;
   align-items: center;
   justify-content: center;
-  // color: red;
-  // background-color: red;
 }
-
-.hidden {
-  visibility: hidden;
-  // opacity: 0;
-}
-
 hr.divider {
     border: 0;
-    height: .05em;
+    height: .09em;
     margin: 0em;
     padding: 0em;
     background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
 }
 
-.training-section-image {
-  box-shadow: 0em 0em .15em .06em rgba(163,163,163,1);
-  margin: 2em 0em 2em 0em;
-  // font-size: 1.4em;
-  // border: 1px solid pink;
+.hidden {
+  visibility: hidden;
 }
-.training-link-title {
-  position: absolute;
-  color: white;
+
+.ad {
+  font-size: 2.4em;
+  color: $alt-color-primary-darkest;
   font-family: $alt-font-1;
-  // font-weight: 700;
-  background-color: $color-black-overlay;
-  bottom: 0;
-  line-height: .8;
-  font-size: 1em;
-}
-.training-card-title {
-  text-align: left;
-  font-family: $text-font;
-  font-size: 1em;
-}
-.training-card-descr-text {
-  text-align: left;
-  text-indent: 1em;
-  font-family: $text-font;
-  font-size: 1.3em;
   font-weight: 700;
-  letter-spacing: .01em;
-}
-/*
-.hight-transition {
-  transition: height 1s ease-out;
-}
-*/
-// new
-#mainPage {
-  padding-top: 3.5em;
-}
-
-.image-container {
-  background-color: #ecf6ff;
-  // border: 1px solid red;
-  // width: 100%;
-}
-.simple-text-block {
-  font-size: 1.5em;
-  padding: 0em .4em 0em .4em;
-}
-@media screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 414px) { // iPadPro
-
 }
 
 @media screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 960px) { // responsive
@@ -262,7 +178,6 @@ hr.divider {
     background-color: #ecf6ff;
   }
 }
-
 @media screen and (max-resolution: 96dpi) and (min-width: 960px) { // desktop
   .quote {
     background-color: #ecf6ff;

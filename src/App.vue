@@ -19,7 +19,7 @@
       <v-navigation-drawer app right disable-resize-watcher v-model="sideNav" width="240">
         <v-list>
           <v-list-tile>
-          <v-list-tile-title class="logo">
+          <v-list-tile-title class="nav-drawer-title">
             <router-link to="/"> {{ getContent.logo.text }} </router-link>
           </v-list-tile-title>
           <v-btn icon @click="sideNav = !sideNav">
@@ -70,7 +70,6 @@
 
 <script>
 import { mapGetters } from 'vuex'
-// import Footer from '@/components/Footer.vue'
 
 export default {
   name: 'app',
@@ -178,80 +177,39 @@ export default {
     }
   }
 }
-
 </script>
 
 <style lang="scss">
 @import "./assets/scss/index.scss";
+@import './assets/animate.css';
 
 h1, h2, h3 {
-  font-family: $header-font;
-  // letter-spacing: -.09em;
-  // color: $alt-color-primary-darker;
-  // color: red;
+  font-family: $alt-font-1;
+  color: $alt-color-primary-darkest;
+  font-size-adjust: 1;
 }
 h2 {
-  font-size: 2.5em;
+  font-size: 2em;
+  // color: red;
 }
 h3 {
-  font-size: 1.8em;
-}
-h4 {
-  font-size: 1.5em;
+  font-size: 1.6em;
 }
 
 #app {
-  // font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  // color: #2c3e50;
-  // font-size: 1em;
   background-color: white;
-  // padding-top: 4em;
-  // min-height: auto;
   padding-top: 3.5em;
 }
-
-.hardcodedFont { // Meh...
-  text-align: left;
-  font-family: sans-serif;
-  font-size: 16px;
-}
-
-/*
-.container {
-  font-family: $text-font;
-}*/
-
-/*
-#nav {
-  padding: 30px;
-  a {
-    // font-weight: bold;
-    // color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
-*/
-.right {
-  text-align: right;
-}
-
 .toolbar-logo {
   display: flex;
   flex-direction: column;
-  // align-items: center;
-  // justify-content: center;
-  // border: 1px solid lime;
-  // height: 2.5em;
   a {
     text-decoration: none;
   }
 }
-
 .logo{
   font-size: 1.9em;
   line-height: 1em;
@@ -259,44 +217,28 @@ h4 {
   text-transform: uppercase;
   vertical-align: middle;
   text-decoration: none;
-  // color: $color-primary;
-  color: $indigo;
+  color: $alt-color-primary-darkest;
   font-family: $logo-font;
   font-weight: 700;
   // border: 1px solid green;
 }
-
 .lower-logo-text {
   text-transform: uppercase;
   // border: 1px solid red;
   font-size: .79em;
   font-weight: 700;
 }
-/*
-.footerLogo {
-  font-size: 1.3em;
-  color: $color-white;
-  text-decoration: none;
-}
-*/
 .nav-drawer-title {
-  color: $color-primary;
-  // font-family: $logo-font;
-  font-size: 1.4em;
-}
-.quote {
-  // font-family: $quote-font;
+  color: $alt-color-primary-darkest;
+  font-family: $logo-font;
   font-size: 2em;
 }
-
+.quote {
+  font-size: 2em;
+}
 .footer-quote {
   font-family: $text-font;
   font-size: 1.4em;
 }
 
-@media screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 1024px) {
-  #app {
-    padding-top: 4em;
-  }
-}
 </style>

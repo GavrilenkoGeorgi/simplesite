@@ -10,7 +10,7 @@
             lazy
             reverse-transition="slide-right"
             transition="slide-left">
-              <h5 class="overlay">{{ link.text }}</h5>
+            <h5 class="overlay">{{ link.text }}</h5>
           </v-carousel-item>
         </v-carousel>
       </v-flex>
@@ -32,9 +32,7 @@ export default {
   },
   methods: {
     getLinkImage (image) {
-      // return require('../../assets/img/' + image)
       return require(`@/assets/img/${image}.jpg`)
-      // @/assets/gallery/pic1.jpg
     }
   }
 }
@@ -47,7 +45,7 @@ export default {
   // border: 1px solid red;
   color: white;
   padding: 0em .2em 0em .2em;
-  margin: 0em 0em .3em .3em;
+  margin: 0em 0em .6em .8em;
   font-family: $alt-font-1;
   font-size: 1.4em;
   text-align: left;
@@ -55,7 +53,7 @@ export default {
   position: absolute;
   bottom: 0;
 }
-
+// slide left
 #slider-photo .slide-left-enter-active {
   transition: 2s;
 }
@@ -80,7 +78,6 @@ export default {
 // slide right
 #slider-photo .slide-right-enter-active {
   transition: 2s;
-  // transform: translateX(+50em);
 }
 #slider-photo .slide-right-leave-active {
   transition: 2s;
@@ -88,21 +85,15 @@ export default {
 }
 #slider-photo .slide-right-leave-to {
   transition: 2s;
-  // position: absolute;
-  // top: 0;
-  // left: 0;
   transform: translateX(-100%);
 }
 #slider-photo .slide-right-enter,
 #slider-photo .slide-right-leave {
   transition: 2s;
-  // opacity: 0;
   transform: translateX(-100%);
 }
-
 #slider-photo .slide-right-leave-to {
   transition: 2s;
-  // opacity: 0;
   transform: translateX(+100%);
 }
 

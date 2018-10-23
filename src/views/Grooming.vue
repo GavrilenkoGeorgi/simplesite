@@ -11,10 +11,10 @@
     </v-container>
 
     <v-img class="mt-4 pt-4" :src="require('@/assets/img/grooming/groomingTitlePhoto.png')" height="371" contain></v-img>
-    <v-container>
+    <v-container ma-0 pa-0>
       <v-layout justify-center>
         <v-flex md10 xl8>
-          <p>{{ getContent.groomingText.paragraphValue }}</p>
+          <p class="simple-text-block">{{ getContent.groomingText.paragraphValue }}</p>
         </v-flex>
       </v-layout>
     </v-container>
@@ -110,42 +110,20 @@ export default {
 
 <style scoped lang="scss">
 @import "../assets/scss/index.scss";
-// @import "../assets/animate.css";
-@import "../assets/scss/index.scss";
-h1 {
-  font-family: $alt-font-1;
-}
 
 #groomingPage {
   .hidden {
   visibility: hidden;
   }
+  .photo-overlay {
+    position: absolute;
+    bottom: .5em;
+    padding: 0em .3em 0em .3em;
+    letter-spacing: .075em;
+    font-weight: 700;
+    color: $color-white;
+    background-color: $color-black-overlay;
+  }
 }
 
-h1, h2, h3, h4, h5, h6 {
-  // font-family: $header-font;
-  // letter-spacing: -.09em;
-  color: black;
-}
-h2 {
-  // font-size: 2em;
-}
-h3 {
-  // font-size: 1.5em;
-  font-family: $alt-font-1;
-  color: $color-primaryPale2;
-  // line-height: 6em;
-}
-h4 {
-  font-size: 1.5em;
-}
-
-/*
-.title {
-  margin-top: 4em;
-  // font-size: 14em;
-  // font-family: $text-font;
-  // letter-spacing: .07em;
-}
-*/
 </style>

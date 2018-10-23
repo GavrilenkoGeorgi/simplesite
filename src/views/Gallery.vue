@@ -1,17 +1,17 @@
 <template>
-  <!--v-container class="pa-0 ma-0">
-    <v-layout column xs12 lg6 xl4 class="customMargins">
-    <v-flex-->
-    <v-carousel class="customHeight">
-      <v-carousel-item
-        v-for="(item,i) in items"
-        :key="i"
-        :src="item.src"
-      ></v-carousel-item>
-    </v-carousel>
-    <!--/v-flex>
+  <v-container fluid ma-0 px-0>
+    <v-layout justify-center>
+      <v-flex xs12 sm10 md8 lg6>
+        <v-carousel>
+          <v-carousel-item
+            v-for="(item,i) in items"
+            :key="i"
+            :src="item.src"
+          ></v-carousel-item>
+        </v-carousel>
+      </v-flex>
     </v-layout>
-  </v-container-->
+  </v-container>
 </template>
 
 <script>
@@ -48,15 +48,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-
-.customHeight {
-  height: 800px;
-  // margin-bottom: 6em;
-}
-
-.customMargins {
-  margin: 6em 0em 14em 0em;
-}
-</style>

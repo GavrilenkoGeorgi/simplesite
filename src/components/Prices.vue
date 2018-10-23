@@ -54,12 +54,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "../assets/scss/index.scss";
+@import "../assets/scss/colours.scss";
 
 .price-header {
   color: $color-primary-2;
   font-size: 1.6em;
-  // text-align: center;
   font-weight: 700;
   transition: color 500ms;
 }
@@ -70,8 +69,6 @@ export default {
 .price-descr {
   display: flex;
   font-size: 1.5em;
-  // align-items: center;
-  // justify-content: center;
   color: $color-primaryDarkest;
 }
 .price-value {

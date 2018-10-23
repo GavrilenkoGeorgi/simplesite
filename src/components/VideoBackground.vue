@@ -48,45 +48,19 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-@import "../assets/scss/index.scss";
-// @import "../assets/animate.css";
-// @import "../assets/scss/fonts.scss";
-$color-white: hsl(0, 0%, 100%);
-$color-red: hsl(0, 100%, 41%);
-$color-black: hsl(0, 0%, 0%);
-$color-lightGray: hsl(0, 0%, 73%);
-$color-grayShadow: hsla(0, 0%, 80%, 0.75);
-$color-darkGray: hsl(0, 0%, 33%);
 
 #videoBackground {
   width: 100%;
-  // height: 98%;
   background-color: #ecf6ff;
-  // height: 240px;
-  // object-fit: contain;
-  // object-position: center;
-  // border: 1px solid pink;
 }
 
 #doggyVideo {
-    // position: fixed;
-    // right: 0;
-    // bottom: 0;
-    // margin-top:.3em;
     width: 100%;
-    // height: 240px;
-    // border: 1px solid red;
-    // min-width: 100%;
-    // min-height: 100%;
 }
 
 .play-pause-button {
   // border: 1px solid red;
-  // width: 10em;
-  // height: 2em;
-  // background-color: red;
   position: absolute;
   left: 1em;
   top: 4.7em;
@@ -105,113 +79,10 @@ $color-darkGray: hsl(0, 0%, 33%);
     border-width: 0em 0em 0em 1em;
   }
 }
-/*
-  &:hover {
-    border-color: transparent transparent transparent #ff0000;
-  }
-}
-*/
-
-/*
-@media only screen and (min-width: 768px) {
-  .playPauseButton {
-    top: -20em;
-  }
-  .content {
-    top: -7em;
-  }
-  .video-overlay {
-    font-size: 2em;
-    letter-spacing: .1em;
-    padding: .4em;
-    width: 100%;
-  }
-}
-*/
-
-@media screen and (-webkit-min-device-pixel-ratio: 1.4) and (min-width: 250px) { // fly iq4415 iphone5Se
-  .video-overlay {
-    // color: red;
-    // font-size: .65em;
-    // bottom: 2em;
-  }
-}
-
-@media screen and (-webkit-min-device-pixel-ratio: 1.88) and (min-width: 360px) { // nokia5
-  .video-overlay {
-    // color: pink;
-    // font-size: .75em;
-    // bottom: 2.7em;
-    // padding-left: .75em;
-  }
-}
-
-@media screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 414px) {
-  .video-overlay {
-    // color: orange;
-    // font-size: 1em;
-    // bottom: 2.2em;
-  }
-}
-
-@media screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 768px) {
-  .video-overlay {
-    // color: orange;
-    // font-size: 1.55em;
-    // bottom: 2.2em;
-  }
-}
-
-@media screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 1024px) { // iPadPro
-  .video-overlay {
-    // color: lime;
-    // font-size: 2em;
-  }
-  .play-pause-button {
-    left: 3em;
-    top: 7em;
-  }
-}
-@media screen and (max-resolution: 96dpi) and (min-width: 1024px) { // desktop
-  .video-overlay {
-    // color: powderblue;
-    // font-size: 2em;
-    // bottom: 2.3em;
-  }
-  .play-pause-button {
-    left: 3em;
-    top: 7em;
-  }
-}
-
-/*
-@media (max-resolution: 360dpi) {
-  .video-overlay {
-  // font-size: 1em;
-  // letter-spacing: .1em;
-  // padding: .4em;
-  // z-index: 1;
-  //border: 1px solid lime;
-  position: relative;
-  color: red;
-  font-size: .6em;
-  text-align: left;
-  bottom: 2.8em;
-  padding-left: 1em;
-  font-weight: 500;
-  }
-}
-
-@media (max-resolution: 181dpi) { // nokia5
-  color: green;
-}
-*/
 
 .manual {
   display: flex;
   flex-direction: column;
-  // align-items: center;
-  // justify-content: center;
   box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.75);
   z-index: 1;
 }
@@ -220,27 +91,11 @@ $color-darkGray: hsl(0, 0%, 33%);
   top: .4em;
   left: .4em;
   color: white;
-  font-size: .8em;
+  font-size: .9em;
   text-align: left;
   // background-color: $color-black-overlay;
   padding: 0em .3em 0em .5em;
-}
-
-@media screen and (-webkit-min-device-pixel-ratio: 1.4) and (min-width: 250px) { // fly iq4415 iphone5Se
-  .video-overlay {
-    // color: red;
-    // font-size: .65em;
-    // bottom: 2em;
-  }
-}
-
-@media screen and (-webkit-min-device-pixel-ratio: 1.88) and (min-width: 360px) { // nokia5
-  .video-overlay {
-    // color: pink;
-    // font-size: .75em;
-    // bottom: 2.7em;
-    // padding-left: .75em;
-  }
+  margin-top: .7em;
 }
 
 @media screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 414px) {
@@ -266,11 +121,11 @@ $color-darkGray: hsl(0, 0%, 33%);
     top: 7em;
   }
 }
-@media screen and (max-resolution: 96dpi) and (min-width: 1024px) { // desktop
+@media screen and (max-resolution: 96dpi) and (min-width: 768px) { // desktop
   .video-overlay {
     font-size: 2em;
-    top: 1em;
-    left: .6em;
+    top: .3em;
+    left: .3em;
   }
   .play-pause-button {
     left: 3em;
