@@ -45,8 +45,7 @@
     </v-layout>
     <v-container class="my-4 pa-0">
       <v-layout column>
-        <h2>SPA комплекс</h2>
-        <h3>Банные услуги и гигиена</h3>
+        <h2>Прайс</h2>
       </v-layout>
     </v-container>
   </v-container>

@@ -1,12 +1,12 @@
-import Vue from 'vue'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import App from './App.vue'
 import router from './router'
 import store from './store/store'
-import Vuetify from 'vuetify'
 import '../node_modules/vuetify/dist/vuetify.min.css'
 import './assets/animate.css'
+import Vue from 'vue'
+import Vuetify from 'vuetify'
 import VueObserveVisibility from 'vue-observe-visibility'
 
 Vue.use(VueAxios, axios)

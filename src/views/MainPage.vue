@@ -2,42 +2,67 @@
   <v-container fluid id="mainPage" pa-0 ma-0>
 <!-- Video background -->
     <VideoBackground />
-    <!-- v-container pa-0 fluid -->
+<!-- 1st layout -->
     <v-layout row wrap>
       <v-flex xs12 sm12 md4 class="image-container">
           <v-img :src="require('@/assets/img/mainPage/main-photo-1024px300dpi.jpg')" contain max-height="500px"></v-img>
         </v-flex>
         <v-flex xs12 sm12 md8>
           <p class="quote">"Вы подобны художнику, пишите этот мир собаке!"</p>
-          <!--v-card flat class="quote">
-            <v-card-text class="quote-font">"Вы подобны художнику, пишите этот мир собаке!"</v-card-text>
-          </v-card-->
         </v-flex>
     </v-layout>
+
     <v-flex xs12 mb-4>
-    <hr class="divider" />
+      <hr class="divider" />
     </v-flex>
-    <!-- /v-container -->
 <!-- Training types block -->
-    <!-- v-container py-0 -->
-      <v-layout row wrap justify-space-around>
-        <v-flex xs12 md5 v-observe-visibility="{ callback: visibilityChanged, throttle: 500 }" class="animated groupTraining hidden">
-          <h3 class="double">{{ getContent.mainPageText.groupTraining.header }}</h3>
-          <v-img :src="require('@/assets/img/group_training-h500-96dpi.jpg')" class="training-section-image" contain></v-img>
-          <p class="simple-text-block"> {{ getContent.mainPageText.groupTraining.text }} </p>
-        </v-flex>
-        <v-flex xs12 md5 v-observe-visibility="{ callback: visibilityChanged, throttle: 500 }" class="animated individualTraining hidden">
-          <h3>{{ getContent.mainPageText.individualTraining.header }}</h3>
-          <v-img :src="require('@/assets/img/ind_training-h500-96dpi.jpg')" class="training-section-image" contain></v-img>
-          <p class="simple-text-block">{{ getContent.mainPageText.individualTraining.text }}</p>
+    <v-layout row wrap justify-space-around>
+      <v-flex xs12 sm8 md5 v-observe-visibility="{ callback: visibilityChanged, throttle: 500 }"
+        class="animated groupTraining hidden">
+        <h3>{{ getContent.mainPageText.groupTraining.header }}</h3>
+        <v-img :src="require('@/assets/img/mainPage/SAA_3426_1024x678.jpg')" class="training-section-image" contain></v-img>
+        <p class="simple-text-block"> {{ getContent.mainPageText.groupTraining.text }} </p>
+      </v-flex>
+      <v-flex xs12 sm8 md5 v-observe-visibility="{ callback: visibilityChanged, throttle: 500 }"
+        class="animated individualTraining hidden">
+        <v-layout column>
+          <v-flex d-flex justify-center>
+            <h3>{{ getContent.mainPageText.individualTraining.header }}</h3>
+          </v-flex>
+          <v-flex d-flex>
+          <v-img :src="require('@/assets/img/mainPage/SAA_3096_1024x678.jpg')"
+            class="training-section-image" contain>
+          </v-img>
+          </v-flex>
+          <v-flex d-flex justify-center>
+            <p class="simple-text-block">{{ getContent.mainPageText.individualTraining.text }}</p>
+          </v-flex>
+        </v-layout>
+      </v-flex>
+    </v-layout>
+<!-- next thingy -->
+    <v-layout justify-center column>
+      <v-flex>
+      <h2>{{ getContent.mainPageText.lessonsHeader }}</h2>
+      </v-flex>
+
+      <v-flex>
+        <Slider />
+      </v-flex>
+
+      <v-layout align-center column>
+        <v-flex>
+          <v-flex>
+          <v-btn to="/consultform"
+            color="info"
+            class="mt-4 animated"
+            v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }">
+            ОНЛАЙН ЗАПИСЬ
+          </v-btn>
+          </v-flex>
         </v-flex>
       </v-layout>
-    <!-- /v-container-->
-    <!--v-container-->
-      <h2>{{ getContent.mainPageText.lessonsHeader }}</h2>
-    <!--/v-container -->
-    <Slider />
-    <v-btn to="/consultform" color="info" large class="mt-4 animated" v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }">ОНЛАЙН ЗАПИСЬ</v-btn>
+    </v-layout>
   </v-container>
 </template>
 
@@ -111,21 +136,13 @@ export default {
 
 <style scoped lang="scss">
 @import "../assets/scss/index.scss";
+@import "../assets/scss/colours.scss";
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3 {
   font-family: $header-font;
+  // font-family: 'Courier New', Courier, monospace;
   // letter-spacing: -.09em;
-  color: $color-primaryDarkest;
-}
-h2 {
-  font-size: 2.5em;
-}
-h3 {
-  font-size: 1.8em;
-}
-
-h4 {
-  font-size: 1.5em;
+  color: $alt-color-primary-darkest;
 }
 
 /*
@@ -141,9 +158,7 @@ h4 {
   padding: 20px;
 }
 */
-.simple-text-block {
-  font-size: 1.6em;
-}
+
 .vertical {
   color: white;
   font: 32px "Arial";
@@ -234,12 +249,15 @@ hr.divider {
   // border: 1px solid red;
   // width: 100%;
 }
-
+.simple-text-block {
+  font-size: 1.5em;
+  padding: 0em .4em 0em .4em;
+}
 @media screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 414px) { // iPadPro
 
 }
 
-@media screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 768px) { // iPadPro
+@media screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 960px) { // responsive
   .quote {
     background-color: #ecf6ff;
   }

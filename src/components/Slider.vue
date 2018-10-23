@@ -1,12 +1,13 @@
 <template>
-  <v-container id="slider">
-    <v-layout row wrap justify-space-around>
-      <v-flex xs12 md10>
-        <v-carousel id="xp" hide-delimiters hide-controls>
+  <v-container fluid mt-3 pa-0 id="slider">
+    <v-layout justify-center row wrap>
+      <v-flex xs12 sm10 md8 lg6>
+        <v-carousel id="slider-photo" hide-delimiters hide-controls>
           <v-carousel-item
             v-for="link in getTrainingTypeLinks.links"
             :key="link.image"
             :src="require(`@/assets/img/${link.image}`)"
+            lazy
             reverse-transition="slide-right"
             transition="slide-left">
               <h5 class="overlay">{{ link.text }}</h5>
@@ -55,51 +56,51 @@ export default {
   bottom: 0;
 }
 
-#xp .slide-left-enter-active {
+#slider-photo .slide-left-enter-active {
   transition: 2s;
 }
-#xp .slide-left-leave-active {
-  transition: 2s;
-  transform: translateX(+100%);
-}
-#xp .slide-left-leave-to {
+#slider-photo .slide-left-leave-active {
   transition: 2s;
   transform: translateX(+100%);
 }
-#xp .slide-left-enter,
-#xp .slide-left-leave {
+#slider-photo .slide-left-leave-to {
   transition: 2s;
   transform: translateX(+100%);
 }
-#xp .slide-left-leave-to {
+#slider-photo .slide-left-enter,
+#slider-photo .slide-left-leave {
+  transition: 2s;
+  transform: translateX(+100%);
+}
+#slider-photo .slide-left-leave-to {
   transition: 2s;
   transform: translateX(-100%);
 }
 
 // slide right
-#xp .slide-right-enter-active {
+#slider-photo .slide-right-enter-active {
   transition: 2s;
   // transform: translateX(+50em);
 }
-#xp .slide-right-leave-active {
+#slider-photo .slide-right-leave-active {
   transition: 2s;
   transform: translateX(-100%);
 }
-#xp .slide-right-leave-to {
+#slider-photo .slide-right-leave-to {
   transition: 2s;
   // position: absolute;
   // top: 0;
   // left: 0;
   transform: translateX(-100%);
 }
-#xp .slide-right-enter,
-#xp .slide-right-leave {
+#slider-photo .slide-right-enter,
+#slider-photo .slide-right-leave {
   transition: 2s;
   // opacity: 0;
   transform: translateX(-100%);
 }
 
-#xp .slide-right-leave-to {
+#slider-photo .slide-right-leave-to {
   transition: 2s;
   // opacity: 0;
   transform: translateX(+100%);

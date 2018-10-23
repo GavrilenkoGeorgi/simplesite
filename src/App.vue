@@ -45,9 +45,8 @@
                   leave-active-class="animated fadeOutLeft">
         <router-view />
       </transition>
-
-      <v-footer dark height="auto" class="mt-4">
-        <v-card width="100%" class="indigo lighten-1 white--text text-xs-center">
+      <v-footer dark height="auto mt-4">
+        <v-card width="100%" class=" lighten-1 white--text text-xs-center">
             <v-card-text>
               <v-btn
                 v-for="icon in icons" :key="icon" class="mx-3 white--text" icon>
@@ -56,7 +55,7 @@
             </v-card-text>
 
             <v-card-text class="white--text pt-0">
-              «То, что сегодня кажется невозможным, завтра станет результатом».
+              <span class='footer-quote'>«То, что сегодня кажется невозможным, завтра станет результатом».</span>
             </v-card-text>
 
             <v-divider></v-divider>
@@ -71,7 +70,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import Footer from '@/components/Footer.vue'
+// import Footer from '@/components/Footer.vue'
 
 export default {
   name: 'app',
@@ -97,7 +96,7 @@ export default {
     }
   },
   components: {
-    Footer
+    // Footer
   },
   computed: {
     ...mapGetters([
@@ -185,10 +184,11 @@ export default {
 <style lang="scss">
 @import "./assets/scss/index.scss";
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3 {
   font-family: $header-font;
   // letter-spacing: -.09em;
-  color: $color-primaryDarkest;
+  // color: $alt-color-primary-darker;
+  // color: red;
 }
 h2 {
   font-size: 2.5em;
@@ -287,6 +287,11 @@ h4 {
 .quote {
   // font-family: $quote-font;
   font-size: 2em;
+}
+
+.footer-quote {
+  font-family: $text-font;
+  font-size: 1.4em;
 }
 
 @media screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 1024px) {
