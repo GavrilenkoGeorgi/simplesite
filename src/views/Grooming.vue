@@ -76,24 +76,7 @@ export default {
   },
   methods: {
     visibilityChanged (isVisible, entry) {
-      // this.isVisible = isVisible
-      // console.log(entry.target)
-      // console.log(`Is it visible now? ${isVisible}`)
-      // entry.target.classList.add('bounceInUp')
-      // console.log(entry.target.className)
       let animationType = 'fadeInLeft'
-      /*
-      if (entry.target.classList.contains('groupTraining')) {
-        // console.log(`Training!`)
-        animationType = 'fadeInLeft'
-      } else if (entry.target.classList.contains('individualTraining')) {
-        animationType = 'fadeInRight'
-      } else if (entry.target.classList.contains('serviceItems')) {
-        animationType = 'fadeInLeft'
-      } else if (entry.target.classList.contains('groomingSection')) {
-        animationType = 'zoomIn'
-      }
-      */
       if (isVisible) {
         entry.target.classList.add(animationType)
         entry.target.classList.remove('hidden')

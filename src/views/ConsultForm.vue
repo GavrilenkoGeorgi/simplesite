@@ -1,11 +1,11 @@
 <template>
-  <v-container>
-    <v-layout align-center justify-center column pt-4 mt-4>
+  <v-flex my-4 py-4>
+    <v-layout align-center justify-center column>
       <v-flex>
         <h1>{{ formTitle }}</h1>
       </v-flex>
     </v-layout>
-      <v-layout align-center justify-center pt-4 mt-2>
+      <v-layout align-center justify-center>
       <v-flex xs12 sm6 md6 lg4 xl2>
       <v-form ref="form" v-model="valid" lazy-validation>
     <v-text-field
@@ -45,7 +45,7 @@
   </v-form>
       </v-flex>
       </v-layout>
-  </v-container>
+  </v-flex>
 </template>
 
 <script>

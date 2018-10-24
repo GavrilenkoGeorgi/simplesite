@@ -91,10 +91,6 @@ export default {
   },
   methods: {
     visibilityChanged (isVisible, entry) {
-      // this.isVisible = isVisible
-      // console.log(entry.target)
-      // console.log(`Is it visible now? ${isVisible}`)
-      // console.log(entry.target.className)
       let animationType = 'fadeInUp'
 
       if (entry.target.classList.contains('groupTraining')) {
@@ -118,7 +114,6 @@ export default {
       }
     },
     getLinkImage (image) {
-      // return require('../../assets/img/' + image)
       return require('../assets/img/' + image)
     },
     openTrainingDescr (event) {
@@ -153,13 +148,6 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-hr.divider {
-    border: 0;
-    height: .09em;
-    margin: 0em;
-    padding: 0em;
-    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
 }
 
 .hidden {

@@ -1,5 +1,5 @@
 <template>
-<v-container ma-4 pa-0 fluid>
+<v-container pa-0 fluid>
     <v-layout row wrap justify-center>
       <v-flex xs12 md8>
         <h1 >О нас</h1>

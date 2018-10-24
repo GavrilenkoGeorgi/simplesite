@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid ma-0 px-0>
+  <v-container>
     <v-layout justify-center>
       <v-flex xs12 sm10 md8 lg6>
         <v-carousel>

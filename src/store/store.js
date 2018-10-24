@@ -145,7 +145,8 @@ const getDefaultState = () => {
         { text: `Социализация`, path: `/`, image: 'SAA_3731_1024x678.jpg', name: 'socialisation' },
         { text: `Трюковая дрессировка`, path: `/`, image: 'SAA_3471_678x1024.jpg', name: 'tricks' },
         { text: `Послушание`, path: `/`, image: 'SAA_3353_678x1024.jpg', name: 'obedience' }
-      ] }
+      ]
+    }
   }
 }
 // initial state

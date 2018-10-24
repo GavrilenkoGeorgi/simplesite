@@ -1,7 +1,7 @@
 <template>
-  <v-container ma-4 pa-0 fluid>
-    <v-layout row wrap justify-center>
-      <v-flex xs12 md8>
+  <v-container fluid>
+    <v-layout column justify-center>
+      <v-flex>
       <h1 class="mt-4">Наша философия</h1>
       <p class="simple-text-block"> <!-- remove all this from here -->
         В процессе дрессировки вы не только научите собаку базовому послушанию, вы достигнете взаимопонимания с собакой.

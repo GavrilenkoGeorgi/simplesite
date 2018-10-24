@@ -6,7 +6,7 @@
         <v-expansion-panel-content v-for="(serviceItem, index) in getPrices.serviceItems" :key="index">
           <div slot="header" class="price-header">{{ serviceItem.header }}</div>
           <v-card v-for="(priceItem, index) in serviceItem.services" :key="index">
-            <v-card-text class="price-descr pa-2 pl-3"><span>{{ priceItem.serviceDescr }}</span>
+            <v-card-text class="price-descr pa-2 pl-3"><span class="hover">{{ priceItem.serviceDescr }}</span>
             <v-spacer />
             <span class="price-value">{{ priceItem.price }}</span>
             <div class="price-icon-container">
@@ -57,7 +57,7 @@ export default {
 @import "../assets/scss/colours.scss";
 
 .price-header {
-  color: $color-primary-2;
+  color: $alt-color-primary-darker;
   font-size: 1.6em;
   font-weight: 700;
   transition: color 500ms;
@@ -69,10 +69,14 @@ export default {
 .price-descr {
   display: flex;
   font-size: 1.5em;
-  color: $color-primaryDarkest;
+  color: $alt-color-primary-darker;
+  transition: background-color 600ms;
+}
+.price-descr:hover {
+  background-color: $alt-color-primary-light;
 }
 .price-value {
-  color: $color-primary-bright;
+  color: $alt-color-primary-darkest;
   font-weight: 500;
   // border: 1px solid red;
 }
