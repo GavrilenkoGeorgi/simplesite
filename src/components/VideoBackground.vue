@@ -4,7 +4,7 @@
     <v-layout row fill-height>
       <v-flex class="manual">
       <video autoplay muted loop id="doggyVideo" poster="../assets/video/maxdogAdBg-1200x720p.jpg">
-        <source src="../assets/video/maxdogAd-1200x720p.mp4" type="video/mp4" media="all and (max-width: 768px)">
+        <source src="../assets/video/maxdogAd-1200x720p.mp4" type="video/mp4" media="all and (max-width: 768px)" alt="Video clip">
         <!--source src="../assets/video/Puppy1280.mp4" type="video/mp4" media="all and (min-width: 768px)"-->
         <!--source src="../assets/video/Puppy640.webm" type="video/webm"-->
       </video>

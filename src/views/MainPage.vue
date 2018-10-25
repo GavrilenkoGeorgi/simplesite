@@ -40,7 +40,7 @@
         </v-layout>
       </v-flex>
     </v-layout>
-<!-- next thingy -->
+<!-- Slider -->
     <v-layout justify-center column>
       <v-flex>
       <span class="ad">{{ getContent.mainPageText.lessonsHeader }}</span>
@@ -56,8 +56,8 @@
           <v-btn to="/consultform"
             color="info"
             class="ma-4 animated"
-            v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }">
-            ОНЛАЙН ЗАПИСЬ
+            v-observe-visibility="{ callback: visibilityChanged, throttle: 500 }">
+            {{ consultButtonText }}
           </v-btn>
           </v-flex>
         </v-flex>
@@ -76,7 +76,8 @@ export default {
   data () {
     return {
       title: 'MaxDog',
-      trainLinkToShow: ''
+      trainLinkToShow: '',
+      consultButtonText: 'ОНЛАЙН ЗАПИСЬ'
     }
   },
   components: {

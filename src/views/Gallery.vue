@@ -1,7 +1,7 @@
 <template>
-  <v-container>
-    <v-layout justify-center>
-      <v-flex xs12 sm10 md8 lg6>
+    <v-container fluid mt-3 pa-0 id="gallery">
+    <v-layout justify-center row wrap>
+      <v-flex fluid xs12 sm10 md8 lg6>1
         <v-carousel>
           <v-carousel-item
             v-for="(item,i) in items"
