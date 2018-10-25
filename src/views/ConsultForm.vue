@@ -6,7 +6,7 @@
       </v-flex>
     </v-layout>
       <v-layout align-center justify-center>
-      <v-flex xs12 sm6 md6 lg4 xl2>
+      <v-flex>
       <v-form ref="form" v-model="valid" lazy-validation>
     <v-text-field
       v-model="name"

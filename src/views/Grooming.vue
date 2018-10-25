@@ -1,7 +1,7 @@
 <template>
   <div id="groomingPage">
-    <v-container class="parralax-box" fluid pa-0>
-      <v-layout fluid>
+    <v-container fluid class="parralax-box" pa-0>
+      <v-layout>
         <v-flex xs12>
           <v-parallax :src="require('@/assets/img/dogFenceRunningSquare.jpg')" height="500">
           <h1 class="photo-overlay">{{getContent.groomingText.photoOverlayText}}</h1>

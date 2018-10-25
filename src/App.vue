@@ -15,7 +15,7 @@
           </symbol>
         </svg>
 <!-- Toolbar -->
-        <v-container fluid ma-0 pa-0>
+        <v-container fluid fill-height ma-0 pa-0>
           <v-layout align-center justify-space-between column fill-height>
             <v-toolbar app scroll-off-screen class="px-0">
               <header class='toolbar-logo'>
@@ -155,6 +155,7 @@ h3 {
   text-align: center;
   background-color: white;
   // padding-top: 3.5em;
+  // height: 100vh;
 }
 .toolbar-logo {
   display: flex;
@@ -198,7 +199,7 @@ h3 {
   height: 2em;
   width: 2em;
   fill: $alt-color-primary-even-darker;
-  transition: fill 1s;
+  transition: fill 500ms ease-out;
 }
 .footer {
   // border: 1px solid pink;
@@ -214,6 +215,7 @@ h3 {
     text-decoration: none;
     font-family: $alt-font-1;
     color: black;
+    transition: color 500ms ease-out;
   }
   a:hover {
     color: $color-link-hover;
