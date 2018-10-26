@@ -105,14 +105,14 @@ export default {
   name: 'app',
   data () {
     return {
-      fontSize: 16,
-      selectedFont: '',
-      currentLogoFont: 'Default',
-      currentHeaderFont: 'Default',
-      currentTextFont: 'Default',
-      currentQuoteFont: 'Default',
-      whatToChange: '',
-      checkBox: '',
+      // fontSize: 16,
+      // selectedFont: '',
+      // currentLogoFont: 'Default',
+      // currentHeaderFont: 'Default',
+      // currentTextFont: 'Default',
+      // currentQuoteFont: 'Default',
+      // whatToChange: '',
+      // checkBox: '',
       socialIcons: [
         'icon-facebook',
         'icon-instagram',
@@ -131,7 +131,7 @@ export default {
   }
 }
 </script>
-/
+
 <style lang="scss">
 @import "./assets/scss/index.scss";
 @import './assets/animate.css';
@@ -202,9 +202,7 @@ h3 {
   transition: fill 500ms ease-out;
 }
 .footer {
-  // border: 1px solid pink;
   background-color: $alt-color-primary-light;
-  // box-shadow: 0px 0px 5px 1px $alt-color-primary-dark;
 }
 .social-network-icon:hover {
   fill: $color-link-hover;

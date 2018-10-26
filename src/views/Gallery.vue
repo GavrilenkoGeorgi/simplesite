@@ -23,11 +23,11 @@ export default {
       // console.log(`Mounted`)
       var feed = new Instafeed({
         get: 'user',
-        userId: '8987997106',
-        clientId: '924f677fa3854436947ab4372ffa688d',
-        accessToken: '8987997106.924f677.8555ecbd52584f41b9b22ec1a16dafb9',
-        // userId: '8759098712',
-        // accessToken: '8759098712.1677ed0.5f7d20d7e4be4457b9b4d9e35cca7598',
+        // userId: '8987997106',
+        // clientId: '924f677fa3854436947ab4372ffa688d',
+        // accessToken: '8987997106.924f677.8555ecbd52584f41b9b22ec1a16dafb9',
+        userId: '8759098712',
+        accessToken: '8759098712.1677ed0.5f7d20d7e4be4457b9b4d9e35cca7598',
         resolution: 'standard_resolution',
         template: '<v-flex class="pa-4"><a href="{{link}}" target="_blank" id="{{id}}"><img class="instagram-img" src="{{image}}" /></a></v-flex>',
         sortBy: 'most-recent',
