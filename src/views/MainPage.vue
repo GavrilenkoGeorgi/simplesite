@@ -46,11 +46,11 @@
       <span class="ad">{{ getContent.mainPageText.lessonsHeader }}</span>
       </v-flex>
 
-      <v-flex>
+      <v-flex class="mb-4 pb-4">
         <Slider />
       </v-flex>
 
-      <v-layout align-center column>
+      <!--v-layout align-center column>
         <v-flex ma-4>
           <v-flex>
           <v-btn to="/consultform"
@@ -61,7 +61,7 @@
           </v-btn>
           </v-flex>
         </v-flex>
-      </v-layout>
+      </v-layout-->
     </v-layout>
   </v-container>
 </template>

@@ -2,7 +2,7 @@
   <v-container fluid mt-3 pa-0 id="slider">
     <v-layout justify-center row wrap>
       <v-flex xs12 sm10 md8 lg6>
-        <v-carousel id="slider-photo" hide-delimiters hide-controls>
+        <v-carousel id="slider-photo" hide-delimiters>
           <v-carousel-item
             v-for="link in getTrainingTypeLinks.links"
             :key="link.image"

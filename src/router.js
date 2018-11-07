@@ -23,6 +23,16 @@ export default new Router({
       component: () => import(/* webpackChunkName: "gallery" */ './views/Gallery.vue')
     },
     {
+      path: '/price',
+      name: 'price',
+      component: () => import(/* webpackChunkName: "price" */ './views/Price.vue')
+    },
+    {
+      path: '/merch',
+      name: 'merch',
+      component: () => import(/* webpackChunkName: "merch" */ './views/Merch.vue')
+    },
+    {
       path: '/consultform',
       name: 'consultform',
       component: () => import(/* webpackChunkName: "consultform" */ './views/ConsultForm.vue')
@@ -33,9 +43,9 @@ export default new Router({
       component: () => import(/* webpackChunkName: "philosophy" */ './views/Philosophy.vue')
     },
     {
-      path: '/about',
-      name: 'about',
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+      path: '/contacts',
+      name: 'contacts',
+      component: () => import(/* webpackChunkName: "contacts" */ './views/Contacts.vue')
     }
   ],
   scrollBehavior (to, from, savedPosition) {

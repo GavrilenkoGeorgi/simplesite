@@ -43,27 +43,29 @@
         </p>
       </v-flex>
     </v-layout>
-    <v-container class="my-4 pa-0">
+    <!--v-container class="my-4 pa-0">
       <v-layout column>
         <h2>Прайс</h2>
       </v-layout>
-    </v-container>
+    </v-container-->
   </v-container>
-  <prices class="animated hidden" v-observe-visibility="{ callback: visibilityChanged, throttle: 500 }"/>
-  <v-btn to="/consultform" color="info" large class="mb-4 animated" v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }">ОНЛАЙН ЗАПИСЬ</v-btn>
+  <!--prices class="animated hidden" v-observe-visibility="{ callback: visibilityChanged, throttle: 500 }"/-->
+  <!--v-btn to="/consultform" color="info" large class="mb-4 animated" v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }">ОНЛАЙН ЗАПИСЬ</v-btn-->
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-import Prices from '@/components/Prices.vue'
+// import Prices from '@/components/Prices.vue'
 
 export default {
   name: 'grooming',
+  /*
   components: {
     Prices
     // Navigation
   },
+  */
   data () {
     return {
       title: 'Груминг'

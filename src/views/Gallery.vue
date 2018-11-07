@@ -15,7 +15,7 @@ export default {
   name: 'Gallery',
   data () {
     return {
-      header: 'Instagram feed'
+      header: 'Инстаграм'
     }
   },
   mounted: function () {
