@@ -56,14 +56,14 @@
               </v-list>
             </v-navigation-drawer>
 <!-- Main page router view -->
-            <v-flex>
+<v-flex>
               <transition name="custom-classes-transition"
                           mode="out-in"
                           enter-active-class="animated fadeInRight"
                           leave-active-class="animated fadeOutLeft">
                 <router-view></router-view>
               </transition>
-            </v-flex>
+</v-flex>
 <!-- Footer -->
             <v-container fluid ma-0 pa-0 class="footer">
               <hr class="divider mb-4" />

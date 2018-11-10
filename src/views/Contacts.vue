@@ -61,6 +61,7 @@ export default {
 
 h1 {
   font-size: 5em;
+  font-family: $logo-font;
 }
 
 .custom-layout {

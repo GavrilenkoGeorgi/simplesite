@@ -1,14 +1,10 @@
 <template>
-  <div id="groomingPage">
-    <v-container fluid class="parralax-box" pa-0>
-      <v-layout>
-        <v-flex xs12>
+  <v-container fluid ma-0 pa-0 id="groomingPage">
+    <!--v-container class="parralax-box"-->
           <v-parallax :src="require('@/assets/img/dogFenceRunningSquare.jpg')" height="500">
           <h1 class="photo-overlay">{{getContent.groomingText.photoOverlayText}}</h1>
           </v-parallax>
-        </v-flex>
-      </v-layout>
-    </v-container>
+    <!--/v-container-->
 
     <v-img class="mt-4 pt-4" :src="require('@/assets/img/grooming/groomingTitlePhoto.png')" height="371" contain></v-img>
     <v-container ma-0 pa-0>
@@ -51,7 +47,7 @@
   </v-container>
   <!--prices class="animated hidden" v-observe-visibility="{ callback: visibilityChanged, throttle: 500 }"/-->
   <!--v-btn to="/consultform" color="info" large class="mb-4 animated" v-observe-visibility="{ callback: visibilityChanged, throttle: 300 }">ОНЛАЙН ЗАПИСЬ</v-btn-->
-  </div>
+  </v-container>
 </template>
 
 <script>
