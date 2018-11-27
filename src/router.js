@@ -6,6 +6,9 @@ Vue.use(Router)
 
 export default new Router({
   mode: 'hash',
+  scrollBehavior (to, from) { // ?
+    return { x: 0, y: 0 }
+  },
   routes: [
     {
       path: '/',
@@ -47,8 +50,5 @@ export default new Router({
       name: 'contacts',
       component: () => import(/* webpackChunkName: "contacts" */ './views/Contacts.vue')
     }
-  ],
-  scrollBehavior (to, from, savedPosition) {
-    return { x: 0, y: 0 }
-  }
+  ]
 })

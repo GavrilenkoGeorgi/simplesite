@@ -1,6 +1,5 @@
 <template>
-  <div id="app">
-    <v-app>
+    <v-app id="app">
       <v-content>
 <!-- SVG icon defs -->
         <svg version='1.1' style="display: none;" xmlns="http://www.w3.org/2000/svg">
@@ -56,14 +55,12 @@
               </v-list>
             </v-navigation-drawer>
 <!-- Main page router view -->
-<v-flex>
               <transition name="custom-classes-transition"
                           mode="out-in"
                           enter-active-class="animated fadeInRight"
                           leave-active-class="animated fadeOutLeft">
                 <router-view></router-view>
               </transition>
-</v-flex>
 <!-- Footer -->
             <v-container fluid ma-0 pa-0 class="footer">
               <hr class="divider mb-4" />
@@ -95,7 +92,6 @@
         </v-container>
       </v-content>
     </v-app>
-  </div>
 </template>
 
 <script>

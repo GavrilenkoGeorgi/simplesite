@@ -1,6 +1,6 @@
 {
-    "name": "",
-    "short_name": "",
+    "name": "MaxDog grooming and dog training",
+    "short_name": "MaxDog",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",
@@ -13,7 +13,7 @@
             "type": "image/png"
         }
     ],
-    "theme_color": "#ffffff",
-    "background_color": "#ffffff",
+    "theme_color": "#7b96ad",
+    "background_color": "#7b96ad",
     "display": "standalone"
 }
