@@ -1,4 +1,5 @@
 <template>
+  <v-container fill-height>
   <v-layout id="gallery" column>
     <v-flex>
       <h1 class="mt-4">{{ header }}</h1>
@@ -6,6 +7,7 @@
     <v-layout id="instafeed" column>
     </v-layout>
   </v-layout>
+  </v-container>
 </template>
 
 <script>
