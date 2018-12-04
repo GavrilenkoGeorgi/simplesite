@@ -82,7 +82,7 @@ export default {
 }
 
 // nokia iphone
-@media screen and (-webkit-min-device-pixel-ratio: 1.88) and (max-width: 415px) {
+@media screen and (-webkit-min-device-pixel-ratio: 2) and (max-width: 415px) {
   #prices {
     .price-header {
       font-size: 1.1em;

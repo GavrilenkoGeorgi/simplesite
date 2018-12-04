@@ -1,15 +1,13 @@
 <template>
   <v-container fluid mt-3 pa-0 id="slider">
     <v-layout justify-center row wrap>
-      <v-flex xs12 sm10 md8 lg6>
+      <v-flex xs12 md10 lg8>
         <v-carousel id="slider-photo" hide-delimiters>
-          <v-carousel-item
+          <v-carousel-item class="slow"
             v-for="link in getTrainingTypeLinks.links"
             :key="link.image"
             :src="require(`@/assets/img/${link.image}`)"
-            lazy
-            reverse-transition="slide-right"
-            transition="slide-left">
+            lazy>
             <h5 class="overlay">{{ link.text }}</h5>
           </v-carousel-item>
         </v-carousel>
@@ -52,48 +50,9 @@ export default {
   position: absolute;
   bottom: 0;
 }
-// slide left
-#slider-photo .slide-left-enter-active {
-  transition: 2s;
-}
-#slider-photo .slide-left-leave-active {
-  transition: 2s;
-  transform: translateX(+100%);
-}
-#slider-photo .slide-left-leave-to {
-  transition: 2s;
-  transform: translateX(+100%);
-}
-#slider-photo .slide-left-enter,
-#slider-photo .slide-left-leave {
-  transition: 2s;
-  transform: translateX(+100%);
-}
-#slider-photo .slide-left-leave-to {
-  transition: 2s;
-  transform: translateX(-100%);
-}
 
-// slide right
-#slider-photo .slide-right-enter-active {
-  transition: 2s;
-}
-#slider-photo .slide-right-leave-active {
-  transition: 2s;
-  transform: translateX(-100%);
-}
-#slider-photo .slide-right-leave-to {
-  transition: 2s;
-  transform: translateX(-100%);
-}
-#slider-photo .slide-right-enter,
-#slider-photo .slide-right-leave {
-  transition: 2s;
-  transform: translateX(-100%);
-}
-#slider-photo .slide-right-leave-to {
-  transition: 2s;
-  transform: translateX(+100%);
+.slow {
+  transition: 1s ease-out;
 }
 
 </style>

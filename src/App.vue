@@ -58,7 +58,7 @@
     </svg>
 <!-- Main page router view -->
     <v-content>
-      <v-container pa-0 fluid class="router-container">
+      <v-container pa-0 fluid fill-height class="router-container">
         <transition name="custom-classes-transition"
           mode="out-in"
           enter-active-class="animated fadeInRight"
@@ -67,10 +67,20 @@
         </transition>
       </v-container>
     </v-content>
+<!-- Back to top button -->
+    <v-btn v-scroll="onScroll"
+            class="animated zoomIn"
+            color="#5a6f81"
+            v-show="fab"
+            fab dark small
+            fixed bottom right
+            @click="toTop">
+      <v-icon>keyboard_arrow_up</v-icon>
+    </v-btn>
 <!-- Footer -->
-    <hr class="divider"/>
-    <v-footer height="13em">
+    <v-footer height="13em" v-if="!['contacts'].includes($route.name)">
       <v-layout justify-space-around column fill-height>
+              <hr class="divider"/>
         <v-flex d-flex py-1>
           <v-layout row align-center justify-center>
             <v-flex d-flex align-center xs4 sm2 md1
@@ -113,6 +123,7 @@ export default {
   name: 'app',
   data () {
     return {
+      fab: false,
       // fontSize: 16,
       // selectedFont: '',
       // currentLogoFont: 'Default',
@@ -136,6 +147,21 @@ export default {
     ...mapGetters([
       'getContent'
     ])
+  },
+  methods: {
+    onScroll (e) {
+      if (typeof window === 'undefined') return
+      const top = window.pageYOffset || e.target.scrollTop || 0
+      this.fab = top > 20
+    },
+    toTop () {
+      this.$vuetify.goTo(0)
+    }
+  },
+  mounted: function () {
+    this.$nextTick(function () {
+      console.log('Start.')
+    })
   }
 }
 </script>

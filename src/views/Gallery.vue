@@ -30,7 +30,7 @@ export default {
         resolution: 'standard_resolution',
         template: '<v-flex class="pa-4"><a href="{{link}}" target="_blank" id="{{id}}"><img class="instagram-img" src="{{image}}" /></a></v-flex>',
         sortBy: 'most-recent',
-        limit: 8,
+        limit: 10,
         links: false
       })
       feed.run()

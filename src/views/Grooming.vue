@@ -1,12 +1,20 @@
 <template>
   <v-container fluid ma-0 pa-0 id="groomingPage">
     <v-layout row wrap>
-<!-- Parralax -->
       <v-flex xs12>
+        <v-img class="mt-4 pt-4"
+              :src="require('@/assets/img/grooming/grooming-parallax-photo-96dpi-1280px.jpg')"
+              max-height="853px"
+              contain>
+        </v-img>
+        <h1 class="photo-overlay">{{getContent.groomingText.photoOverlayText}}</h1>
+      </v-flex>
+<!-- Parralax -->
+      <!--v-flex xs12>
         <v-parallax :src="require('@/assets/img/dogFenceRunningSquare.jpg')" height="500">
           <h1 class="photo-overlay">{{getContent.groomingText.photoOverlayText}}</h1>
         </v-parallax>
-      </v-flex>
+      </v-flex-->
       <!--v-flex xs12>
         <v-parallax :src="require('@/assets/img/grooming/grooming-parallax-photo-96dpi-1280px.jpg')" height="905">
           <h1 class="photo-overlay">{{getContent.groomingText.photoOverlayText}}</h1>
@@ -55,7 +63,7 @@
           </p>
         </v-flex>
         <v-flex xs12 md5>
-          <h3>Дополнительные услуги</h3>
+          <h2>Дополнительные услуги</h2>
           <v-img :src="require('@/assets/img/grooming/grooming-another-dog-72dpi-1366px.jpg')"
           contain
           v-observe-visibility="{ callback: visibilityChanged, throttle: 500 }"
@@ -114,22 +122,55 @@ export default {
 <style scoped lang="scss">
 @import "../assets/scss/index.scss";
 
-#groomingPage {
-  .hidden {
+.hidden {
   visibility: hidden;
   }
   .photo-overlay {
-    position: absolute;
-    bottom: .5em;
+    font-size: 4em;
+    position: relative;
+    bottom: 2em;
+    text-align: left;
+    width: 15em;
     padding: 0em .3em 0em .3em;
     letter-spacing: .075em;
     font-weight: 700;
     color: $color-white;
-    background-color: $color-black-overlay;
+    // color: red;
+    // background-color: $color-black-overlay;
+  }
+.border {
+  border: 1px solid pink;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 320px) {
+  .photo-overlay {
+    font-size: 1.7em;
+    // position: relative;
+    bottom: 2.2em;
+    text-align: left;
+    width: 15em;
+    // padding: 0em .3em 0em .3em;
+    // letter-spacing: .075em;
+    // font-weight: 700;
+    // color: $color-white;
+    // color: red;
+    // background-color: $color-black-overlay;
   }
 }
 
-.border {
-  border: 1px solid pink;
+@media screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 414px) {
+  .photo-overlay {
+    font-size: 1.7em;
+    // position: relative;
+    // bottom: 2.2em;
+  }
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 768px) {
+  .photo-overlay {
+    font-size: 3em;
+    // position: relative;
+    // bottom: 2.2em;
+  }
 }
 </style>

@@ -45,13 +45,11 @@ const getDefaultState = () => {
         lowerText: 'дрессировка собак'
       },
       navLinks: [
-        { title: 'Наша философия', path: '/philosophy', icon: 'format_quote' },
-        { title: 'Галерея', path: '/gallery', icon: 'photo_library' },
         { title: 'Груминг', path: '/grooming', icon: 'waves' },
-        { title: 'Отзывы', path: '/reviews', icon: 'chat_bubble_outline' },
-        // { title: 'Оставить заявку', path: '/consultform', icon: 'contact_mail' },
-        // { title: 'О нас', path: '/about', icon: 'supervisor_account' },
         { title: 'Прайс', path: '/price', icon: 'receipt' },
+        { title: 'Галерея', path: '/gallery', icon: 'photo_library' },
+        { title: 'Наша философия', path: '/philosophy', icon: 'format_quote' },
+        { title: 'Отзывы', path: '/reviews', icon: 'chat_bubble_outline' },
         { title: 'Товары', path: '/merch', icon: 'shopping_cart' },
         { title: 'Контакты', path: '/contacts', icon: 'place' }
       ]
