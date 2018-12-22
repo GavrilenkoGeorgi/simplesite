@@ -54,13 +54,20 @@ const getDefaultState = () => {
         { title: 'Контакты', path: '/contacts', icon: 'place' }
       ]
     },
+    merchDescr: [
+      { title: 'Описание товара', longDescr: 'Описание которое нужно будет придумать после того, как эти товары появятся...', imgPath: require('@/assets/img/merch/bowls.webp') },
+      { title: 'Корзина', longDescr: 'Описание которое нужно будет придумать после того, как эти товары появятся...', imgPath: require('@/assets/img/merch/cat-basket.webp') },
+      { title: 'Dog Pod', longDescr: 'Описание которое нужно будет придумать после того, как эти товары появятся...', imgPath: require('@/assets/img/merch/dog-pod.webp') },
+      { title: 'Ошейник один', longDescr: 'Описание которое нужно будет придумать после того, как эти товары появятся...', imgPath: require('@/assets/img/merch/collar-one.webp') },
+      { title: 'Ошейник номер два', longDescr: 'Описание которое нужно будет придумать после того, как эти товары появятся...', imgPath: require('@/assets/img/merch/collar-two.webp') }
+    ],
     prices: {
       serviceItems: [{
         header: `Собаки: полный комплекс`,
         services: [
-          { serviceDescr: `Мелкие`, price: `300—350` },
-          { serviceDescr: `Средние`, price: `400—500` },
-          { serviceDescr: `Крупные`, price: `600—750` },
+          { serviceDescr: `Мелкие`, price: `300—350 ` },
+          { serviceDescr: `Средние`, price: `400—500 ` },
+          { serviceDescr: `Крупные`, price: `600—750 ` },
           { serviceDescr: `Гиганты`, price: `900—1000 ` }
         ]
       },

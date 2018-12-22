@@ -7,5 +7,8 @@ export default {
   },
   getTrainingTypeLinks (state) {
     return state.trainingTypeLinks
+  },
+  getMerchDescriptions (state) {
+    return state.merchDescr
   }
 }

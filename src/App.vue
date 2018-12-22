@@ -188,8 +188,12 @@ h3 {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   background-color: white;
-  // padding-top: 3.5em;
-  // height: 100vh;
+  .v-carousel__controls { // sorry about that
+    background: none;
+  }
+  .v-image .v-carousel__item {
+    height: 400px;
+  }
 }
 .toolbar-logo {
   display: flex;
