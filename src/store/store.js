@@ -25,7 +25,7 @@ const getDefaultState = () => {
             самостоятельно там, где, когда и во сколько вам удобно. Тренировка ориентирована на потребности
             сугубо вашей собаки и соответственно обучение дает максимальный результат в сжатые сроки.`
         },
-        lessonsHeader: `Первое занятие — 50%`
+        lessonsHeader: `Первое занятие — скидка 50%`
       },
       groomingText: {
         paragraphValue: `Здравствуй, дорогой друг, меня зовут Людмила!
@@ -149,10 +149,10 @@ const getDefaultState = () => {
     trainingTypeLinks: {
       links: [
         { text: `Помощь и консультации`, path: `/`, image: 'SAA_3738_1024x678.jpg', name: 'help' },
-        { text: `Защита`, path: `/`, image: 'SAA_3567_1024x678.jpg', name: 'protection' },
-        { text: `Социализация`, path: `/`, image: 'SAA_3731_1024x678.jpg', name: 'socialisation' },
-        { text: `Трюковая дрессировка`, path: `/`, image: 'SAA_3471_678x1024.jpg', name: 'tricks' },
-        { text: `Послушание`, path: `/`, image: 'SAA_3353_678x1024.jpg', name: 'obedience' }
+        { text: `Защита`, path: `/`, image: 'protection.jpg', name: 'protection' },
+        { text: `Социализация`, path: `/`, image: 'socialization.jpg', name: 'socialisation' },
+        { text: `Трюковая дрессировка`, path: `/`, image: 'tricks.jpg', name: 'tricks' },
+        { text: `Послушание`, path: `/`, image: 'obedience.jpg', name: 'obedience' }
       ]
     }
   }

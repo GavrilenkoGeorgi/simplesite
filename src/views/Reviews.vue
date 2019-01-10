@@ -7,7 +7,7 @@
         <v-layout justify-center>
           <v-carousel light class="reviews" height="550px">
             <v-carousel-item class="slow"
-              v-for="review in allReviews"
+              v-for="review in allReviewsXP"
               :key="review.id">
               <v-layout align-center justify-center column fill-height>
                 <v-flex d-flex align-center class="text-xs-center">
@@ -16,7 +16,7 @@
                       <v-icon v-for="i in review.stars" :key="i" color="orange">grade</v-icon>
                     </v-flex>
                     <v-flex xs9 class="text-xs-left">
-                      <i>{{ review.content }}</i>
+                      <i>{{ review.text }}</i>
                     </v-flex>
                     <v-flex xs9 class="author-name text-xs-right">
                       {{ quoteFormatting }}{{ review.author }}
@@ -28,10 +28,10 @@
           </v-carousel>
         </v-layout>
         <v-layout justify-center wrap>
-          <v-flex mt-4>
-            <h3>ОСТАВЬТЕ ОТЗЫВ</h3>
+          <v-flex xs10 mt-4>
+            <h3>ОСТАВЬТЕ СВОЙ ОТЗЫВ</h3>
           </v-flex>
-          <v-flex xs10>
+          <v-flex xs10 sm6>
             <v-form
               ref="form"
               v-model="form"
@@ -39,6 +39,7 @@
               <v-text-field
                 v-model="name"
                 :rules="[rules.nameLength(10)]"
+                required
                 box
                 color="deep-purple"
                 counter="10"
@@ -46,6 +47,9 @@
                 style="min-height: 96px"
                 type="user-name">
               </v-text-field>
+              <v-flex mb-4>
+                <v-icon id="ratingStar" v-for="star in 5" :key="star" @click="setRating">grade</v-icon>
+              </v-flex>
               <!--v-text-field
                 v-model="password"
                 :rules="[rules.password, rules.length(6)]"
@@ -73,6 +77,7 @@
               ></v-text-field-->
               <v-textarea
                 v-model="formReviewText"
+                required
                 :rules="[rules.reviewLength(200)]"
                 auto-grow
                 box
@@ -95,27 +100,34 @@
               </v-checkbox-->
             </v-form>
           </v-flex>
-          <v-flex xs10 sm8 md6 lg3>
-            <v-flex d-flex mt-3 mb-4 >
-                <v-btn
-        flat
-        @click="$refs.form.reset()"
-      >
-        ОЧИСТИТЬ
-      </v-btn>
-                <v-btn color="blue-grey lighten-4">
-                <v-icon>format_quote</v-icon>ОТПРАВИТЬ
+          <v-flex xs10 sm8 md6 lg3 mb-3>
+              <v-btn color="blue-grey lighten-4"
+                @click="$refs.form.reset()">
+                ОЧИСТИТЬ
               </v-btn>
-            </v-flex>
-          </v-flex>
-        </v-layout>
+              <v-btn @click.prevent="executeRecaptcha"
+                :disabled="!this.form"
+                color="blue-grey lighten-2">отправить</v-btn>
+              <!-- listen to verify event emited by the recaptcha component -->
+              <recaptcha ref="recaptcha" @verify="getScore"></recaptcha>
+        </v-flex>
+      </v-layout>
     </v-layout>
   </v-container>
 </template>
 
 <script>
+import Vue from 'vue'
+import VueResource from 'vue-resource'
+import Recaptcha from '@/components/Recaptcha.vue'
+import secret from '@/store/recaptcha.js'
+import db from '@/components/firebaseInit'
+
+Vue.use(VueResource)
+
 export default {
   data: () => ({
+    token: null,
     pageTitle: 'отзывы',
     quoteFormatting: '— ',
     allReviews: [
@@ -128,8 +140,11 @@ export default {
       { id: 'review3', stars: 3, author: 'Mr Flanders', content: 'Some notes about dogs and cats and something else' },
       { id: 'review4', stars: 4, author: 'Apu', content: 'Some notes about dogs and cats and even more stuff about cats and dogs' }
     ],
+    allReviewsXP: undefined,
     agreement: false,
-    formReviewText: 'Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts',
+    formReviewText: 'Напишите нам что-нибудь хорошее...',
+    starsRating: undefined,
+    userScore: undefined,
     dialog: false,
     email: undefined,
     form: false,
@@ -138,16 +153,155 @@ export default {
     password: undefined,
     phone: undefined,
     rules: {
-      email: v => (v || '').match(/@/) || 'Please enter a valid email',
+      // email: v => (v || '').match(/@/) || 'Please enter a valid email',
       length: len => v => (v || '').length >= len || `Invalid character length, required ${len}`,
       nameLength: len => value => (value && value.length <= len) || `Name must be less than ${len} and longer than 1`,
       reviewLength: len => value => (value && value.length <= len) || `Review must be less than ${len} and longer than 1`,
-      nameLengthXp: value => value.length <= 20 || 'Max 20 characters',
-      password: v => (v || '').match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/) ||
-        'Password must contain an upper case letter, a numeric character, and a special character',
+      // nameLengthXp: value => value.length <= 20 || 'Max 20 characters',
+      // password: v => (v || '').match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/) ||
+      //  'Password must contain an upper case letter, a numeric character, and a special character',
       required: v => !!v || 'This field is required'
     }
-  })
+  }),
+  components: {
+    Recaptcha
+  },
+  methods: {
+    addReview () {
+      console.log('Adding review..')
+      // Add a new document with a generated id.
+      // console.log(`Name to add is ${this.name}`)
+      // console.log(`Review to add is ${this.formReviewText}`)
+      // console.log(`Stars quantity is ${this.starsRating}`)
+      if (this.form) {
+        console.log(`Form is: ${this.form}, adding to database, stars are ${this.starsRating}`)
+        if (!this.starsRating) {
+          // one star in case user forgets to set rating
+          // make it required maybe?
+          this.starsRating = 1
+        }
+        db.collection('reviews').add({
+          name: this.name,
+          starsRating: this.starsRating,
+          review: this.formReviewText
+        })
+          .then(function (docRef) {
+            console.log('Document written with ID: ', docRef.id)
+          })
+          .catch(function (error) {
+            console.error('Error adding document: ', error)
+          })
+      } else {
+        console.log(`Check your form it is: ${this.form}`)
+      }
+      /*
+      db.collection('reviews').add({
+        name: this.name,
+        starsRating: this.starsRating,
+        review: this.formReviewText
+      })
+        .then(function (docRef) {
+          console.log('Document written with ID: ', docRef.id)
+        })
+        .catch(function (error) {
+          console.error('Error adding document: ', error)
+        }) */
+    },
+    setRating (event) {
+      // console.log(`Setting rating ${event.target}`)
+      let child = event.target
+      const parent = child.parentNode
+      let index = Array.prototype.indexOf.call(parent.children, child) + 1
+      console.log(`Setting rating to ${index}`)
+      this.userStarRating = index
+      let starsToHighlight = parent.children
+      // clear all stars if some of them are set
+      for (let star of starsToHighlight) {
+        star.style = 'color: gray;'
+      }
+      // set stars rating variable
+      this.starsRating = index
+      while (index) {
+        starsToHighlight[index - 1].style = 'color: orange;'
+        index--
+      }
+    },
+    // send your recaptcha token to the server to verify it
+    getScore (response) {
+      // console.log(response)
+      this.$http.post(`https://cors-escape.herokuapp.com/https://www.google.com/recaptcha/api/siteverify?secret=${secret.recaptchaSecret}&response=${response}`)
+        .then(response => {
+          this.userScore = response.body.score
+          console.log(`Score is: ${response.body.score}`)
+        }).then(() => {
+          if (this.userScore >= 0.3) {
+            console.log('Adding to database')
+            // console.log(`Type of score is ${typeof this.userScore}`)
+            this.addReview()
+          } else {
+            console.log(`Your score is too low: ${this.userScore}, try again`)
+            // console.log(`Type of score is ${typeof this.userScore}`)
+          }
+          // this.addReview()
+        })
+    },
+    // execute the recaptcha widget
+    executeRecaptcha () {
+      this.$refs.recaptcha.execute()
+    },
+    check () {
+      console.log('Checking')
+      /*
+      this.$recaptcha('login').then((token) => {
+        console.log(token) // Will print the token
+        this.token = token
+      })
+      */
+    },
+    getReviews () {
+      console.log('Getting reviews..')
+      db.collection('reviews') // .where('starsRating', '==', 5)
+        .get()
+        .then(function (querySnapshot) {
+          let reviewsFromDB = []
+          querySnapshot.forEach(function (doc) {
+            // doc.data() is never undefined for query doc snapshots
+            console.log(doc.id, ' => ', doc.data().name)
+            let review = {
+              author: doc.data().name,
+              text: doc.data().review,
+              stars: doc.data().starsRating,
+              id: doc.id
+            }
+            reviewsFromDB.push(review)
+          })
+          return reviewsFromDB
+        })
+        .then((reviewsFromDB) => {
+          this.allReviewsXP = reviewsFromDB
+          console.log(this.allReviewsXP)
+        })
+        .catch(function (error) {
+          console.log('Error getting documents: ', error)
+        })
+    }
+  },
+  mounted () {
+    this.$nextTick(function () {
+      console.log('Reviews page mounted')
+      this.getReviews()
+      // console.log('Getting recaptcha score...')
+      // this.executeRecaptcha()
+      // setTimeout(this.getScore(), 3000)
+      // setTimeout(console.log(this.userScore), 3000)
+      /*
+      this.$recaptcha('login').then((token) => {
+        console.log(token) // Will print the token
+        this.token = token
+      })
+      */
+    })
+  }
 }
 </script>
 <style lang="scss" scoped>
@@ -237,6 +391,19 @@ h2 {
 
 .slow {
   transition: .8s ease-in;
+}
+
+#recaptcha {
+   margin: 0px;
+   width: 304px;
+   position: relative;
+   float: left;
+}
+
+#recaptcha iframe {
+   position: absolute;
+   left: 0px;
+   top: 0px;
 }
 
 </style>

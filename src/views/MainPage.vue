@@ -30,7 +30,7 @@
             <h3 class="mb-4">{{ getContent.mainPageText.individualTraining.header }}</h3>
           </v-flex>
           <v-flex d-flex>
-          <v-img :src="require('@/assets/img/mainPage/SAA_3096_1024x678.jpg')"
+          <v-img :src="require('@/assets/img/mainPage/individual_training.jpg')"
             class="training-section-image" contain>
           </v-img>
           </v-flex>

@@ -73,7 +73,7 @@
             color="#5a6f81"
             v-show="fab"
             fab dark small
-            fixed bottom right
+            fixed bottom left
             @click="toTop">
       <v-icon>keyboard_arrow_up</v-icon>
     </v-btn>

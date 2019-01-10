@@ -6,7 +6,7 @@
     </v-flex>
 <!-- Main container -->
     <v-layout row wrap justify-center>
-      <v-flex v-for="merch in getMerchDescriptions" class="ma-4" xs8 sm3
+      <v-flex v-for="merch in getMerchDescriptions" class="my-4 mx-2" xs10 sm3
             :key="merch.imgPath">
         <v-card>
           <v-img

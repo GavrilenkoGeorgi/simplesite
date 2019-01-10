@@ -8,6 +8,9 @@ selenium-debug.log
 /components/
 footer.bak.vue
 
+/src/store/recaptcha.js
+/src/components/firebaseConfig.js
+
 # local env files
 .env.local
 .env.*.local
