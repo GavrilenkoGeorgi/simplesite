@@ -28,10 +28,10 @@
           </v-carousel>
         </v-layout>
         <v-layout justify-center wrap>
-          <v-flex xs10 mt-4>
+          <v-flex xs12 mt-4>
             <h3>ОСТАВЬТЕ СВОЙ ОТЗЫВ</h3>
           </v-flex>
-          <v-flex xs10 sm6>
+          <v-flex xs10 sm8 md6>
             <v-form
               ref="form"
               v-model="form"
@@ -41,13 +41,13 @@
                 :rules="[rules.nameLength(10)]"
                 required
                 box
-                color="deep-purple"
+                color="blue-grey"
                 counter="10"
                 label="Ваше имя"
                 style="min-height: 96px"
                 type="user-name">
               </v-text-field>
-              <v-flex mb-4>
+              <v-flex mb-3>
                 <v-icon id="ratingStar" v-for="star in 5" :key="star" @click="setRating">grade</v-icon>
               </v-flex>
               <!--v-text-field
@@ -82,7 +82,7 @@
                 auto-grow
                 box
                 counter="200"
-                color="deep-purple"
+                color="blue-grey"
                 label="Отзыв"
                 rows="5"
               ></v-textarea>
@@ -100,7 +100,7 @@
               </v-checkbox-->
             </v-form>
           </v-flex>
-          <v-flex xs10 sm8 md6 lg3 mb-3>
+          <v-flex xs12 ma-4>
               <v-btn color="blue-grey lighten-4"
                 @click="$refs.form.reset()">
                 ОЧИСТИТЬ
@@ -130,6 +130,7 @@ export default {
     token: null,
     pageTitle: 'отзывы',
     quoteFormatting: '— ',
+    /*
     allReviews: [
       { id: 'review5', author: 'Edna', stars: 5, content: `Some notes about dogs and cats and even more stuff
                                   about cats and dogs and even their owners,
@@ -139,7 +140,7 @@ export default {
       { id: 'review2', stars: 2, author: 'Bart', content: 'Some notes about dogs and cats and such' },
       { id: 'review3', stars: 3, author: 'Mr Flanders', content: 'Some notes about dogs and cats and something else' },
       { id: 'review4', stars: 4, author: 'Apu', content: 'Some notes about dogs and cats and even more stuff about cats and dogs' }
-    ],
+    ], */
     allReviewsXP: undefined,
     agreement: false,
     formReviewText: 'Напишите нам что-нибудь хорошее...',

@@ -10,5 +10,8 @@ export default {
   },
   getMerchDescriptions (state) {
     return state.merchDescr
+  },
+  getUserState (state) {
+    return state.userState
   }
 }

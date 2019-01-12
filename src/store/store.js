@@ -1,11 +1,16 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import getters from './getters'
+import mutations from './mutations'
 
 Vue.use(Vuex)
 
 const getDefaultState = () => {
   return {
+    userState: {
+      isAuthenticated: false,
+      userUid: null
+    },
     content: {
       mainPageText: {
         groupTraining: {
@@ -50,7 +55,7 @@ const getDefaultState = () => {
         { title: 'Галерея', path: '/gallery', icon: 'photo_library' },
         { title: 'Наша философия', path: '/philosophy', icon: 'format_quote' },
         { title: 'Отзывы', path: '/reviews', icon: 'chat_bubble_outline' },
-        { title: 'Товары', path: '/merch', icon: 'shopping_cart' },
+        // { title: 'Товары', path: '/merch', icon: 'shopping_cart' },
         { title: 'Контакты', path: '/contacts', icon: 'place' }
       ]
     },
@@ -161,5 +166,6 @@ const getDefaultState = () => {
 const state = getDefaultState()
 export default new Vuex.Store({
   state,
-  getters
+  getters,
+  mutations
 })
