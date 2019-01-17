@@ -13,7 +13,7 @@ export default new Router({
     {
       path: '/',
       name: 'mainPage',
-      component: MainPage
+      component: MainPage // ?
     },
     {
       path: '/grooming',
@@ -64,6 +64,11 @@ export default new Router({
       path: '/register',
       name: 'register',
       component: () => import(/* webpackChunkName: "register" */ './views/Register.vue')
+    },
+    {
+      path: '/cms',
+      name: 'cms',
+      component: () => import(/* webpackChunkName: "cms" */ './views/Cms.vue')
     }
   ]
 })

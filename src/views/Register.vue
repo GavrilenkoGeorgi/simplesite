@@ -3,15 +3,18 @@
     <v-flex xs12>
       <v-layout row wrap>
         <v-flex class="text-xs-right">
+<!-- Go back button -->
           <v-btn fab flat large color="grey darken-1" @click="$router.go(-1)">
             <v-icon>close</v-icon>
           </v-btn>
         </v-flex>
+<!-- Header -->
         <v-flex xs12>
-          <h1>{{ title }}</h1>
+          <h1>{{ header }}</h1>
         </v-flex>
       </v-layout>
     </v-flex>
+<!-- Register form -->
     <v-flex d-flex>
       <v-form ref="registerForm" v-model="valid">
         <v-container>
@@ -39,37 +42,12 @@
               </v-flex>
             <v-flex xs12 sm3 my-4>
               <v-btn @click="register">
-                <v-icon>
-                  done
-                </v-icon>
-                {{ title }}
+                {{ header }}
               </v-btn>
               <v-btn @click="clear">
                 очистити
               </v-btn>
             </v-flex>
-            <!--v-flex
-              xs12
-              md4>
-              <v-text-field
-                v-model="lastname"
-                :rules="nameRules"
-                :counter="10"
-                label="Last name"
-                required
-              ></v-text-field>
-            </v-flex-->
-
-            <!--v-flex
-              xs12
-              md4>
-              <v-text-field
-                v-model="email"
-                :rules="emailRules"
-                label="E-mail"
-                required
-              ></v-text-field>
-            </v-flex-->
           </v-layout>
         </v-container>
       </v-form>
@@ -85,7 +63,7 @@ import 'firebase/auth'
 
 export default {
   data: () => ({
-    title: 'Реєстрація',
+    header: 'Реєстрація',
     errorMessage: null,
     registering: false,
     valid: false,
@@ -137,8 +115,8 @@ export default {
               userUid: response.user.uid
             }
             this.$store.commit('setUserState', user)
-            this.verifyUserEmail()
-            console.log(`User added ${response.user.email}`)
+            // this.verifyUserEmail()
+            console.log(`User added ${response.user.email}, after validating your email, you will be able to edit some strings.`)
             // this.$router.push('/')
             /*
             // add new user data to db

@@ -3,7 +3,7 @@ export default {
     return state.content
   },
   getPrices (state) {
-    return state.prices
+    return state.pricesXp
   },
   getTrainingTypeLinks (state) {
     return state.trainingTypeLinks

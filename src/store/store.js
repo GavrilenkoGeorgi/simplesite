@@ -11,6 +11,7 @@ const getDefaultState = () => {
       isAuthenticated: false,
       userUid: null
     },
+    pricesXp: [],
     content: {
       mainPageText: {
         groupTraining: {

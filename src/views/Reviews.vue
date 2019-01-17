@@ -4,6 +4,7 @@
       <v-flex d-flex align-center>
         <h1>{{ pageTitle }}</h1>
       </v-flex>
+<!-- Reviews carousel -->
         <v-layout justify-center>
           <v-carousel light class="reviews" height="550px">
             <v-carousel-item class="slow"
@@ -141,7 +142,7 @@ export default {
       { id: 'review3', stars: 3, author: 'Mr Flanders', content: 'Some notes about dogs and cats and something else' },
       { id: 'review4', stars: 4, author: 'Apu', content: 'Some notes about dogs and cats and even more stuff about cats and dogs' }
     ], */
-    allReviewsXP: undefined,
+    allReviewsXP: [],
     agreement: false,
     formReviewText: 'Напишите нам что-нибудь хорошее...',
     starsRating: undefined,
@@ -155,7 +156,7 @@ export default {
     phone: undefined,
     rules: {
       // email: v => (v || '').match(/@/) || 'Please enter a valid email',
-      length: len => v => (v || '').length >= len || `Invalid character length, required ${len}`,
+      // length: len => v => (v || '').length >= len || `Invalid character length, required ${len}`,
       nameLength: len => value => (value && value.length <= len) || `Name must be less than ${len} and longer than 1`,
       reviewLength: len => value => (value && value.length <= len) || `Review must be less than ${len} and longer than 1`,
       // nameLengthXp: value => value.length <= 20 || 'Max 20 characters',
@@ -184,7 +185,8 @@ export default {
         db.collection('reviews').add({
           name: this.name,
           starsRating: this.starsRating,
-          review: this.formReviewText
+          review: this.formReviewText,
+          approved: false
         })
           .then(function (docRef) {
             console.log('Document written with ID: ', docRef.id)
