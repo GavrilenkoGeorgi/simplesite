@@ -13,5 +13,8 @@ export default {
   },
   getUserState (state) {
     return state.userState
+  },
+  getItemsWhichOrderHasChanged (state) {
+    return state.itemsWhichOrderHasChanged
   }
 }

@@ -3,6 +3,22 @@
     <v-layout d-flex justify-center fill-height>
       <v-flex xs12 sm10 md8 lg7>
         <v-expansion-panel>
+          <v-expansion-panel-content v-for="(serviceItem, index) in getPrices" :key="index">
+            <div slot="header" class="price-header">{{ serviceItem.header }}</div>
+            <v-card v-for="(priceItem, index) in serviceItem.services" :key="index">
+              <v-card-text class="price-descr pa-2 pl-3"><span class="hover">{{ priceItem }}</span>
+              <v-spacer></v-spacer>
+              <span class="price-value">{{ priceItem.price }}</span>
+              <div class="price-icon-container">
+                <svg>
+                  <use xlink:href="#icon-uah"></use>
+                </svg>
+              </div>
+              </v-card-text>
+            </v-card>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+        <!--v-expansion-panel>
           <v-expansion-panel-content v-for="(serviceItem, index) in getPrices.serviceItems" :key="index">
             <div slot="header" class="price-header">{{ serviceItem.header }}</div>
             <v-card v-for="(priceItem, index) in serviceItem.services" :key="index">
@@ -17,7 +33,7 @@
               </v-card-text>
             </v-card>
           </v-expansion-panel-content>
-        </v-expansion-panel>
+        </v-expansion-panel-->
       </v-flex>
     </v-layout>
     <v-container>
@@ -35,20 +51,82 @@
 import { mapGetters } from 'vuex'
 import IconSvg from './IconSvg.vue'
 import Debug from './Debug'
+import db from '@/components/firebaseInit'
 
 export default {
-  name: 'Prices',
-  props: {
-    msg: 'Prices here.'
-  },
+  data: () => ({
+    name: 'Prices',
+    serviceItemsFromDB: [],
+    serviceItemsRef: db.collection('serviceItems')
+  }),
   components: {
     Debug,
     IconSvg
+  },
+  mounted () {
+    this.$nextTick(() => {
+      console.log(`Prices pageloaded.`)
+      this.loadPrices()
+    })
   },
   computed: {
     ...mapGetters([
       'getPrices'
     ])
+  },
+  methods: {
+    sortServiceItemsArray () {
+      console.log(`Sorting service items array`)
+      this.serviceItemsFromDB = this.serviceItemsFromDB.sort((a, b) => (a.order > b.order) ? 1 : ((b.order > a.order) ? -1 : 0))
+    },
+    loadPrices () {
+      console.log('Loading prices..')
+      this.serviceItemsRef.get()
+        .then(querySnapshot => {
+          // let serviceItemsFromDB = []
+          querySnapshot.forEach(doc => {
+            // doc.data() is never undefined for query doc snapshots
+            /*
+            console.log(doc.id, ' => ', doc.data().name)
+            let serviceItem = {
+              header: doc.data().header,
+              services: doc.data().services,
+              id: doc.id
+            } */
+            this.serviceItemsFromDB.push({
+              id: doc.id,
+              order: doc.data().order,
+              header: doc.data().header,
+              services: doc.data().services
+            })
+          })
+          this.sortServiceItemsArray()
+          // this.serviceItemsFromDB = this.serviceItemsFromDB.sort((a, b) => (a.order > b.order) ? 1 : ((b.order > a.order) ? -1 : 0))
+          // console.log(`Sorted array -->`)
+          // console.log(this.serviceItemsFromDB)
+          // default order
+          /*
+          function compare(currentItem, nextItem) {
+            if (currentItem.order < b.last_nom)
+              return -1;
+            if (a.last_nom > b.last_nom)
+              return 1;
+            return 0;
+          }
+
+          objs.sort(compare);
+          */
+          return true
+        })
+        .then(() => {
+          // this.allServiceItems = serviceItemsFromDB
+          // console.log(this.allServiceItems)
+          this.$store.commit('setPrices', this.serviceItemsFromDB)
+        })
+        .catch(function (error) {
+          console.log('Error getting documents: ', error)
+        })
+    }
   }
 }
 </script>

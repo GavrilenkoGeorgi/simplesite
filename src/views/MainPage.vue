@@ -20,7 +20,7 @@
       <v-flex xs12 sm8 md5 v-observe-visibility="{ callback: visibilityChanged, throttle: 500 }"
         class="animated groupTraining hidden">
         <h3 class="mb-4">{{ getContent.mainPageText.groupTraining.header }}</h3>
-        <v-img :src="require('@/assets/img/mainPage/SAA_3426_1024x678.jpg')" class="training-section-image" contain></v-img>
+        <v-img :src="require('@/assets/img/mainPage/group_training.jpg')" class="training-section-image" contain></v-img>
         <p class="simple-text-block"> {{ getContent.mainPageText.groupTraining.text }} </p>
       </v-flex>
       <v-flex xs12 sm8 md5 v-observe-visibility="{ callback: visibilityChanged, throttle: 500 }"
@@ -30,7 +30,7 @@
             <h3 class="mb-4">{{ getContent.mainPageText.individualTraining.header }}</h3>
           </v-flex>
           <v-flex d-flex>
-          <v-img :src="require('@/assets/img/mainPage/individual_training.jpg')"
+          <v-img :src="require('@/assets/img/mainPage/SAA_3096_1024x678.jpg')"
             class="training-section-image" contain>
           </v-img>
           </v-flex>

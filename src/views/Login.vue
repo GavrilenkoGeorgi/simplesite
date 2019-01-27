@@ -58,9 +58,15 @@
 </template>
 
 <script>
+// import db from '../components/firebaseInit'
+import firebase from 'firebase/app'
+import 'firebase/auth'
+
 export default {
   data: () => ({
     valid: false,
+    logginIn: false,
+    errorMessage: null,
     email: '',
     emailRules: [
       v => !!v || 'Потрібна електронна пошта',
@@ -73,12 +79,45 @@ export default {
     ]
   }),
   methods: {
+    /*
     login () {
       if (this.valid) {
         console.log(`Loggin in.`)
         this.$router.push('/cms')
       } else {
         console.log(`Check input.`)
+      }
+    },
+    */
+    setLoginLoadingState () {
+      this.logginIn = !this.logginIn
+      return true
+    },
+    login () {
+      this.errorMessage = undefined
+      if (this.email && this.password) { // need some proper validation
+        this.setLoginLoadingState()
+        firebase.auth().signInWithEmailAndPassword(this.email, this.password)
+          .then(
+            response => {
+              console.log(`You are logged in as`)
+              console.log(response.user.email)
+              console.log(response.user.uid)
+              // let tempName = this.getUserNameFromDB(response.user.uid)
+              const newUser = {
+                isAuthenticated: true,
+                uid: response.user.uid
+                // name: tempName
+              }
+              this.$store.commit('setUser', newUser)
+              this.$router.push('/cms')
+            },
+            err => {
+              console.log(err.message)
+              this.errorMessage = err.message
+              this.setLoginLoadingState()
+            })
+        return true
       }
     },
     clear () {

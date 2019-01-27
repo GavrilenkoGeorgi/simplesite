@@ -9,8 +9,9 @@ const getDefaultState = () => {
   return {
     userState: {
       isAuthenticated: false,
-      userUid: null
+      uid: null
     },
+    itemsWhichOrderHasChanged: [],
     pricesXp: [],
     content: {
       mainPageText: {
