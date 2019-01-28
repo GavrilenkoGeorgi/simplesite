@@ -1,22 +1,20 @@
 <template>
 <!-- Price editor -->
-  <v-container fluid pa-0 v-if="this.getUserState.isAuthenticated">
+  <v-container fill-height fluid pa-0 v-if="this.getUserState.isAuthenticated">
     <v-layout row wrap justify-center>
 <!-- Header -->
-      <v-flex xs6>
+      <v-flex d-flex align-center>
         <h1>{{ header }}</h1>
       </v-flex>
 <!-- Expansion panel -->
       <v-flex xs12 sm6 offset-sm3>
         <v-expansion-panel>
-          <v-expansion-panel-content
-            v-for="(item,i) in 1"
-            :key="i">
+          <v-expansion-panel-content>
             <div slot="header">
               Ціни
             </div>
             <v-card>
-              <!--v-card-text>Тут можна редагувати ціни</v-card-text-->
+              <v-card-text>Тут можна редагувати ціни</v-card-text>
                   <v-flex xs12 v-for="doc in getPrices" :key="doc.id">
                     <v-layout wrap>
                       <v-flex xs12 class="text-xs-center">
@@ -75,6 +73,38 @@
                         <v-btn color="blue-grey lighten-4" @click="handleAddCategory">додати категорію</v-btn>
                       </v-flex>
                     </v-layout>
+            </v-card>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+        <v-expansion-panel>
+          <v-expansion-panel-content>
+            <div slot="header">
+              Коментарі
+            </div>
+            <v-card>
+              <v-card-text>Видаляти або затверджувати коментарі</v-card-text>
+                <v-flex v-for="doc in getReviews" :key="doc.id" pa-3>
+                  <v-layout wrap>
+                    <v-flex xs6 py-1>
+                      Ім'я: {{ doc.name }}
+                      <v-icon v-if="doc.approved" small color="orange">verified_user</v-icon>
+                    </v-flex>
+                    <v-flex xs6 class="text-xs-right">
+                      <v-icon small color="orange" v-for="(star,i) in doc.starsRating" :key="i">grade</v-icon>
+                    </v-flex>
+                    <v-flex xs12>
+                      Коментар: {{ doc.review }}
+                    </v-flex>
+                    <v-flex xs12 class="text-xs-right">
+                      <v-btn small icon fab>
+                        <v-icon v-if="!doc.approved" medium color="green">verified_user</v-icon>
+                      </v-btn>
+                      <v-btn small icon fab>
+                        <v-icon medium color="red">delete</v-icon>
+                      </v-btn>
+                    </v-flex>
+                  </v-layout>
+                </v-flex>
             </v-card>
           </v-expansion-panel-content>
         </v-expansion-panel>
@@ -366,10 +396,14 @@ export default {
       docID: null,
       currentServiceItemOrder: null
     },
+    editingChoices: [
+      { choiceName: 'Ціни' },
+      { choiceName: 'Коментарі' }
+    ],
     priceEditingFormValid: false,
     priceStringRules: [
       v => !!v || 'Необхідно ввести назву та ціну',
-      v => (v && v.length <= 60) || 'Позиція повинна бути менше 60 символів'
+      v => (v && v.length <= 70) || 'Позиція повинна бути менше 70 символів'
     ],
     headerRules: [
       v => !!v || 'Необхідно ввести назву',
@@ -389,8 +423,10 @@ export default {
     addCategoryFormValid: false,
     safeToDelete: false,
     serviceItemsRef: db.collection('serviceItems'),
+    reviewsItemsRef: db.collection('reviews'),
     serviceItemsFromDB: [],
-    serviceItemsDisplayOrder: []
+    serviceItemsDisplayOrder: [],
+    reviewsItemsFromDB: []
   }),
   mounted () {
     this.$nextTick(function () {
@@ -398,6 +434,7 @@ export default {
       if (this.getUserState.isAuthenticated) {
         console.log(`Loading prices`)
         this.loadPrices()
+        this.loadReviews()
       } else {
         console.log(`Login first or GTFO`)
       }
@@ -406,6 +443,7 @@ export default {
   computed: {
     ...mapGetters([
       'getPrices',
+      'getReviews',
       'getUserState',
       'getItemsWhichOrderHasChanged'
     ])
@@ -765,6 +803,64 @@ export default {
           // this.allServiceItems = serviceItemsFromDB
           // console.log(this.allServiceItems)
           this.$store.commit('setPrices', this.serviceItemsFromDB)
+        })
+        .catch(function (error) {
+          console.log('Error getting documents: ', error)
+        })
+    },
+    loadReviews () {
+      console.log('Loading comments..')
+      // db.collection('serviceItems') // .where('starsRating', '==', 5)
+      this.reviewsItemsRef.get()
+        .then(querySnapshot => {
+          // let serviceItemsFromDB = []
+          querySnapshot.forEach(doc => {
+            // doc.data() is never undefined for query doc snapshots
+            /*
+            console.log(doc.id, ' => ', doc.data().name)
+            let serviceItem = {
+              header: doc.data().header,
+              services: doc.data().services,
+              id: doc.id
+            } */
+            this.reviewsItemsFromDB.push({
+              id: doc.id,
+              approved: doc.data().approved,
+              name: doc.data().name,
+              review: doc.data().review,
+              starsRating: doc.data().starsRating
+            })
+            /*
+            this.serviceItemsFromDB.push({
+              id: doc.id,
+              order: doc.data().order,
+              header: doc.data().header,
+              services: doc.data().services
+            })
+            */
+          })
+          // this.sortServiceItemsArray()
+          // this.serviceItemsFromDB = this.serviceItemsFromDB.sort((a, b) => (a.order > b.order) ? 1 : ((b.order > a.order) ? -1 : 0))
+          // console.log(`Sorted array -->`)
+          // console.log(this.serviceItemsFromDB)
+          // default order
+          /*
+          function compare(currentItem, nextItem) {
+            if (currentItem.order < b.last_nom)
+              return -1;
+            if (a.last_nom > b.last_nom)
+              return 1;
+            return 0;
+          }
+
+          objs.sort(compare);
+          */
+          return true
+        })
+        .then(() => {
+          // this.allServiceItems = serviceItemsFromDB
+          // console.log(this.allServiceItems)
+          this.$store.commit('setReviews', this.reviewsItemsFromDB)
         })
         .catch(function (error) {
           console.log('Error getting documents: ', error)

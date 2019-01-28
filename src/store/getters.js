@@ -5,6 +5,9 @@ export default {
   getPrices (state) {
     return state.pricesXp
   },
+  getReviews (state) {
+    return state.reviewsForEditing
+  },
   getTrainingTypeLinks (state) {
     return state.trainingTypeLinks
   },

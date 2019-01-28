@@ -5,6 +5,9 @@ export default {
   setPrices (state, payload) {
     state.pricesXp = payload
   },
+  setReviews (state, payload) {
+    state.reviewsForEditing = payload
+  },
   deletePrice (state, payload) {
     let indexOfResult = state.pricesXp.findIndex(service => service.id === payload.id)
     let service = state.pricesXp[indexOfResult] // more info?

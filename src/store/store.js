@@ -13,6 +13,7 @@ const getDefaultState = () => {
     },
     itemsWhichOrderHasChanged: [],
     pricesXp: [],
+    reviewsForEditing: [],
     content: {
       mainPageText: {
         groupTraining: {
@@ -58,7 +59,8 @@ const getDefaultState = () => {
         { title: 'Наша философия', path: '/philosophy', icon: 'format_quote' },
         { title: 'Отзывы', path: '/reviews', icon: 'chat_bubble_outline' },
         // { title: 'Товары', path: '/merch', icon: 'shopping_cart' },
-        { title: 'Контакты', path: '/contacts', icon: 'place' }
+        { title: 'Контакты', path: '/contacts', icon: 'place' },
+        { title: 'Логін', path: '/login', icon: 'exit_to_app' }
       ]
     },
     merchDescr: [

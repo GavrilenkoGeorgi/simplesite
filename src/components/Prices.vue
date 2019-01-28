@@ -6,9 +6,9 @@
           <v-expansion-panel-content v-for="(serviceItem, index) in getPrices" :key="index">
             <div slot="header" class="price-header">{{ serviceItem.header }}</div>
             <v-card v-for="(priceItem, index) in serviceItem.services" :key="index">
-              <v-card-text class="price-descr pa-2 pl-3"><span class="hover">{{ priceItem }}</span>
+              <v-card-text class="price-descr pa-2 pl-3"><span class="hover">{{ priceItem.serviceDescr }}</span>
               <v-spacer></v-spacer>
-              <span class="price-value">{{ priceItem.price }}</span>
+              <span class="price-value">{{ priceItem.priceValue }}</span>
               <div class="price-icon-container">
                 <svg>
                   <use xlink:href="#icon-uah"></use>
@@ -57,6 +57,7 @@ export default {
   data: () => ({
     name: 'Prices',
     serviceItemsFromDB: [],
+    itemsToDisplayInPricesList: [],
     serviceItemsRef: db.collection('serviceItems')
   }),
   components: {
@@ -78,6 +79,26 @@ export default {
     sortServiceItemsArray () {
       console.log(`Sorting service items array`)
       this.serviceItemsFromDB = this.serviceItemsFromDB.sort((a, b) => (a.order > b.order) ? 1 : ((b.order > a.order) ? -1 : 0))
+    },
+    splitStringsInPricesArray () {
+      for (let item of this.serviceItemsFromDB) {
+        // console.log(`Items in serviceItemsFormDb ${item}`)
+        // console.dir(item)
+        let tempArray = []
+        for (let pricePosition of item.services) {
+          // console.dir(pricePosition)
+          let resultingArray = pricePosition.split(/:/i)
+          // console.log(`After split -->`)
+          // console.log(resultingArray)
+          let splitResult = {
+            serviceDescr: resultingArray[0],
+            priceValue: resultingArray[1]
+          }
+          tempArray.push(splitResult)
+        }
+        item.services = tempArray
+        console.log(item.services)
+      }
     },
     loadPrices () {
       console.log('Loading prices..')
@@ -101,6 +122,7 @@ export default {
             })
           })
           this.sortServiceItemsArray()
+          this.splitStringsInPricesArray()
           // this.serviceItemsFromDB = this.serviceItemsFromDB.sort((a, b) => (a.order > b.order) ? 1 : ((b.order > a.order) ? -1 : 0))
           // console.log(`Sorted array -->`)
           // console.log(this.serviceItemsFromDB)
