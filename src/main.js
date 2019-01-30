@@ -34,7 +34,7 @@ const initializeAuth = new Promise(resolve => {
       resolve(user)
     } else {
       console.log(`No user!`)
-      this.userName = this.getDefaultUserName
+      // this.userName = this.getDefaultUserName
     }
   })
 })

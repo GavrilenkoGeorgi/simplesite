@@ -61,6 +61,7 @@
 // import db from '../components/firebaseInit'
 import firebase from 'firebase/app'
 import 'firebase/auth'
+import { mapGetters } from 'vuex'
 
 export default {
   data: () => ({
@@ -78,6 +79,20 @@ export default {
       v => (v && v.length <= 12) || 'Пароль повинен містити менше 12 символів'
     ]
   }),
+  computed: {
+    ...mapGetters([
+      'getUserState'
+    ])
+  },
+  mounted () {
+    this.$nextTick(function () {
+      console.log(`Login page mounted.`)
+      if (this.getUserState.isAuthenticated) {
+        console.log(`User is authenticated, loading editor`)
+        this.$router.push('cms')
+      }
+    })
+  },
   methods: {
     /*
     login () {

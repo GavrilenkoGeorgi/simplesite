@@ -58,7 +58,7 @@ export default {
     name: 'Prices',
     serviceItemsFromDB: [],
     itemsToDisplayInPricesList: [],
-    serviceItemsRef: db.collection('serviceItems')
+    serviceItemsRef: db.collection('services')
   }),
   components: {
     Debug,

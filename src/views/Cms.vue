@@ -10,19 +10,21 @@
       <v-flex xs12 sm6 offset-sm3>
         <v-expansion-panel>
           <v-expansion-panel-content>
-            <div slot="header">
+            <div slot="header" class="title">
               Ціни
             </div>
+            <hr class="divider" />
             <v-card>
-              <v-card-text>Тут можна редагувати ціни</v-card-text>
+              <v-card-text class="blue-grey--text">Поточні значення:</v-card-text>
                   <v-flex xs12 v-for="doc in getPrices" :key="doc.id">
                     <v-layout wrap>
-                      <v-flex xs12 class="text-xs-center">
+                      <v-flex xs12 class="text-xs-left" pl-2>
+                        <hr class="divider" />
                         <v-layout>
                           <v-flex xs7 d-flex align-center>
-                            <h4 class="orange--text">{{ doc.header }}</h4>
+                            <h4 class="orange--text subheading">{{ doc.header }}</h4>
                           </v-flex>
-                          <v-flex xs5>
+                          <v-flex xs5 class="text-xs-right">
 <!-- Up, down and delete service item buttons -->
                             <v-btn icon small @click="moveItem(doc.id, 'up')"><v-icon color="blue darken-1">arrow_upward</v-icon></v-btn>
                             <v-btn icon small @click="moveItem(doc.id, 'down')"><v-icon color="blue darken-1">arrow_downward</v-icon></v-btn>
@@ -37,7 +39,7 @@
                               <v-icon small color="blue darken-1">create</v-icon>
                             </v-btn>
                           </v-flex>
-                          <v-flex xs9>
+                          <v-flex xs9 class="body-2">
                             {{ priceValue }}
                           </v-flex>
                           <v-flex xs2>
@@ -48,8 +50,9 @@
                         </v-layout>
                       </v-flex>
                       <v-flex xs12 class="text-xs-right">
-                        <v-btn icon small fab @click="handleAddServiceItem(doc.id, doc.header)">
+                        <v-btn small @click="handleAddServiceItem(doc.id, doc.header)" color="blue-grey lighten-4">
                           <v-icon medium color="orange">add</v-icon>
+                            Додаті
                         </v-btn>
                       </v-flex>
                     </v-layout>
@@ -69,7 +72,7 @@
                     </v-flex>
                   </v-flex-->
                   <v-layout>
-                      <v-flex align-center d-flex>
+                      <v-flex align-center d-flex py-4>
                         <v-btn color="blue-grey lighten-4" @click="handleAddCategory">додати категорію</v-btn>
                       </v-flex>
                     </v-layout>
@@ -78,11 +81,11 @@
         </v-expansion-panel>
         <v-expansion-panel>
           <v-expansion-panel-content>
-            <div slot="header">
+            <div slot="header" class="title">
               Коментарі
             </div>
             <v-card>
-              <v-card-text>Видаляти або затверджувати коментарі</v-card-text>
+              <v-card-text class="subheading grey--text">Видаляти або затверджувати коментарі:</v-card-text>
                 <v-flex v-for="doc in getReviews" :key="doc.id" pa-3>
                   <v-layout wrap>
                     <v-flex xs6 py-1>
@@ -102,6 +105,9 @@
                       <v-btn small icon fab>
                         <v-icon medium color="red">delete</v-icon>
                       </v-btn>
+                    </v-flex>
+                    <v-flex xs12>
+                      <hr class="divider" />
                     </v-flex>
                   </v-layout>
                 </v-flex>
@@ -146,18 +152,18 @@
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn
-                color="blue darken-1"
-                outline
-                flat
-                @click="saveEdit">
-                зберегти
-              </v-btn>
-              <v-btn
-                color="grey"
+                color="blue"
                 outline
                 flat
                 @click="editPriceDialog = false">
                 скасувати
+              </v-btn>
+              <v-btn
+                color="orange"
+                outline
+                flat
+                @click="saveEdit">
+                зберегти
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -304,15 +310,15 @@
                 color="blue darken-1"
                 outline
                 flat
-                @click="addServiceItemToDb">
-                додаті
-              </v-btn>
-              <v-btn
-                color="grey"
-                outline
-                flat
                 @click="addServiceItemDialog = false">
                 скасувати
+              </v-btn>
+              <v-btn
+                color="orange"
+                outline
+                flat
+                @click="addServiceItemToDb">
+                додаті
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -422,7 +428,7 @@ export default {
     addCategoryDialog: false,
     addCategoryFormValid: false,
     safeToDelete: false,
-    serviceItemsRef: db.collection('serviceItems'),
+    serviceItemsRef: db.collection('services'),
     reviewsItemsRef: db.collection('reviews'),
     serviceItemsFromDB: [],
     serviceItemsDisplayOrder: [],
@@ -437,6 +443,7 @@ export default {
         this.loadReviews()
       } else {
         console.log(`Login first or GTFO`)
+        this.$router.push('login')
       }
     })
   },
@@ -514,7 +521,7 @@ export default {
         this.buffer.docHeader = header
       } else {
         console.log(`Its safe to delete buffer id is ${this.buffer.docID}`)
-        db.collection('serviceItems').doc(this.buffer.docID).delete().then(() => {
+        this.serviceItemsRef.doc(this.buffer.docID).delete().then(() => {
           console.log(`Document successfully deleted`)
           // this.buffer.docID = null
           let payload = {
@@ -655,7 +662,7 @@ export default {
         let order = this.serviceItemsFromDB.length
         // let services = ['Something small 120', 'Bigger ones 400', 'Huge 760']
         let services = []
-        db.collection('serviceItems').add({
+        this.serviceItemsRef.add({
           header: this.buffer.header,
           order: order,
           services: services
@@ -733,7 +740,7 @@ export default {
       console.log(`Syncing db document id is ${documentId} ${itemToUpdate}`)
       // getDataForDb('sdfsdnfsmdfb')
       // get doc data from store
-      db.collection('serviceItems').doc(documentId).set(itemToUpdate)
+      this.serviceItemsRef.doc(documentId).set(itemToUpdate)
         .then(function () {
           console.log('Document successfully written!')
         })
@@ -746,7 +753,7 @@ export default {
       console.dir(this.getItemsWhichOrderHasChanged)
 
       for (let item of this.getItemsWhichOrderHasChanged) {
-        db.collection('serviceItems').doc(item.id).update({
+        this.serviceItemsRef.doc(item.id).update({
           order: item.order
         }).then(() => {
           console.log('Document successfully written!')
@@ -810,19 +817,9 @@ export default {
     },
     loadReviews () {
       console.log('Loading comments..')
-      // db.collection('serviceItems') // .where('starsRating', '==', 5)
       this.reviewsItemsRef.get()
         .then(querySnapshot => {
-          // let serviceItemsFromDB = []
           querySnapshot.forEach(doc => {
-            // doc.data() is never undefined for query doc snapshots
-            /*
-            console.log(doc.id, ' => ', doc.data().name)
-            let serviceItem = {
-              header: doc.data().header,
-              services: doc.data().services,
-              id: doc.id
-            } */
             this.reviewsItemsFromDB.push({
               id: doc.id,
               approved: doc.data().approved,
@@ -830,36 +827,10 @@ export default {
               review: doc.data().review,
               starsRating: doc.data().starsRating
             })
-            /*
-            this.serviceItemsFromDB.push({
-              id: doc.id,
-              order: doc.data().order,
-              header: doc.data().header,
-              services: doc.data().services
-            })
-            */
           })
-          // this.sortServiceItemsArray()
-          // this.serviceItemsFromDB = this.serviceItemsFromDB.sort((a, b) => (a.order > b.order) ? 1 : ((b.order > a.order) ? -1 : 0))
-          // console.log(`Sorted array -->`)
-          // console.log(this.serviceItemsFromDB)
-          // default order
-          /*
-          function compare(currentItem, nextItem) {
-            if (currentItem.order < b.last_nom)
-              return -1;
-            if (a.last_nom > b.last_nom)
-              return 1;
-            return 0;
-          }
-
-          objs.sort(compare);
-          */
           return true
         })
         .then(() => {
-          // this.allServiceItems = serviceItemsFromDB
-          // console.log(this.allServiceItems)
           this.$store.commit('setReviews', this.reviewsItemsFromDB)
         })
         .catch(function (error) {
