@@ -106,11 +106,11 @@
                 @click="$refs.form.reset()">
                 ОЧИСТИТЬ
               </v-btn>
-              <v-btn @click.prevent="executeRecaptcha"
+              <v-btn @click="addReview"
                 :disabled="!this.form"
                 color="blue-grey lighten-2">отправить</v-btn>
               <!-- listen to verify event emited by the recaptcha component -->
-              <recaptcha ref="recaptcha" @verify="getScore"></recaptcha>
+              <!--recaptcha ref="recaptcha" @verify="getScore"></recaptcha-->
         </v-flex>
       </v-layout>
     </v-layout>
@@ -232,7 +232,7 @@ export default {
     // send your recaptcha token to the server to verify it
     getScore (response) {
       // console.log(response)
-      this.$http.post(`https://cors-escape.herokuapp.com/https://www.google.com/recaptcha/api/siteverify?secret=${secret.recaptchaSecret}&response=${response}`)
+      this.$http.post(`https://cors-anywhere.herokuapp.com/https://www.google.com/recaptcha/api/siteverify?secret=${secret.recaptchaSecret}&response=${response}`)
         .then(response => {
           this.userScore = response.body.score
           console.log(`Score is: ${response.body.score}`)
@@ -249,9 +249,11 @@ export default {
         })
     },
     // execute the recaptcha widget
+    /*
     executeRecaptcha () {
       this.$refs.recaptcha.execute()
     },
+    */
     check () {
       console.log('Checking')
       /*

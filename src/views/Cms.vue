@@ -1,13 +1,11 @@
 <template>
 <!-- Price editor -->
   <v-container fill-height fluid pa-0 v-if="this.getUserState.isAuthenticated">
-    <v-layout row wrap justify-center>
+    <v-layout row>
 <!-- Header -->
-      <v-flex d-flex align-center>
-        <h1>{{ header }}</h1>
-      </v-flex>
 <!-- Expansion panel -->
       <v-flex xs12 sm6 offset-sm3>
+        <h1 class="py-2">{{ header }}</h1>
         <v-expansion-panel>
           <v-expansion-panel-content>
             <div slot="header" class="title">
@@ -21,10 +19,10 @@
                       <v-flex xs12 class="text-xs-left" pl-2>
                         <hr class="divider" />
                         <v-layout>
-                          <v-flex xs7 d-flex align-center>
+                          <v-flex xs7 d-flex align-center class="py-4 pl-2">
                             <h4 class="orange--text subheading">{{ doc.header }}</h4>
                           </v-flex>
-                          <v-flex xs5 class="text-xs-right">
+                          <v-flex xs5 class="text-xs-right py-4">
 <!-- Up, down and delete service item buttons -->
                             <v-btn icon small @click="moveItem(doc.id, 'up')"><v-icon color="blue darken-1">arrow_upward</v-icon></v-btn>
                             <v-btn icon small @click="moveItem(doc.id, 'down')"><v-icon color="blue darken-1">arrow_downward</v-icon></v-btn>
@@ -90,19 +88,26 @@
                   <v-layout wrap>
                     <v-flex xs6 py-1>
                       Ім'я: {{ doc.name }}
-                      <v-icon v-if="doc.approved" small color="orange">verified_user</v-icon>
+                      <v-btn v-if="doc.approved"
+                        @click="disapproveComment(doc.id)"
+                        small icon fab>
+                        <v-icon small color="orange">verified_user</v-icon>
+                      </v-btn>
                     </v-flex>
                     <v-flex xs6 class="text-xs-right">
-                      <v-icon small color="orange" v-for="(star,i) in doc.starsRating" :key="i">grade</v-icon>
+                        <v-icon small color="orange" v-for="(star,i) in doc.starsRating" :key="i">grade</v-icon>
                     </v-flex>
                     <v-flex xs12>
                       Коментар: {{ doc.review }}
                     </v-flex>
                     <v-flex xs12 class="text-xs-right">
-                      <v-btn small icon fab>
-                        <v-icon v-if="!doc.approved" medium color="green">verified_user</v-icon>
+                      <v-btn v-if="!doc.approved"
+                        @click="approveComment(doc.id)"
+                        small icon fab>
+                        <v-icon medium color="green">verified_user</v-icon>
                       </v-btn>
-                      <v-btn small icon fab>
+                      <v-btn @click="handleDeleteComment(doc.id)"
+                        small icon fab>
                         <v-icon medium color="red">delete</v-icon>
                       </v-btn>
                     </v-flex>
@@ -380,6 +385,62 @@
           </v-card>
         </v-dialog>
       </v-flex>
+<!-- Delete comment dialog -->
+      <v-flex class="text-xs-center">
+        <v-dialog
+          v-model="deleteCommentDialog"
+          width="500">
+          <!--v-btn
+            slot="activator"
+            color="red lighten-2"
+            dark>
+            Click Me
+          </v-btn-->
+
+          <v-card>
+            <v-card-title
+              class="red accent-4">
+              <h3 class="white--text">Видалити коментар</h3>
+            </v-card-title>
+
+            <v-card-text class="text-xs-left">
+              Дійсно видаліть цей коментар? <br />
+              <!--span class="orange--text">{{ this.buffer.docHeader }}</span-->
+              <!--v-form ref="deleteServiceItemDialogForm" v-model="deleteServiceItemFormValid">
+                <v-text-field
+                  v-model="buffer.header"
+                  :rules="serviceItemRules"
+                  type='text'
+                  autocomplete='off'
+                  required
+                  append-icon='create'
+                  label='Назва позіції'>
+                </v-text-field>
+              </v-form-->
+            </v-card-text>
+
+            <v-divider></v-divider>
+
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn
+                color="red"
+                outline
+                flat
+                @click="handleDeleteComment">
+                видалити
+              </v-btn>
+              <v-btn
+                color="primary"
+                outline
+                flat
+                @click="deleteCommentDialog = false, safeToDelete = false">
+                скасувати
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-flex>
     </v-layout>
   </v-container>
 </template>
@@ -425,6 +486,7 @@ export default {
     deleteServiceItemFormValid: false,
     deleteServiceItemDialog: false,
     deleteWarningDialog: false,
+    deleteCommentDialog: false,
     addCategoryDialog: false,
     addCategoryFormValid: false,
     safeToDelete: false,
@@ -458,6 +520,33 @@ export default {
   methods: {
     changeServiceItemOrder () {
       console.log(`Changing order`)
+    },
+    clearBuffer () {
+      this.buffer = {
+        docHeader: '',
+        priceValue: '',
+        valueForLabel: '',
+        header: '',
+        index: null,
+        docID: null,
+        currentServiceItemOrder: null
+      }
+    },
+    approveComment (id) {
+      console.log(`Setting 'approved' to comment with id: ${id}`)
+      // const update = {}
+      // update[`approved.${id}`] = true
+      db.collection('reviews').doc(id).update({ approved: true })
+      // db.collection("data").doc("one").set({foo:'bar'})
+      this.$store.commit('toggleReviewApproved', id)
+    },
+    disapproveComment (id) {
+      console.log(`Setting 'disapproved' to comment with id: ${id}`)
+      // const update = {}
+      // update[`approved.${id}`] = true
+      db.collection('reviews').doc(id).update({ approved: false })
+      this.$store.commit('toggleReviewApproved', id)
+      // db.collection("data").doc("one").set({foo:'bar'})
     },
     moveItem (id, direction) {
       console.log(`Moving item with id ${id} up.`)
@@ -508,6 +597,26 @@ export default {
         resolve()
         // this.deleteWarningDialog = !this.deleteWarningDialog
       })
+    },
+    handleDeleteComment (id) {
+      if (!this.safeToDelete && id) {
+        console.log(`Dialog...`)
+        console.log(`Deleting comment with id ${id}`)
+        this.safeToDelete = !this.safeToDelete
+        this.buffer.docID = id
+        this.deleteCommentDialog = !this.deleteCommentDialog
+      } else {
+        console.log(`Deleting comment with id ${this.buffer.docID}`)
+        db.collection('reviews').doc(this.buffer.docID).delete().then(() => {
+          console.log('Document successfully deleted!')
+        }).catch(error => {
+          console.error('Error removing document: ', error)
+        })
+        this.$store.commit('deleteReview', this.buffer.docID)
+        this.deleteCommentDialog = !this.deleteCommentDialog
+        this.safeToDelete = !this.safeToDelete
+        this.clearBuffer()
+      }
     },
     handleDeleteServiceItem (id, header) {
       if (!this.safeToDelete && id) {

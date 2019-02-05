@@ -41,6 +41,18 @@ export default {
   setUser (state, payload) {
     state.userState = payload
   },
+  deleteReview (state, id) {
+    console.log(`Deleteing review from store with id ${id}`)
+    let indexOfCommentToDelete = state.reviewsForEditing.findIndex(review => review.id === id)
+    state.reviewsForEditing.splice(indexOfCommentToDelete, 1)
+  },
+  toggleReviewApproved (state, id) {
+    console.log(`Approving in store with id of ${id}`)
+    let reviewToApprove = state.reviewsForEditing.find(review => review.id === id)
+    console.log(`Review to approve is ${reviewToApprove}`)
+    reviewToApprove.approved = !reviewToApprove.approved
+    console.log(reviewToApprove)
+  },
   changePriceItemsOrder (state, payload) {
     if (payload.direction) {
       state.itemsWhichOrderHasChanged = []
