@@ -14,19 +14,22 @@
             <hr class="divider" />
             <v-card>
               <v-card-text class="blue-grey--text">Поточні значення:</v-card-text>
-                  <v-flex xs12 v-for="doc in getPrices" :key="doc.id">
+                  <v-flex xs12
+                    v-for="doc in getPrices"
+                    :key="doc.id">
                     <v-layout wrap>
                       <v-flex xs12 class="text-xs-left" pl-2>
-                        <hr class="divider" />
+                        <!-- hr class="divider" /-->
                         <v-layout>
-                          <v-flex xs7 d-flex align-center class="py-4 pl-2">
+                          <v-flex xs6 d-flex align-center class="py-4 pl-2">
                             <h4 class="orange--text subheading">{{ doc.header }}</h4>
                           </v-flex>
-                          <v-flex xs5 class="text-xs-right py-4">
-<!-- Up, down and delete service item buttons -->
+                          <v-flex xs6 class="text-xs-right py-4 pr-1">
+<!-- Edit, up, down and delete service item buttons -->
+                            <v-btn icon small @click="handleEditServiceItemName(doc.id, doc.header)"><v-icon color="green">create</v-icon></v-btn>
                             <v-btn icon small @click="moveItem(doc.id, 'up')"><v-icon color="blue darken-1">arrow_upward</v-icon></v-btn>
                             <v-btn icon small @click="moveItem(doc.id, 'down')"><v-icon color="blue darken-1">arrow_downward</v-icon></v-btn>
-                            <v-btn icon small @click="handleDeleteServiceItem(doc.id, doc.header)"><v-icon color="blue darken-1">delete</v-icon></v-btn>
+                            <v-btn icon small @click="handleDeleteServiceItem(doc.id, doc.header)"><v-icon color="red">delete</v-icon></v-btn>
                           </v-flex>
                         </v-layout>
                       </v-flex>
@@ -34,13 +37,13 @@
                         <v-layout row align-center>
                           <v-flex class="text-xs-right">
                             <v-btn icon small fab @click="editPrice(priceValue, index, doc.id, doc.header)">
-                              <v-icon small color="blue darken-1">create</v-icon>
+                              <v-icon small color="green">create</v-icon>
                             </v-btn>
                           </v-flex>
                           <v-flex xs9 class="body-2">
                             {{ priceValue }}
                           </v-flex>
-                          <v-flex xs2>
+                          <v-flex xs2 class="text-xs-right">
                             <v-btn icon small fab @click="handlePriceDelete(doc.id, priceValue)">
                               <v-icon small color="red">delete</v-icon>
                             </v-btn>
@@ -70,10 +73,10 @@
                     </v-flex>
                   </v-flex-->
                   <v-layout>
-                      <v-flex align-center d-flex py-4>
-                        <v-btn color="blue-grey lighten-4" @click="handleAddCategory">додати категорію</v-btn>
-                      </v-flex>
-                    </v-layout>
+                    <v-flex align-center d-flex py-4>
+                      <v-btn color="blue-grey lighten-4" @click="handleAddCategory">додати категорію</v-btn>
+                    </v-flex>
+                  </v-layout>
             </v-card>
           </v-expansion-panel-content>
         </v-expansion-panel>
@@ -441,6 +444,55 @@
           </v-card>
         </v-dialog>
       </v-flex>
+<!-- Generic dialog -->
+      <v-flex class="text-xs-center">
+        <v-dialog
+          v-model="genericDialog"
+          width="500">
+          <v-card>
+            <v-card-title
+              class="blue darken-1">
+              <h4 class="white--text">{{ genericDialogData.title }}</h4>
+            </v-card-title>
+
+            <v-card-text>
+              <v-form ref="generic-edit-input" v-model="priceEditingFormValid">
+                <v-text-field
+                  v-model="genericDialogData.inputFieldValue"
+                  :rules="priceStringRules"
+                  type='text'
+                  autocomplete='off'
+                  required
+                  append-icon='create'
+                  :label="genericDialogData.inputFieldLabel">
+                </v-text-field>
+              </v-form>
+            </v-card-text>
+
+            <v-divider></v-divider>
+
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn
+                color="blue"
+                outline
+                flat
+                @click="genericDialog = false">
+                скасувати
+              </v-btn>
+              <v-btn
+                :loading="buttonLoadingState"
+                :disabled="buttonLoadingState"
+                color="orange"
+                outline
+                flat
+                @click="editServiceItemName">
+                зберегти
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-flex>
     </v-layout>
   </v-container>
 </template>
@@ -454,6 +506,15 @@ import db from '@/components/firebaseInit'
 export default {
   data: () => ({
     header: 'Редагувати',
+    buttonLoadingState: false,
+    genericDialog: false,
+    genericDialogData: {
+      type: '',
+      title: '',
+      inputFieldValue: '',
+      id: null,
+      inputFieldLabel: ''
+    },
     buffer: {
       docHeader: '',
       priceValue: '',
@@ -713,7 +774,7 @@ export default {
         }
       })
     },
-    handleAddServiceItem (id) {
+    handleAddServiceItem (id) { // ????
       // console.log(`Handling add service item to the service with id ${id}`)
       // this.buffer.priceValue = ''
       this.buffer.docID = id
@@ -725,6 +786,41 @@ export default {
       }
       */
       // this.$store.commit('addServiceItem', payload)
+    },
+    handleEditServiceItemName (id, header) {
+      console.log(`Displaying service item name edit dialog. Doc id is ${id}`)
+      let data = {
+        type: 'save',
+        title: 'Змінити назву категорії',
+        inputFieldValue: header,
+        id: id,
+        inputFieldLabel: header
+      }
+      this.genericDialogData = data
+      this.genericDialog = !this.genericDialog
+    },
+    editServiceItemName () {
+      console.log(`Renaming service item. Doc id is ${this.genericDialogData.id}`)
+      this.buttonLoadingState = !this.buttonLoadingState
+      console.log(`Saving this header: ${this.genericDialogData.inputFieldValue}`)
+      const serviceItemToUpdateRef = db.collection(`services`).doc(this.genericDialogData.id)
+      return serviceItemToUpdateRef.update({
+        header: this.genericDialogData.inputFieldValue
+      })
+        .then(() => {
+          console.log(`Document successfully updated!`)
+          this.buttonLoadingState = !this.buttonLoadingState
+          this.genericDialog = !this.genericDialog
+          let data = {
+            id: this.genericDialogData.id,
+            header: this.genericDialogData.inputFieldValue
+          }
+          this.$store.commit('updateServiceItemName', data)
+        })
+        .catch((error) => {
+          // The document probably doesn't exist.
+          console.error(`Error updating document: `, error)
+        })
     },
     addServiceItemToDb () {
       console.log(`Adding service item to db`)

@@ -21,6 +21,11 @@ export default {
     // console.dir(service)
     // console.log(`Removing data with index ${indexOfDataToRemove}`)
   },
+  updateServiceItemName (state, data) {
+    console.log(`Updating service item name.`)
+    let serviceIndexToUpdate = state.pricesXp.findIndex(service => service.id === data.id)
+    state.pricesXp[serviceIndexToUpdate].header = data.header
+  },
   updatePrices (state, data) {
     console.log(`Updating price values`)
     let serviceIndexToUpdate = state.pricesXp.findIndex(service => service.id === data.id)

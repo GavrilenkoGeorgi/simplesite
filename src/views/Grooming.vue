@@ -16,7 +16,7 @@
         </v-parallax>
       </v-flex-->
       <v-flex xs12>
-        <v-parallax :src="require('@/assets/img/grooming/parallax-photo.jpg')" height="900">
+        <v-parallax :src="require('@/assets/img/grooming/parallax.jpg')" height="500">
           <h1 class="photo-overlay">{{ getContent.groomingText.photoOverlayText }}</h1>
         </v-parallax>
       </v-flex>
@@ -130,31 +130,30 @@ export default {
     position: relative;
     bottom: -4.5em;
     text-align: left;
-    width: 15em;
+    width: 14em;
     padding: 0em .3em 0em .3em;
     letter-spacing: .075em;
     font-weight: 700;
     color: $color-white;
     // color: red;
     background-color: $color-black-overlay;
+    // border: 1px solid blue;
   }
-.border {
-  border: 1px solid pink;
-}
 
 @media screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 320px) {
   .photo-overlay {
-    font-size: 1.7em;
+    font-size: 1.4em;
     // position: relative;
-    bottom: 2.2em;
+    bottom: -11em;
     text-align: left;
-    width: 15em;
+    // width: 15em;
     // padding: 0em .3em 0em .3em;
     // letter-spacing: .075em;
     // font-weight: 700;
     // color: $color-white;
     // color: red;
     // background-color: $color-black-overlay;
+    // border: 1px solid green;
   }
 }
 
@@ -162,7 +161,8 @@ export default {
   .photo-overlay {
     font-size: 1.7em;
     // position: relative;
-    // bottom: 2.2em;
+    bottom: -8em;
+    // border: 1px solid red;
   }
 }
 
@@ -170,7 +170,8 @@ export default {
   .photo-overlay {
     font-size: 3em;
     // position: relative;
-    // bottom: 2.2em;
+    bottom: -4.5em;
+    // border: 1px solid pink;
   }
 }
 </style>
