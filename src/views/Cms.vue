@@ -6,27 +6,26 @@
 <!-- Expansion panel -->
       <v-flex xs12 sm6 offset-sm3>
         <h1 class="py-2">{{ header }}</h1>
-        <v-expansion-panel>
+        <!--v-expansion-panel>
           <v-expansion-panel-content>
             <div slot="header" class="title">
-              Ціни
+              Груминг
             </div>
             <hr class="divider" />
             <v-card>
-              <v-card-text class="blue-grey--text">Поточні значення:</v-card-text>
+              <v-card-text class="blue-grey--text">Двокрапка відокремлює назву послуги від ціни, потрібно для правильного відображення цін на сайті.</v-card-text>
                   <v-flex xs12
                     v-for="doc in getPrices"
                     :key="doc.id">
                     <v-layout wrap>
                       <v-flex xs12 class="text-xs-left" pl-2>
-                        <!-- hr class="divider" /-->
                         <v-layout>
-                          <v-flex xs6 d-flex align-center class="py-4 pl-2">
+                          <v-flex xs5 d-flex align-center class="py-4 pl-2">
                             <h4 class="orange--text subheading">{{ doc.header }}</h4>
                           </v-flex>
-                          <v-flex xs6 class="text-xs-right py-4 pr-1">
+                          <v-flex xs7 class="text-xs-right py-4 pr-1"-->
 <!-- Edit, up, down and delete service item buttons -->
-                            <v-btn icon small @click="handleEditServiceItemName(doc.id, doc.header)"><v-icon color="green">create</v-icon></v-btn>
+                            <!--v-btn icon small @click="handleEditServiceItemName(doc.id, doc.header)"><v-icon color="green">create</v-icon></v-btn>
                             <v-btn icon small @click="moveItem(doc.id, 'up')"><v-icon color="blue darken-1">arrow_upward</v-icon></v-btn>
                             <v-btn icon small @click="moveItem(doc.id, 'down')"><v-icon color="blue darken-1">arrow_downward</v-icon></v-btn>
                             <v-btn icon small @click="handleDeleteServiceItem(doc.id, doc.header)"><v-icon color="red">delete</v-icon></v-btn>
@@ -57,30 +56,18 @@
                         </v-btn>
                       </v-flex>
                     </v-layout>
-                  </v-flex>
-                   <!-- Header -->
-                  <!--v-flex v-for="(item, index) in getPrices"
-                    :key="index"
-                    :data-product-id="item.id">
-                    {{ item.header }}
-                    <v-flex v-for="(service, index) in item.services" :key="index" px-2 py-1 @click.prevent="editPrice(service, index, item.id)">
-                      <v-flex d-flex pl-2 class="subheading" align-center>
-                        {{ service }}
-                        <v-btn flat small icon>
-                          <v-icon>done</v-icon>
-                        </v-btn>
-                      </v-flex>
-                    </v-flex>
                   </v-flex-->
-                  <v-layout>
+<!-- Add category button -->
+                  <!--v-layout>
                     <v-flex align-center d-flex py-4>
                       <v-btn color="blue-grey lighten-4" @click="handleAddCategory">додати категорію</v-btn>
                     </v-flex>
                   </v-layout>
             </v-card>
           </v-expansion-panel-content>
-        </v-expansion-panel>
-        <v-expansion-panel>
+        </v-expansion-panel-->
+<!-- Comments approval section -->
+        <!--v-expansion-panel>
           <v-expansion-panel-content>
             <div slot="header" class="title">
               Коментарі
@@ -119,6 +106,74 @@
                     </v-flex>
                   </v-layout>
                 </v-flex>
+            </v-card>
+          </v-expansion-panel-content>
+        </v-expansion-panel-->
+<!-- Training section prices - there really should be one -->
+        <v-expansion-panel v-for="(pricePosition, collectionIndex) in this.getPriceItemsCollectionToLoad"
+          :key="collectionIndex">
+          <v-expansion-panel-content>
+            <div slot="header" class="title">
+              {{ pricePosition.humanReadableTitle }}
+            </div>
+            <v-card>
+              <v-card-text class="blue-grey--text">
+                {{ helpMessage }}
+                </v-card-text>
+                  <v-flex xs12
+                    v-for="doc of getAllPrices[collectionIndex]"
+                    :key="doc.id">
+                    <v-layout wrap>
+                      <v-flex xs12 class="text-xs-left" pl-2>
+                        <!-- hr class="divider" /-->
+                        <v-layout>
+                          <v-flex xs5 d-flex align-center class="py-4 pl-2">
+                            <h4 class="orange--text subheading">{{ doc.header }}</h4>
+                          </v-flex>
+                          <v-flex xs7 class="text-xs-right py-4 pr-1">
+<!-- Edit, up, down and delete service item buttons (four buttons in a row) -->
+                            <v-btn icon small @click="handleEditServiceItemName(doc.id, doc.header)"><v-icon color="green">create</v-icon></v-btn>
+                            <v-btn icon small @click="moveItem(doc.id, 'up')"><v-icon color="blue darken-1">arrow_upward</v-icon></v-btn>
+                            <v-btn icon small @click="moveItem(doc.id, 'down')"><v-icon color="blue darken-1">arrow_downward</v-icon></v-btn>
+                            <v-btn icon small @click="handleDeleteServiceItem(doc.id, doc.header, pricePosition.collectionName)"><v-icon color="red">delete</v-icon></v-btn>
+                          </v-flex>
+                        </v-layout>
+                      </v-flex>
+                      <v-flex xs12 v-for="(priceValue, index) in doc.services" :key="index">
+                        <v-layout row align-center>
+                          <v-flex class="text-xs-right">
+                            <v-btn icon small fab @click="editPrice(priceValue, index, doc.id, doc.header)">
+                              <v-icon small color="green">create</v-icon>
+                            </v-btn>
+                          </v-flex>
+                          <v-flex xs9 class="body-2">
+                            {{ priceValue }}
+                          </v-flex>
+<!-- Delete single string button -->
+                          <v-flex xs2 class="text-xs-right">
+                            <v-btn icon small fab @click="handleDeletePriceString(doc.id, priceValue, pricePosition.collectionName, collectionIndex)">
+                              <v-icon small color="red">delete</v-icon>
+                            </v-btn>
+                          </v-flex>
+                        </v-layout>
+                      </v-flex>
+                      <v-flex xs12 class="text-xs-right">
+                        <v-btn
+                          @click="handleAddServiceItem(doc.id, doc.header, 'trainingPrices')"
+                          small
+                          color="blue-grey lighten-4">
+                          <v-icon medium color="orange">add</v-icon>
+                            Додаті
+                        </v-btn>
+                      </v-flex>
+                    </v-layout>
+                  </v-flex>
+<!-- Add category button -->
+                  <v-layout>
+                    <v-flex align-center d-flex py-4>
+                      <v-btn color="blue-grey lighten-4" @click="handleAddCategory">додати категорію</v-btn>
+                    </v-flex>
+                  </v-layout>
             </v-card>
           </v-expansion-panel-content>
         </v-expansion-panel>
@@ -178,7 +233,7 @@
         </v-dialog>
       </v-flex>
 <!-- Delete warning dialog -->
-      <v-flex class="text-xs-center">
+      <!--v-flex class="text-xs-center">
         <v-dialog
           v-model="deleteWarningDialog"
           persistent
@@ -194,12 +249,6 @@
             <v-card-text class="text-xs-left">
               Дійсно видалити цю позицію? <br />
               <span class="orange--text">{{ buffer.priceValue }}</span>
-              <!--v-text-field
-                v-model="buffer.priceValue"
-                @click:append="saveEdit"
-                append-icon='done'
-                :label="buffer.valueForLabel">
-              </v-text-field-->
             </v-card-text>
 
             <v-divider></v-divider>
@@ -223,7 +272,7 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
-      </v-flex>
+      </v-flex-->
 <!-- Add category dialog -->
       <v-flex class="text-xs-center">
         <v-dialog
@@ -374,7 +423,7 @@
                 color="red"
                 outline
                 flat
-                @click="handleDeleteServiceItem">
+                @click="handleDeletePriceString">
                 видалити
               </v-btn>
               <v-btn
@@ -448,15 +497,20 @@
       <v-flex class="text-xs-center">
         <v-dialog
           v-model="genericDialog"
+          v-on:input="safeToDelete = $event"
           width="500">
           <v-card>
             <v-card-title
-              class="blue darken-1">
-              <h4 class="white--text">{{ genericDialogData.title }}</h4>
+              v-bind:class="{ 'blue darken-1': genericDialogData.rename, red: genericDialogData.delete}">
+              <h4 class="white--text subheading">{{ genericDialogData.title }}</h4>
             </v-card-title>
-
             <v-card-text>
-              <v-form ref="generic-edit-input" v-model="priceEditingFormValid">
+              <v-flex v-if="genericDialogData.delete" class="text-xs-left">
+                {{ genericDialogData.inputFieldLabel }}
+              </v-flex>
+              <v-form ref="generic-edit-input"
+                v-if="genericDialogData.rename"
+                v-model="priceEditingFormValid">
                 <v-text-field
                   v-model="genericDialogData.inputFieldValue"
                   :rules="priceStringRules"
@@ -477,10 +531,21 @@
                 color="blue"
                 outline
                 flat
-                @click="genericDialog = false">
+                @click="cancelAction">
                 скасувати
               </v-btn>
               <v-btn
+                v-if="genericDialogData.delete"
+                :loading="buttonLoadingState"
+                :disabled="buttonLoadingState"
+                color="red"
+                outline
+                flat
+                @click="handleDeletePriceString">
+                видалити
+              </v-btn>
+              <v-btn
+                v-if="genericDialogData.rename"
                 :loading="buttonLoadingState"
                 :disabled="buttonLoadingState"
                 color="orange"
@@ -506,10 +571,15 @@ import db from '@/components/firebaseInit'
 export default {
   data: () => ({
     header: 'Редагувати',
+    helpMessage: `Двокрапка відокремлює назву послуги від ціни, потрібно для правильного відображення цін на сайті.`,
+    allPrices: [],
+    trainingPrices: [],
     buttonLoadingState: false,
     genericDialog: false,
     genericDialogData: {
       type: '',
+      rename: false,
+      delete: false,
       title: '',
       inputFieldValue: '',
       id: null,
@@ -520,8 +590,10 @@ export default {
       priceValue: '',
       valueForLabel: '',
       header: '',
-      index: null,
+      // index: null,
       docID: null,
+      collectionRef: null,
+      collectionIndex: null,
       currentServiceItemOrder: null
     },
     editingChoices: [
@@ -553,32 +625,62 @@ export default {
     safeToDelete: false,
     serviceItemsRef: db.collection('services'),
     reviewsItemsRef: db.collection('reviews'),
+    trainingItemsRef: db.collection('trainingPrices'),
     serviceItemsFromDB: [],
     serviceItemsDisplayOrder: [],
     reviewsItemsFromDB: []
   }),
+  computed: {
+    ...mapGetters([
+      'getPrices',
+      'getReviews',
+      'getUserState',
+      'getAllPrices',
+      'getItemsWhichOrderHasChanged',
+      'getPriceItemsCollectionToLoad'
+    ])
+  },
   mounted () {
-    this.$nextTick(function () {
-      console.log(`Kind of cms mounted.`)
+    this.$nextTick(() => {
+      // console.log(`Kind of cms mounted.`)
       if (this.getUserState.isAuthenticated) {
         console.log(`Loading prices`)
-        this.loadPrices()
-        this.loadReviews()
+        if (this.getAllPrices.length === 0) {
+          this.loadAllPrices()
+        } else {
+          console.log(`Prices are set in the state already`)
+        }
       } else {
         console.log(`Login first or GTFO`)
         this.$router.push('login')
       }
     })
   },
-  computed: {
-    ...mapGetters([
-      'getPrices',
-      'getReviews',
-      'getUserState',
-      'getItemsWhichOrderHasChanged'
-    ])
-  },
   methods: {
+    // load all current prices from db, sort them and add to store
+    loadAllPrices () {
+      for (let collectionToLoad of this.getPriceItemsCollectionToLoad) {
+        const tempArray = []
+        db.collection(`${collectionToLoad.collectionName}`).get()
+          .then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+              tempArray.push({
+                id: doc.id,
+                order: doc.data().order,
+                header: doc.data().header,
+                services: doc.data().services
+              })
+            })
+            let sortedArray = this.sortItemsArray(tempArray)
+            this.allPrices.push(sortedArray)
+            console.log(`Training items ready. Pushing to store`)
+            this.$store.commit('setPrices', sortedArray)
+          })
+          .catch(error => {
+            console.log('Error getting documents: ', error)
+          })
+      }
+    },
     changeServiceItemOrder () {
       console.log(`Changing order`)
     },
@@ -588,8 +690,9 @@ export default {
         priceValue: '',
         valueForLabel: '',
         header: '',
-        index: null,
+        collectionIndex: null,
         docID: null,
+        collectionRef: null,
         currentServiceItemOrder: null
       }
     },
@@ -643,7 +746,7 @@ export default {
         console.log('Error getting document:', error)
       })
       */
-    },
+    }, /*
     addServiceItem () {
       return new Promise(resolve => {
         console.log(`Adding service item ${this.buffer.priceValue}`)
@@ -658,7 +761,7 @@ export default {
         resolve()
         // this.deleteWarningDialog = !this.deleteWarningDialog
       })
-    },
+    }, */
     handleDeleteComment (id) {
       if (!this.safeToDelete && id) {
         console.log(`Dialog...`)
@@ -679,7 +782,7 @@ export default {
         this.clearBuffer()
       }
     },
-    handleDeleteServiceItem (id, header) {
+    handleDeleteServiceItem (id, header, collectionRef) {
       if (!this.safeToDelete && id) {
         console.log(`Deleting doc with id ${id}.`)
         this.safeToDelete = !this.safeToDelete
@@ -688,10 +791,11 @@ export default {
         console.log(`Setting delete service item dialog to ${this.deleteServiceItemDialog}`)
         console.log(`Setting buffer doc id to ${id}`)
         this.buffer.docID = id
+        this.buffer.collectionRef = collectionRef
         this.buffer.docHeader = header
       } else {
         console.log(`Its safe to delete buffer id is ${this.buffer.docID}`)
-        this.serviceItemsRef.doc(this.buffer.docID).delete().then(() => {
+        db.collection(`${collectionRef}`).doc(this.buffer.docID).delete().then(() => {
           console.log(`Document successfully deleted`)
           // this.buffer.docID = null
           let payload = {
@@ -705,46 +809,66 @@ export default {
         })
       }
     },
-    handlePriceDelete (docID, priceValue) {
-      if (this.safeToDelete) {
-        console.log(`All set, deleting from store.`)
-        // console.log(`Deleting price item with id ${this.buffer.docID}`)
-        this.deletePriceFromStore().then(() => {
-          // console.log(`Syncing with db..`)
-          // this.syncPricesInDB()
-        })
-          .catch(function (error) {
-            console.log(`Error is ${error}`)
-          })
-        this.toggleSafeCheck()
-        // this.deleteWarningDialog = !this.deleteWarningDialog
-      } else {
-        console.log(`Check if is it safe with id ${docID}`)
-        this.deleteWarningDialog = !this.deleteWarningDialog // ???
-        this.buffer.priceValue = priceValue
-        this.buffer.docID = docID
-        this.toggleSafeCheck()
-        this.deleteWarningDialog = true // ???
-        return true
-      }
+    cancelAction () {
+      this.toggleSafeCheck()
+      this.clearBuffer()
+      this.genericDialog = !this.genericDialog
     },
     toggleSafeCheck () {
       this.safeToDelete = !this.safeToDelete
-      this.deleteWarningDialog = !this.deleteWarningDialog
+      // this.genericDialog = !this.genericDialog
     },
-    deletePriceFromStore () {
-      return new Promise(resolve => {
-        console.log(`Deleting price from store ${this.buffer.priceValue}`)
-        let itemToUpdate = this.serviceItemsFromDB.find(serviceItem => serviceItem.id === this.buffer.docID)
-        let payload = {
-          id: this.buffer.docID,
-          priceValue: this.buffer.priceValue
+    // Delete one string from price 'sting:uah'
+    handleDeletePriceString (docID, priceValue, collectionName, collectionIndex) {
+      if (!this.safeToDelete) {
+        console.log(`Check if is it safe with id ${docID}`)
+        this.genericDialog = true
+        let dialogSettings = {
+          rename: false,
+          delete: true,
+          title: 'Видалення',
+          inputFieldValue: priceValue,
+          id: docID,
+          inputFieldLabel: `Дійсно видалити: "${priceValue}"?`
         }
-        this.$store.commit('deletePrice', payload)
-        this.syncPricesInDB(this.buffer.docID, itemToUpdate)
+        this.genericDialogData = dialogSettings
+        this.buffer.docID = docID
+        this.buffer.priceValue = priceValue
+        this.buffer.collectionRef = collectionName
+        this.buffer.collectionIndex = collectionIndex
+        // set ok to delete
+        this.toggleSafeCheck()
+      } else {
+        // it's ok to delete
+        console.log(`All set, deleting from store.`)
+        console.log(`Deleting from collection index ${this.buffer.collectionIndex} doc with id ${this.buffer.docID} value ${this.buffer.priceValue}`)
+        this.deletePriceStringFromStore().then(() => {
+          console.log(`Syncing with db..`)
+          this.syncPricesInDB(this.buffer.docID, this.buffer.priceValue, this.buffer.collectionRef)
+        })
+          .catch(error => {
+            console.log(`Error is ${error}`)
+          })
+        // this.clearBuffer()
+        this.toggleSafeCheck()
+        this.genericDialog = !this.genericDialog
+        console.log(`All ok, clearing buffer.`)
+      }
+    },
+    deletePriceStringFromStore () {
+      return new Promise(resolve => {
+        let payload = {
+          collectionIndex: this.buffer.collectionIndex,
+          value: this.buffer.priceValue,
+          id: this.buffer.docID
+        }
+        this.$store.commit('deleteSinglePriceString', payload)
         resolve()
-        // this.deleteWarningDialog = !this.deleteWarningDialog
       })
+    },
+    syncPricesInDB (id, value, collectionRef) {
+      db.collection(`${collectionRef}`).doc(id)
+        .update({ 'services': firebase.firestore.FieldValue.arrayRemove(value) })
     },
     saveEdit () {
       return new Promise((resolve, reject) => {
@@ -774,10 +898,11 @@ export default {
         }
       })
     },
-    handleAddServiceItem (id) { // ????
-      // console.log(`Handling add service item to the service with id ${id}`)
+    handleAddServiceItem (id, header, collectionRef) { // ????
+      console.log(`Handling add service item to the service with docref ${collectionRef}`)
       // this.buffer.priceValue = ''
       this.buffer.docID = id
+      this.buffer.collectionRef = collectionRef
       this.addServiceItemDialog = !this.addServiceItemDialog
       /*
       let payload = {
@@ -828,21 +953,21 @@ export default {
         console.log(`Adding to firebase...`)
         console.log(`Adding to doc with id ${this.buffer.docID}`)
         console.log(`Adding with value of ${this.buffer.priceValue}`)
+        console.log(`Collection reference is ${this.buffer.collectionRef}`)
         // this.serviceItemsRef.doc(this.buffer.docID).update({ 'services': firebase.firestore.FieldValue.arrayUnion(this.buffer.priceValue) })
-        this.serviceItemsRef.doc(this.buffer.docID).update({
-          // header: this.buffer.header,
-          // order: order,
-          'services': firebase.firestore.FieldValue.arrayUnion(this.buffer.priceValue)
-          // services: firebase.firestore().FieldValue.arrayUnion(this.buffer.priceValue)
-        })
+        db.collection(`${this.buffer.collectionRef}`)
+          .doc(this.buffer.docID).update({
+            'services': firebase.firestore.FieldValue.arrayUnion(this.buffer.priceValue)
+          })
           .then(() => {
             console.log('Document successfully written!')
             this.addServiceItemDialog = false
             let payload = {
+              collection: this.buffer.collectionRef,
               id: this.buffer.docID,
               value: this.buffer.priceValue
             }
-            this.$store.commit('addServiceItem', payload)
+            this.$store.commit('addTrainingItem', payload)
             this.buffer.priceValue = ''
           })
           .catch(error => {
@@ -941,18 +1066,6 @@ export default {
       prices.push(price)
       this.$store.commit('setPrices', prices) */
     },
-    syncPricesInDB (documentId, itemToUpdate) {
-      console.log(`Syncing db document id is ${documentId} ${itemToUpdate}`)
-      // getDataForDb('sdfsdnfsmdfb')
-      // get doc data from store
-      this.serviceItemsRef.doc(documentId).set(itemToUpdate)
-        .then(function () {
-          console.log('Document successfully written!')
-        })
-        .catch(function (error) {
-          console.error('Error writing document: ', error)
-        })
-    },
     syncOrderOfItemsInDB () {
       console.log(`Syncing order of prices in db.`)
       console.dir(this.getItemsWhichOrderHasChanged)
@@ -968,8 +1081,41 @@ export default {
       }
     },
     sortServiceItemsArray () {
-      console.log(`Sorting service items array`)
+      console.log(`Sorting service items array <-- remove this`)
       this.serviceItemsFromDB = this.serviceItemsFromDB.sort((a, b) => (a.order > b.order) ? 1 : ((b.order > a.order) ? -1 : 0))
+    },
+    sortItemsArray (array) {
+      if (!array) {
+        console.log(`Nothing to sort`)
+      } else {
+        array = array.sort((a, b) => (a.order > b.order) ? 1 : ((b.order > a.order) ? -1 : 0))
+        return array
+      }
+    },
+    loadTrainingPrices () {
+      console.log('Loading training prices..')
+      this.trainingItemsRef.get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            this.trainingPrices.push({
+              id: doc.id,
+              order: doc.data().order,
+              header: doc.data().header,
+              services: doc.data().services
+            })
+          })
+          this.trainingPrices = this.sortItemsArray(this.trainingPrices)
+          return true
+        })
+        .then(() => {
+          // this.allServiceItems = serviceItemsFromDB
+          console.log(`Training items ready.`)
+          // console.log(this.allServiceItems)
+          this.$store.commit('setTrainingPrices', this.trainingPrices)
+        })
+        .catch(error => {
+          console.log('Error getting documents: ', error)
+        })
     },
     loadPrices () {
       console.log('Loading prices..')

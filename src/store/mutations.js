@@ -2,11 +2,22 @@ export default {
   setUserState (state, payload) {
     state.userState = payload
   },
-  setPrices (state, payload) {
-    state.pricesXp = payload
+  setPrices (state, payload) { // grooming prices
+    // state.pricesXp = payload
+    state.allPrices.push(payload)
+  },
+  setTrainingPrices (state, payload) {
+    state.trainingPrices = payload
   },
   setReviews (state, payload) {
     state.reviewsForEditing = payload
+  },
+  deleteSinglePriceString (state, payload) {
+    let collectionToModify = state.allPrices[payload.collectionIndex]
+    let docToModify = collectionToModify.find(doc => doc.id === payload.id)
+    let indexOfDataToRemove = docToModify.services.findIndex(priceString => priceString === payload.value)
+    // remove it already
+    docToModify.services.splice(indexOfDataToRemove, 1)
   },
   deletePrice (state, payload) {
     let indexOfResult = state.pricesXp.findIndex(service => service.id === payload.id)
@@ -31,10 +42,23 @@ export default {
     let serviceIndexToUpdate = state.pricesXp.findIndex(service => service.id === data.id)
     state.pricesXp[serviceIndexToUpdate].services = data.services
   },
+  addTrainingItem (state, payload) {
+    console.log(`Adding training item to array`)
+    let serviceIndexToUpdate = state.trainingPrices.findIndex(service => service.id === payload.id)
+    if (serviceIndexToUpdate) {
+      state.trainingPrices[serviceIndexToUpdate].services.push(payload.value)
+    } else {
+      console.log(`Something wrong went adding training price. state.traningPrices is: ${state.trainingPrices}`)
+    }
+  },
   addServiceItem (state, payload) {
     console.log(`Adding service item to array`)
     let serviceIndexToUpdate = state.pricesXp.findIndex(service => service.id === payload.id)
     state.pricesXp[serviceIndexToUpdate].services.push(payload.value)
+  },
+  deleteTrainingItemPrice (state, payload) {
+    // let serviceIndexToDelete = state.trainingPrices.findIndex(service => service.id === payload.id)
+    // state.trainingPrices.splice(serviceIndexToDelete, 1)
   },
   deleteCategory (state, payload) {
     let serviceIndexToDelete = state.pricesXp.findIndex(service => service.id === payload.id)

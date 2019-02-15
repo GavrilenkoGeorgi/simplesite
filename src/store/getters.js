@@ -19,5 +19,11 @@ export default {
   },
   getItemsWhichOrderHasChanged (state) {
     return state.itemsWhichOrderHasChanged
+  },
+  getPriceItemsCollectionToLoad (state) {
+    return state.priceItemsCollectionsToLoad
+  },
+  getAllPrices (state) {
+    return state.allPrices
   }
 }

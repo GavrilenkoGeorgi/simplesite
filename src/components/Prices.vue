@@ -1,14 +1,27 @@
 <template>
   <v-container fluid id="prices">
-    <v-layout wrap>
+    <v-progress-circular
+      v-if="loading"
+      indeterminate
+      color="primary"
+    ></v-progress-circular>
+    <v-layout wrap justify-center>
 <!-- Training section -->
-      <v-flex xs12 sm10 md8 lg7 v-for="item in priceItemsToDisplay" :key="item.docRef">
+      <v-flex xs12 sm10 md8 lg7
+        v-for="item in priceItemsToDisplay"
+        :key="item.docRef">
         <h3 class="py-2">{{ item.title }}</h3>
         <v-expansion-panel>
-          <v-expansion-panel-content v-for="(position, index) in item.items" :key="index">
-            <div slot="header" class="price-header">{{ position.header }}</div>
-            <v-card v-for="(priceItem, index) in position.services" :key="index">
-              <v-card-text class="price-descr pa-2 pl-3"><span class="hover">{{ priceItem.serviceDescr }}</span>
+          <v-expansion-panel-content
+            v-for="(position, index) in item.items"
+            :key="index">
+            <div slot="header" class="price-header">
+              {{ position.header }}
+            </div>
+            <v-card v-for="(priceItem, index) in position.services"
+              :key="index">
+              <v-card-text class="price-descr pa-2 pl-3">
+                <span class="hover">{{ priceItem.serviceDescr }}</span>
               <v-spacer></v-spacer>
               <span class="price-value">{{ priceItem.priceValue }}</span>
               <div class="price-icon-container">
@@ -36,18 +49,19 @@ import db from '@/components/firebaseInit'
 
 export default {
   data: () => ({
-    name: 'Prices',
+    name: `Prices`,
+    loading: false,
     priceItemsToDisplay: [],
     priceItems: [
       {
-        title: 'Дрессировка',
+        title: `Дрессировка`,
         items: [],
-        docRef: 'trainingPrices'
+        docRef: `trainingPrices`
       },
       {
-        title: 'Груминг',
+        title: `Груминг`,
         items: [],
-        docRef: 'services'
+        docRef: `services`
       }
     ]
   }),
@@ -84,6 +98,7 @@ export default {
     },
     loadPrices (priceItems) {
       console.log(`Loading prices..`)
+      this.loading = true
       for (let priceItem of priceItems) {
         db.collection(`${priceItem.docRef}`).get()
           .then(querySnapshot => {
@@ -101,9 +116,12 @@ export default {
             }
             // sort items by their order
             priceItem.items = this.sortItemsArray(priceItem.items)
-            // push to display array
+            // pushing to display array
             this.priceItemsToDisplay.push(priceItem)
             return true
+          })
+          .then(() => {
+            this.loading = false
           })
           .catch(error => {
             console.log(`Error getting documents: `, error)

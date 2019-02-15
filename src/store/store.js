@@ -12,7 +12,13 @@ const getDefaultState = () => {
       uid: null
     },
     itemsWhichOrderHasChanged: [],
+    allPrices: [],
+    priceItemsCollectionsToLoad: [
+      { collectionName: 'trainingPrices', humanReadableTitle: 'Дрессировка' },
+      { collectionName: 'services', humanReadableTitle: 'Груминг' }
+    ],
     pricesXp: [],
+    trainingPrices: [],
     reviewsForEditing: [],
     content: {
       mainPageText: {
