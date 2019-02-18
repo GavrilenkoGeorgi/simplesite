@@ -2,113 +2,9 @@
 <!-- Price editor -->
   <v-container fill-height fluid pa-0 v-if="this.getUserState.isAuthenticated">
     <v-layout row>
-<!-- Header -->
-<!-- Expansion panel -->
       <v-flex xs12 sm6 offset-sm3>
+<!-- Header -->
         <h1 class="py-2">{{ header }}</h1>
-        <!--v-expansion-panel>
-          <v-expansion-panel-content>
-            <div slot="header" class="title">
-              Груминг
-            </div>
-            <hr class="divider" />
-            <v-card>
-              <v-card-text class="blue-grey--text">Двокрапка відокремлює назву послуги від ціни, потрібно для правильного відображення цін на сайті.</v-card-text>
-                  <v-flex xs12
-                    v-for="doc in getPrices"
-                    :key="doc.id">
-                    <v-layout wrap>
-                      <v-flex xs12 class="text-xs-left" pl-2>
-                        <v-layout>
-                          <v-flex xs5 d-flex align-center class="py-4 pl-2">
-                            <h4 class="orange--text subheading">{{ doc.header }}</h4>
-                          </v-flex>
-                          <v-flex xs7 class="text-xs-right py-4 pr-1"-->
-<!-- Edit, up, down and delete service item buttons -->
-                            <!--v-btn icon small @click="handleEditServiceItemName(doc.id, doc.header)"><v-icon color="green">create</v-icon></v-btn>
-                            <v-btn icon small @click="moveItem(doc.id, 'up')"><v-icon color="blue darken-1">arrow_upward</v-icon></v-btn>
-                            <v-btn icon small @click="moveItem(doc.id, 'down')"><v-icon color="blue darken-1">arrow_downward</v-icon></v-btn>
-                            <v-btn icon small @click="handleDeleteServiceItem(doc.id, doc.header)"><v-icon color="red">delete</v-icon></v-btn>
-                          </v-flex>
-                        </v-layout>
-                      </v-flex>
-                      <v-flex xs12 v-for="(priceValue, index) in doc.services" :key="index">
-                        <v-layout row align-center>
-                          <v-flex class="text-xs-right">
-                            <v-btn icon small fab @click="editPrice(priceValue, index, doc.id, doc.header)">
-                              <v-icon small color="green">create</v-icon>
-                            </v-btn>
-                          </v-flex>
-                          <v-flex xs9 class="body-2">
-                            {{ priceValue }}
-                          </v-flex>
-                          <v-flex xs2 class="text-xs-right">
-                            <v-btn icon small fab @click="handlePriceDelete(doc.id, priceValue)">
-                              <v-icon small color="red">delete</v-icon>
-                            </v-btn>
-                          </v-flex>
-                        </v-layout>
-                      </v-flex>
-                      <v-flex xs12 class="text-xs-right">
-                        <v-btn small @click="handleAddServiceItem(doc.id, doc.header)" color="blue-grey lighten-4">
-                          <v-icon medium color="orange">add</v-icon>
-                            Додаті
-                        </v-btn>
-                      </v-flex>
-                    </v-layout>
-                  </v-flex-->
-<!-- Add category button -->
-                  <!--v-layout>
-                    <v-flex align-center d-flex py-4>
-                      <v-btn color="blue-grey lighten-4" @click="handleAddCategory">додати категорію</v-btn>
-                    </v-flex>
-                  </v-layout>
-            </v-card>
-          </v-expansion-panel-content>
-        </v-expansion-panel-->
-<!-- Comments approval section -->
-        <!--v-expansion-panel>
-          <v-expansion-panel-content>
-            <div slot="header" class="title">
-              Коментарі
-            </div>
-            <v-card>
-              <v-card-text class="subheading grey--text">Видаляти або затверджувати коментарі:</v-card-text>
-                <v-flex v-for="doc in getReviews" :key="doc.id" pa-3>
-                  <v-layout wrap>
-                    <v-flex xs6 py-1>
-                      Ім'я: {{ doc.name }}
-                      <v-btn v-if="doc.approved"
-                        @click="disapproveComment(doc.id)"
-                        small icon fab>
-                        <v-icon small color="orange">verified_user</v-icon>
-                      </v-btn>
-                    </v-flex>
-                    <v-flex xs6 class="text-xs-right">
-                        <v-icon small color="orange" v-for="(star,i) in doc.starsRating" :key="i">grade</v-icon>
-                    </v-flex>
-                    <v-flex xs12>
-                      Коментар: {{ doc.review }}
-                    </v-flex>
-                    <v-flex xs12 class="text-xs-right">
-                      <v-btn v-if="!doc.approved"
-                        @click="approveComment(doc.id)"
-                        small icon fab>
-                        <v-icon medium color="green">verified_user</v-icon>
-                      </v-btn>
-                      <v-btn @click="handleDeleteComment(doc.id)"
-                        small icon fab>
-                        <v-icon medium color="red">delete</v-icon>
-                      </v-btn>
-                    </v-flex>
-                    <v-flex xs12>
-                      <hr class="divider" />
-                    </v-flex>
-                  </v-layout>
-                </v-flex>
-            </v-card>
-          </v-expansion-panel-content>
-        </v-expansion-panel-->
 <!-- Training section prices - there really should be one -->
         <v-expansion-panel v-for="(pricePosition, collectionIndex) in this.getPriceItemsCollectionToLoad"
           :key="collectionIndex">
@@ -141,8 +37,9 @@
                       </v-flex>
                       <v-flex xs12 v-for="(priceValue, index) in doc.services" :key="index">
                         <v-layout row align-center>
+<!-- Edit single price string button -->
                           <v-flex class="text-xs-right">
-                            <v-btn icon small fab @click="editPrice(priceValue, index, doc.id, doc.header)">
+                            <v-btn icon small fab @click="handleRenameSingleStringPriceItem(doc.id, priceValue, pricePosition.collectionName, collectionIndex)">
                               <v-icon small color="green">create</v-icon>
                             </v-btn>
                           </v-flex>
@@ -157,11 +54,12 @@
                           </v-flex>
                         </v-layout>
                       </v-flex>
+<!-- Add single price string button -->
                       <v-flex xs12 class="text-xs-right">
                         <v-btn
-                          @click="handleAddServiceItem(doc.id, doc.header, 'trainingPrices')"
-                          small
-                          color="blue-grey lighten-4">
+                          @click="handleAddSingleStringPriceItem(doc.id, pricePosition.collectionName, collectionIndex)"
+                          flat outline
+                          color="green">
                           <v-icon medium color="orange">add</v-icon>
                             Додаті
                         </v-btn>
@@ -178,321 +76,6 @@
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-flex>
-<!-- Edit dialog -->
-      <v-flex class="text-xs-center">
-        <v-dialog
-          v-model="editPriceDialog"
-          width="500">
-          <!--v-btn
-            slot="activator"
-            color="red lighten-2"
-            dark>
-            Click Me
-          </v-btn-->
-
-          <v-card>
-            <v-card-title
-              class="blue darken-1">
-              <h4 class="white--text">{{ buffer.docHeader }}</h4>
-            </v-card-title>
-
-            <v-card-text>
-              <v-form ref="priceEditingForm" v-model="priceEditingFormValid">
-                <v-text-field
-                  v-model="buffer.priceValue"
-                  :rules="priceStringRules"
-                  type='text'
-                  autocomplete='off'
-                  required
-                  append-icon='create'
-                  :label="buffer.valueForLabel">
-                </v-text-field>
-              </v-form>
-            </v-card-text>
-
-            <v-divider></v-divider>
-
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn
-                color="blue"
-                outline
-                flat
-                @click="editPriceDialog = false">
-                скасувати
-              </v-btn>
-              <v-btn
-                color="orange"
-                outline
-                flat
-                @click="saveEdit">
-                зберегти
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-      </v-flex>
-<!-- Delete warning dialog -->
-      <!--v-flex class="text-xs-center">
-        <v-dialog
-          v-model="deleteWarningDialog"
-          persistent
-          lazy
-          width="500">
-
-          <v-card>
-            <v-card-title
-              class="red accent-4">
-              <h3 class="white--text">Увага</h3>
-            </v-card-title>
-
-            <v-card-text class="text-xs-left">
-              Дійсно видалити цю позицію? <br />
-              <span class="orange--text">{{ buffer.priceValue }}</span>
-            </v-card-text>
-
-            <v-divider></v-divider>
-
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn
-                color="red"
-                flat
-                outline
-                @click="handlePriceDelete">
-                видалити
-              </v-btn>
-              <v-btn
-                color="primary"
-                flat
-                outline
-                @click="toggleSafeCheck">
-                скасувати
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-      </v-flex-->
-<!-- Add category dialog -->
-      <v-flex class="text-xs-center">
-        <v-dialog
-          v-model="addCategoryDialog"
-          width="500">
-          <!--v-btn
-            slot="activator"
-            color="red lighten-2"
-            dark>
-            Click Me
-          </v-btn-->
-
-          <v-card>
-            <v-card-title
-              class="blue darken-1">
-              <h3 class="white--text">Додати категорію</h3>
-            </v-card-title>
-
-            <v-card-text>
-              <v-form ref="addCategoryDialogForm" v-model="addCategoryFormValid">
-                <v-text-field
-                  v-model="buffer.header"
-                  :rules="headerRules"
-                  type='text'
-                  autocomplete='off'
-                  required
-                  append-icon='create'
-                  label='Назва'>
-                </v-text-field>
-              </v-form>
-            </v-card-text>
-
-            <v-divider></v-divider>
-
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn
-                color="blue darken-1"
-                outline
-                flat
-                @click="addCategoryToDb">
-                додати
-              </v-btn>
-              <v-btn
-                color="grey"
-                outline
-                flat
-                @click="addCategoryDialog = false">
-                скасувати
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-      </v-flex>
-<!-- Add price item dialog -->
-      <v-flex class="text-xs-center">
-        <v-dialog
-          v-model="addServiceItemDialog"
-          width="500">
-          <!--v-btn
-            slot="activator"
-            color="red lighten-2"
-            dark>
-            Click Me
-          </v-btn-->
-
-          <v-card>
-            <v-card-title
-              class="blue darken-1">
-              <h4 class="white--text">Додати позицію в прайс</h4>
-            </v-card-title>
-
-            <v-card-text>
-              <v-form ref="addServiceItemDialogForm" v-model="addServiceItemFormValid">
-                <v-text-field
-                  v-model="buffer.priceValue"
-                  :rules="serviceItemRules"
-                  type='text'
-                  autocomplete='off'
-                  required
-                  append-icon='create'
-                  label='Назва позіції'>
-                </v-text-field>
-              </v-form>
-            </v-card-text>
-
-            <v-divider></v-divider>
-
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn
-                color="blue darken-1"
-                outline
-                flat
-                @click="addServiceItemDialog = false">
-                скасувати
-              </v-btn>
-              <v-btn
-                color="orange"
-                outline
-                flat
-                @click="addServiceItemToDb">
-                додаті
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-      </v-flex>
-<!-- Delete service item dialog -->
-      <v-flex class="text-xs-center">
-        <v-dialog
-          v-model="deleteServiceItemDialog"
-          width="500">
-          <!--v-btn
-            slot="activator"
-            color="red lighten-2"
-            dark>
-            Click Me
-          </v-btn-->
-
-          <v-card>
-            <v-card-title
-              class="red accent-4">
-              <h3 class="white--text">Видалити категорію</h3>
-            </v-card-title>
-
-            <v-card-text class="text-xs-left">
-              Дійсно видалити цю позицію? <br />
-              <span class="orange--text">{{ this.buffer.docHeader }}</span>
-              <!--v-form ref="deleteServiceItemDialogForm" v-model="deleteServiceItemFormValid">
-                <v-text-field
-                  v-model="buffer.header"
-                  :rules="serviceItemRules"
-                  type='text'
-                  autocomplete='off'
-                  required
-                  append-icon='create'
-                  label='Назва позіції'>
-                </v-text-field>
-              </v-form-->
-            </v-card-text>
-
-            <v-divider></v-divider>
-
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn
-                color="red"
-                outline
-                flat
-                @click="handleDeletePriceString">
-                видалити
-              </v-btn>
-              <v-btn
-                color="primary"
-                outline
-                flat
-                @click="deleteServiceItemDialog = false, safeToDelete = false">
-                скасувати
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-      </v-flex>
-<!-- Delete comment dialog -->
-      <v-flex class="text-xs-center">
-        <v-dialog
-          v-model="deleteCommentDialog"
-          width="500">
-          <!--v-btn
-            slot="activator"
-            color="red lighten-2"
-            dark>
-            Click Me
-          </v-btn-->
-
-          <v-card>
-            <v-card-title
-              class="red accent-4">
-              <h3 class="white--text">Видалити коментар</h3>
-            </v-card-title>
-
-            <v-card-text class="text-xs-left">
-              Дійсно видаліть цей коментар? <br />
-              <!--span class="orange--text">{{ this.buffer.docHeader }}</span-->
-              <!--v-form ref="deleteServiceItemDialogForm" v-model="deleteServiceItemFormValid">
-                <v-text-field
-                  v-model="buffer.header"
-                  :rules="serviceItemRules"
-                  type='text'
-                  autocomplete='off'
-                  required
-                  append-icon='create'
-                  label='Назва позіції'>
-                </v-text-field>
-              </v-form-->
-            </v-card-text>
-
-            <v-divider></v-divider>
-
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn
-                color="red"
-                outline
-                flat
-                @click="handleDeleteComment">
-                видалити
-              </v-btn>
-              <v-btn
-                color="primary"
-                outline
-                flat
-                @click="deleteCommentDialog = false, safeToDelete = false">
-                скасувати
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-      </v-flex>
 <!-- Generic dialog -->
       <v-flex class="text-xs-center">
         <v-dialog
@@ -501,7 +84,8 @@
           width="500">
           <v-card>
             <v-card-title
-              v-bind:class="{ 'blue darken-1': genericDialogData.rename, red: genericDialogData.delete}">
+              v-bind:class="{ 'blue darken-1': genericDialogData.rename ||
+              genericDialogData.addString, red: genericDialogData.delete }">
               <h4 class="white--text subheading">{{ genericDialogData.title }}</h4>
             </v-card-title>
             <v-card-text>
@@ -509,7 +93,7 @@
                 {{ genericDialogData.inputFieldLabel }}
               </v-flex>
               <v-form ref="generic-edit-input"
-                v-if="genericDialogData.rename"
+                v-if="genericDialogData.rename || genericDialogData.addString"
                 v-model="priceEditingFormValid">
                 <v-text-field
                   v-model="genericDialogData.inputFieldValue"
@@ -545,14 +129,24 @@
                 видалити
               </v-btn>
               <v-btn
+                v-if="genericDialogData.addString"
+                :loading="buttonLoadingState"
+                :disabled="buttonLoadingState"
+                color="orange"
+                outline
+                flat
+                @click="handleAddSingleStringPriceItem">
+                зберегти
+              </v-btn>
+              <v-btn
                 v-if="genericDialogData.rename"
                 :loading="buttonLoadingState"
                 :disabled="buttonLoadingState"
                 color="orange"
                 outline
                 flat
-                @click="editServiceItemName">
-                зберегти
+                @click="handleRenameSingleStringPriceItem">
+                перейменувати
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -577,12 +171,12 @@ export default {
     buttonLoadingState: false,
     genericDialog: false,
     genericDialogData: {
-      type: '',
       rename: false,
       delete: false,
+      addString: false,
       title: '',
-      inputFieldValue: '',
       id: null,
+      inputFieldValue: '',
       inputFieldLabel: ''
     },
     buffer: {
@@ -590,7 +184,6 @@ export default {
       priceValue: '',
       valueForLabel: '',
       header: '',
-      // index: null,
       docID: null,
       collectionRef: null,
       collectionIndex: null,
@@ -673,13 +266,149 @@ export default {
             })
             let sortedArray = this.sortItemsArray(tempArray)
             this.allPrices.push(sortedArray)
-            console.log(`Training items ready. Pushing to store`)
+            // console.log(`Training items ready. Pushing to store`)
             this.$store.commit('setPrices', sortedArray)
           })
           .catch(error => {
             console.log('Error getting documents: ', error)
           })
       }
+    },
+    //
+    // rename price string
+    //
+    handleRenameSingleStringPriceItem (id, currentValue, collectionName, collectionIndex) {
+      if (!this.genericDialog) {
+        console.log(`Preparing dialog for renaming single price string`)
+        // prepare the dialog
+        let dialogSettings = {
+          rename: true,
+          delete: false,
+          addString: false,
+          title: 'Перейменувати позицію',
+          id: id,
+          inputFieldValue: currentValue,
+          inputFieldLabel: currentValue
+        }
+        this.genericDialogData = dialogSettings
+        this.genericDialog = true
+        this.buffer.collectionRef = collectionName
+        this.buffer.collectionIndex = collectionIndex
+      } else {
+        console.log(`Renaming single price string`)
+        console.log(`From ${this.genericDialogData.inputFieldLabel} to ${this.genericDialogData.inputFieldValue}`)
+        let payload = {
+          id: this.genericDialogData.id,
+          collectionName: this.buffer.collectionRef,
+          collectionIndex: this.buffer.collectionIndex,
+          stringValue: this.genericDialogData.inputFieldValue
+        }
+        this.$store.commit('addSingleStringPriceItem', payload)
+        this.addSingleStringPriceValueToDB(payload.id, payload.stringValue, payload.collectionName)
+      }
+    },
+    //
+    // add single price string
+    //
+    handleAddSingleStringPriceItem (id, collectionName, collectionIndex) { // ????
+      // console.log(`Handling add service item to collection ${collectionName} doc is: ${id}`)
+      if (!this.genericDialog) {
+        let dialogSettings = {
+          rename: false, // modify the origin, not overwrite it
+          delete: false, // modify the origin, not overwrite it
+          addString: true,
+          title: 'Додати цінову позицію',
+          id: id,
+          inputFieldValue: '',
+          inputFieldLabel: `Введіть назву запису`
+        }
+        this.genericDialogData = dialogSettings
+        this.buffer.collectionRef = collectionName
+        this.buffer.collectionIndex = collectionIndex
+        this.buffer.docID = id // ?
+        this.genericDialog = true
+      } else {
+        /* console.log(`Adding to collection doc id ${this.buffer.docID},
+          collection name ${this.buffer.collectionRef},
+          dialog input data is ${this.genericDialogData.inputFieldValue},
+          with index of ${this.buffer.collectionIndex}`) */
+        let payload = {
+          id: this.buffer.docID,
+          collectionName: this.buffer.collectionRef,
+          collectionIndex: this.buffer.collectionIndex,
+          stringValue: this.genericDialogData.inputFieldValue
+        }
+        this.$store.commit('addSingleStringPriceItem', payload)
+        this.addSingleStringPriceValueToDB(payload.id, payload.stringValue, payload.collectionName)
+        // close dialog
+        this.genericDialog = false
+      }
+    },
+    // Delete one string from price 'sting:uah'
+    handleDeletePriceString (docID, priceValue, collectionName, collectionIndex) {
+      if (!this.genericDialog) {
+        // console.log(`Check if is it safe with id ${docID}`)
+        this.genericDialog = true
+        let dialogSettings = {
+          rename: false,
+          delete: true,
+          addString: false,
+          title: 'Видалення',
+          id: docID,
+          inputFieldValue: priceValue,
+          inputFieldLabel: `Дійсно видалити: "${priceValue}"?`
+        }
+        this.genericDialogData = dialogSettings
+        this.buffer.docID = docID
+        this.buffer.priceValue = priceValue
+        this.buffer.collectionRef = collectionName
+        this.buffer.collectionIndex = collectionIndex
+      } else {
+        // it's ok to delete
+        // console.log(`All set, deleting from store.`)
+        // console.log(`Deleting from collection index ${this.buffer.collectionIndex} doc with id ${this.buffer.docID} value ${this.buffer.priceValue}`)
+        this.deletePriceStringFromStore().then(() => {
+          // console.log(`Syncing with db..`)
+          this.deleteSingleStringPriceValueFromDB(this.buffer.docID, this.buffer.priceValue, this.buffer.collectionRef)
+        })
+          .catch(error => {
+            console.log(`Error is ${error}`)
+          })
+        this.genericDialog = !this.genericDialog
+        // console.log(`All ok, clearing buffer.`)
+      }
+    },
+    deletePriceStringFromStore () {
+      return new Promise(resolve => { // do you really need this?
+        let payload = {
+          collectionIndex: this.buffer.collectionIndex,
+          value: this.buffer.priceValue,
+          id: this.buffer.docID
+        }
+        this.$store.commit('deleteSinglePriceString', payload)
+        resolve()
+      })
+    },
+    deleteSingleStringPriceValueFromDB (id, value, collectionRef) {
+      console.log(`Removing from db`)
+      db.collection(`${collectionRef}`).doc(id)
+        .update({ 'services': firebase.firestore.FieldValue.arrayRemove(value) })
+    },
+    addPriceStringToStore () {
+      return new Promise(resolve => {
+        let payload = {
+          collectionIndex: this.buffer.collectionIndex,
+          value: this.buffer.priceValue,
+          id: this.buffer.docID
+        }
+        this.$store.commit('deleteSinglePriceString', payload)
+        resolve()
+      })
+    },
+    addSingleStringPriceValueToDB (id, value, collectionRef) {
+      console.log(`Adding to db`)
+      db.collection(`${collectionRef}`).doc(id)
+        .update({ 'services': firebase.firestore.FieldValue.arrayUnion(value) })
     },
     changeServiceItemOrder () {
       console.log(`Changing order`)
@@ -809,67 +538,6 @@ export default {
         })
       }
     },
-    cancelAction () {
-      this.toggleSafeCheck()
-      this.clearBuffer()
-      this.genericDialog = !this.genericDialog
-    },
-    toggleSafeCheck () {
-      this.safeToDelete = !this.safeToDelete
-      // this.genericDialog = !this.genericDialog
-    },
-    // Delete one string from price 'sting:uah'
-    handleDeletePriceString (docID, priceValue, collectionName, collectionIndex) {
-      if (!this.safeToDelete) {
-        console.log(`Check if is it safe with id ${docID}`)
-        this.genericDialog = true
-        let dialogSettings = {
-          rename: false,
-          delete: true,
-          title: 'Видалення',
-          inputFieldValue: priceValue,
-          id: docID,
-          inputFieldLabel: `Дійсно видалити: "${priceValue}"?`
-        }
-        this.genericDialogData = dialogSettings
-        this.buffer.docID = docID
-        this.buffer.priceValue = priceValue
-        this.buffer.collectionRef = collectionName
-        this.buffer.collectionIndex = collectionIndex
-        // set ok to delete
-        this.toggleSafeCheck()
-      } else {
-        // it's ok to delete
-        console.log(`All set, deleting from store.`)
-        console.log(`Deleting from collection index ${this.buffer.collectionIndex} doc with id ${this.buffer.docID} value ${this.buffer.priceValue}`)
-        this.deletePriceStringFromStore().then(() => {
-          console.log(`Syncing with db..`)
-          this.syncPricesInDB(this.buffer.docID, this.buffer.priceValue, this.buffer.collectionRef)
-        })
-          .catch(error => {
-            console.log(`Error is ${error}`)
-          })
-        // this.clearBuffer()
-        this.toggleSafeCheck()
-        this.genericDialog = !this.genericDialog
-        console.log(`All ok, clearing buffer.`)
-      }
-    },
-    deletePriceStringFromStore () {
-      return new Promise(resolve => {
-        let payload = {
-          collectionIndex: this.buffer.collectionIndex,
-          value: this.buffer.priceValue,
-          id: this.buffer.docID
-        }
-        this.$store.commit('deleteSinglePriceString', payload)
-        resolve()
-      })
-    },
-    syncPricesInDB (id, value, collectionRef) {
-      db.collection(`${collectionRef}`).doc(id)
-        .update({ 'services': firebase.firestore.FieldValue.arrayRemove(value) })
-    },
     saveEdit () {
       return new Promise((resolve, reject) => {
         console.log('Saving data.')
@@ -897,20 +565,6 @@ export default {
           reject(error)
         }
       })
-    },
-    handleAddServiceItem (id, header, collectionRef) { // ????
-      console.log(`Handling add service item to the service with docref ${collectionRef}`)
-      // this.buffer.priceValue = ''
-      this.buffer.docID = id
-      this.buffer.collectionRef = collectionRef
-      this.addServiceItemDialog = !this.addServiceItemDialog
-      /*
-      let payload = {
-        id: id,
-        value: 'Some string'
-      }
-      */
-      // this.$store.commit('addServiceItem', payload)
     },
     handleEditServiceItemName (id, header) {
       console.log(`Displaying service item name edit dialog. Doc id is ${id}`)
@@ -1187,6 +841,15 @@ export default {
         .catch(function (error) {
           console.log('Error getting documents: ', error)
         })
+    },
+    cancelAction () {
+      this.toggleSafeCheck()
+      this.clearBuffer()
+      this.genericDialog = !this.genericDialog
+    },
+    toggleSafeCheck () {
+      this.safeToDelete = !this.safeToDelete
+      // this.genericDialog = !this.genericDialog
     }
   }
 }

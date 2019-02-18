@@ -19,6 +19,13 @@ export default {
     // remove it already
     docToModify.services.splice(indexOfDataToRemove, 1)
   },
+  addSingleStringPriceItem (state, payload) {
+    console.log(`Adding to store ${payload}`)
+    console.log(payload)
+    let collectionToModify = state.allPrices[payload.collectionIndex]
+    let docToModify = collectionToModify.find(doc => doc.id === payload.id)
+    docToModify.services.push(payload.stringValue)
+  },
   deletePrice (state, payload) {
     let indexOfResult = state.pricesXp.findIndex(service => service.id === payload.id)
     let service = state.pricesXp[indexOfResult] // more info?
