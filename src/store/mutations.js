@@ -3,7 +3,6 @@ export default {
     state.userState = payload
   },
   setPrices (state, payload) { // grooming prices
-    // state.pricesXp = payload
     state.allPrices.push(payload)
   },
   setTrainingPrices (state, payload) {
@@ -11,6 +10,31 @@ export default {
   },
   setReviews (state, payload) {
     state.reviewsForEditing = payload
+  },
+  renamePriceCategory (state, payload) {
+    console.log(`Renaming category in store`)
+    let collectionToModify = state.allPrices[payload.collectionIndex]
+    let docToModify = collectionToModify.find(doc => doc.id === payload.id)
+    docToModify.header = payload.inputFieldValue
+  },
+  addCategory (state, payload) {
+    console.log(`Adding category to store.`)
+    console.log(payload)
+    let newCategory = {
+      header: payload.header,
+      id: payload.id,
+      order: payload.order,
+      services: payload.services
+    }
+    state.allPrices[payload.collectionIndex].push(newCategory)
+  },
+  deleteCategory (state, payload) {
+    console.log(`Deleting category from store ${payload.collectionIndex}`)
+    console.log(`Deleting doc with id ${payload.id}`)
+    console.log(state.allPrices[payload.collectionIndex])
+    let collectionToModify = state.allPrices[payload.collectionIndex]
+    let indexOfCategoryToRemove = collectionToModify.findIndex(doc => doc.id === payload.id)
+    collectionToModify.splice(indexOfCategoryToRemove, 1)
   },
   deleteSinglePriceString (state, payload) {
     let collectionToModify = state.allPrices[payload.collectionIndex]
@@ -21,10 +45,15 @@ export default {
   },
   addSingleStringPriceItem (state, payload) {
     console.log(`Adding to store ${payload}`)
-    console.log(payload)
     let collectionToModify = state.allPrices[payload.collectionIndex]
     let docToModify = collectionToModify.find(doc => doc.id === payload.id)
     docToModify.services.push(payload.stringValue)
+  },
+  renamePriceString (state, payload) {
+    console.log(`Renaming price string.`)
+    let collectionToModify = state.allPrices[payload.collectionIndex]
+    let docToModify = collectionToModify.find(doc => doc.id === payload.id)
+    docToModify.services[payload.itemToRenameIndex] = payload.inputFieldValue
   },
   deletePrice (state, payload) {
     let indexOfResult = state.pricesXp.findIndex(service => service.id === payload.id)
@@ -62,17 +91,6 @@ export default {
     console.log(`Adding service item to array`)
     let serviceIndexToUpdate = state.pricesXp.findIndex(service => service.id === payload.id)
     state.pricesXp[serviceIndexToUpdate].services.push(payload.value)
-  },
-  deleteTrainingItemPrice (state, payload) {
-    // let serviceIndexToDelete = state.trainingPrices.findIndex(service => service.id === payload.id)
-    // state.trainingPrices.splice(serviceIndexToDelete, 1)
-  },
-  deleteCategory (state, payload) {
-    let serviceIndexToDelete = state.pricesXp.findIndex(service => service.id === payload.id)
-    state.pricesXp.splice(serviceIndexToDelete, 1)
-  },
-  addCategory (state, payload) {
-    state.pricesXp.push(payload)
   },
   setUser (state, payload) {
     state.userState = payload

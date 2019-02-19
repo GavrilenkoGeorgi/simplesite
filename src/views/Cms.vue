@@ -5,8 +5,10 @@
       <v-flex xs12 sm6 offset-sm3>
 <!-- Header -->
         <h1 class="py-2">{{ header }}</h1>
-<!-- Training section prices - there really should be one -->
-        <v-expansion-panel v-for="(pricePosition, collectionIndex) in this.getPriceItemsCollectionToLoad"
+<!-- Prices section -->
+        <v-expansion-panel
+          v-for="(pricePosition, collectionIndex)
+          in this.getPriceItemsCollectionToLoad"
           :key="collectionIndex">
           <v-expansion-panel-content>
             <div slot="header" class="title">
@@ -28,18 +30,24 @@
                           </v-flex>
                           <v-flex xs7 class="text-xs-right py-4 pr-1">
 <!-- Edit, up, down and delete service item buttons (four buttons in a row) -->
-                            <v-btn icon small @click="handleEditServiceItemName(doc.id, doc.header)"><v-icon color="green">create</v-icon></v-btn>
-                            <v-btn icon small @click="moveItem(doc.id, 'up')"><v-icon color="blue darken-1">arrow_upward</v-icon></v-btn>
-                            <v-btn icon small @click="moveItem(doc.id, 'down')"><v-icon color="blue darken-1">arrow_downward</v-icon></v-btn>
-                            <v-btn icon small @click="handleDeleteServiceItem(doc.id, doc.header, pricePosition.collectionName)"><v-icon color="red">delete</v-icon></v-btn>
+                            <v-btn icon small @click="handleRenameCategory(doc.id, doc.header, pricePosition.collectionName, collectionIndex)"><v-icon color="green">create</v-icon></v-btn>
+                            <v-btn icon small @click="moveItem(doc.id, 'up', pricePosition.collectionName, collectionIndex)"><v-icon color="blue darken-1">arrow_upward</v-icon></v-btn>
+                            <v-btn icon small @click="moveItem(doc.id, 'down', pricePosition.collectionName, collectionIndex)"><v-icon color="blue darken-1">arrow_downward</v-icon></v-btn>
+                            <v-btn icon small @click="handleDeleteCategory(doc.id, doc.header, pricePosition.collectionName, collectionIndex)"><v-icon color="red">delete</v-icon></v-btn>
                           </v-flex>
                         </v-layout>
                       </v-flex>
-                      <v-flex xs12 v-for="(priceValue, index) in doc.services" :key="index">
+                      <v-flex xs12 v-for="(priceValue, itemIndex) in doc.services" :key="itemIndex">
                         <v-layout row align-center>
 <!-- Edit single price string button -->
                           <v-flex class="text-xs-right">
-                            <v-btn icon small fab @click="handleRenameSingleStringPriceItem(doc.id, priceValue, pricePosition.collectionName, collectionIndex)">
+                            <v-btn icon small fab
+                              @click="handleRenameSingleStringPriceItem(
+                                doc.id,
+                                priceValue,
+                                pricePosition.collectionName,
+                                collectionIndex,
+                                itemIndex)">
                               <v-icon small color="green">create</v-icon>
                             </v-btn>
                           </v-flex>
@@ -66,10 +74,10 @@
                       </v-flex>
                     </v-layout>
                   </v-flex>
-<!-- Add category button -->
+<!-- Big add category button -->
                   <v-layout>
                     <v-flex align-center d-flex py-4>
-                      <v-btn color="blue-grey lighten-4" @click="handleAddCategory">додати категорію</v-btn>
+                      <v-btn flat outline color="orange" @click="handleAddCategory(collectionIndex, pricePosition.collectionName)">додати категорію</v-btn>
                     </v-flex>
                   </v-layout>
             </v-card>
@@ -84,16 +92,24 @@
           width="500">
           <v-card>
             <v-card-title
-              v-bind:class="{ 'blue darken-1': genericDialogData.rename ||
-              genericDialogData.addString, red: genericDialogData.delete }">
+              v-bind:class="{ 'blue darken-1':
+              genericDialogData.renameString ||
+              genericDialogData.addString ||
+              genericDialogData.addCategory ||
+              genericDialogData.renameCategory,
+              red: genericDialogData.delete ||
+              genericDialogData.deleteCategory }">
               <h4 class="white--text subheading">{{ genericDialogData.title }}</h4>
             </v-card-title>
             <v-card-text>
-              <v-flex v-if="genericDialogData.delete" class="text-xs-left">
+              <v-flex v-if="genericDialogData.delete || genericDialogData.deleteCategory" class="text-xs-left">
                 {{ genericDialogData.inputFieldLabel }}
               </v-flex>
               <v-form ref="generic-edit-input"
-                v-if="genericDialogData.rename || genericDialogData.addString"
+                v-if="genericDialogData.renameString ||
+                genericDialogData.addString ||
+                genericDialogData.addCategory ||
+                genericDialogData.renameCategory"
                 v-model="priceEditingFormValid">
                 <v-text-field
                   v-model="genericDialogData.inputFieldValue"
@@ -111,6 +127,7 @@
 
             <v-card-actions>
               <v-spacer></v-spacer>
+<!-- Cancel button -->
               <v-btn
                 color="blue"
                 outline
@@ -118,6 +135,40 @@
                 @click="cancelAction">
                 скасувати
               </v-btn>
+<!-- Category rename button -->
+              <v-btn
+                v-if="genericDialogData.renameCategory"
+                :loading="buttonLoadingState"
+                :disabled="buttonLoadingState"
+                color="orange"
+                outline
+                flat
+                @click="handleRenameCategory">
+                перейменувати
+              </v-btn>
+<!-- Category add button -->
+              <v-btn
+                v-if="genericDialogData.addCategory"
+                :loading="buttonLoadingState"
+                :disabled="buttonLoadingState"
+                color="orange"
+                outline
+                flat
+                @click="handleAddCategory">
+                додати
+              </v-btn>
+<!-- Confirm delete category button -->
+              <v-btn
+                v-if="genericDialogData.deleteCategory"
+                :loading="buttonLoadingState"
+                :disabled="buttonLoadingState"
+                color="red"
+                outline
+                flat
+                @click="handleDeleteCategory">
+                видалити
+              </v-btn>
+<!-- Confirm delete single string button -->
               <v-btn
                 v-if="genericDialogData.delete"
                 :loading="buttonLoadingState"
@@ -128,6 +179,7 @@
                 @click="handleDeletePriceString">
                 видалити
               </v-btn>
+<!-- Confirm add single string button -->
               <v-btn
                 v-if="genericDialogData.addString"
                 :loading="buttonLoadingState"
@@ -138,8 +190,9 @@
                 @click="handleAddSingleStringPriceItem">
                 зберегти
               </v-btn>
+<!-- Single string rename button -->
               <v-btn
-                v-if="genericDialogData.rename"
+                v-if="genericDialogData.renameString"
                 :loading="buttonLoadingState"
                 :disabled="buttonLoadingState"
                 color="orange"
@@ -171,13 +224,17 @@ export default {
     buttonLoadingState: false,
     genericDialog: false,
     genericDialogData: {
-      rename: false,
+      renameString: false,
+      renameCategory: false,
+      deleteCategory: false,
+      addCategory: false,
       delete: false,
       addString: false,
       title: '',
       id: null,
       inputFieldValue: '',
-      inputFieldLabel: ''
+      inputFieldLabel: '',
+      itemToRenameIndex: ''
     },
     buffer: {
       docHeader: '',
@@ -230,8 +287,14 @@ export default {
       'getUserState',
       'getAllPrices',
       'getItemsWhichOrderHasChanged',
-      'getPriceItemsCollectionToLoad'
-    ])
+      'getPriceItemsCollectionToLoad',
+      'getUpdatedArray',
+      'getAllPricesLength'
+    ]),
+    getUpdatedArray (collectionIndex) {
+      let collection = this.$store.state.allPrices[collectionIndex]
+      return collection
+    }
   },
   mounted () {
     this.$nextTick(() => {
@@ -275,37 +338,231 @@ export default {
       }
     },
     //
+    // Rename category
+    //
+    handleRenameCategory (id, header, collectionName, collectionIndex) {
+      if (!this.genericDialog) {
+        let dialogSettings = {
+          renameString: false,
+          renameCategory: true,
+          deleteCategory: false,
+          addCategory: false,
+          delete: false,
+          addString: false,
+          title: 'Перейменувати категорію',
+          id: id,
+          inputFieldValue: header,
+          inputFieldLabel: header,
+          itemToRenameIndex: null
+        }
+        this.buffer.collectionIndex = collectionIndex // should be in dialog by now
+        this.buffer.collectionRef = collectionName
+        this.genericDialogData = dialogSettings
+        this.genericDialog = true
+      } else if (this.priceEditingFormValid) {
+        console.log(`Renaming single price string`)
+        this.renameCategoryInStore().then(() => {
+          console.log(`Syncing in firestore`)
+          this.renameCategoryInDB(this.genericDialogData.id, this.buffer.collectionRef, this.genericDialogData.inputFieldValue)
+        })
+          .then(() => {
+            this.genericDialog = false
+          })
+          .catch(error => {
+            console.log(`Error is ${error}`)
+          })
+      } else {
+        console.log(`Check input`)
+      }
+    },
+    //
+    // Rename category in store
+    //
+    renameCategoryInStore () {
+      return new Promise(resolve => { // do you really need this?
+        let payload = {
+          id: this.genericDialogData.id,
+          collectionIndex: this.buffer.collectionIndex,
+          inputFieldValue: this.genericDialogData.inputFieldValue
+        }
+        this.$store.commit('renamePriceCategory', payload)
+        resolve()
+      })
+    },
+    //
+    // Rename category in firestore
+    //
+    renameCategoryInDB (id, collectionRef, newValue) {
+      console.log(`Renaming category in DB`)
+      db.collection(`${collectionRef}`).doc(id)
+        .update({ 'header': newValue })
+    },
+    //
+    // Delete category
+    //
+    handleDeleteCategory (id, header, collectionName, collectionIndex) {
+      if (!this.genericDialog) {
+        let dialogSettings = {
+          renameString: false,
+          renameCategory: false,
+          deleteCategory: true,
+          addCategory: false,
+          delete: false,
+          addString: false,
+          title: 'Видалити категорію',
+          id: id,
+          inputFieldValue: null,
+          inputFieldLabel: `Дійсно видалити: "${header}"?`,
+          itemToRenameIndex: null
+        }
+        this.buffer.collectionIndex = collectionIndex // should be in dialog by now
+        this.buffer.collectionRef = collectionName
+        this.genericDialogData = dialogSettings
+        this.genericDialog = true
+      } else {
+        // it's ok to delete
+        // console.log(`All set, deleting from store.`)
+        // console.log(`Deleting from collection index ${this.buffer.collectionIndex} doc with id ${this.buffer.docID} value ${this.buffer.priceValue}`)
+        this.deleteCategoryFromStore().then(() => {
+          console.log(`Syncing with db..`)
+          this.deleteCategoryFromDB(this.genericDialogData.id, this.buffer.collectionRef)
+        })
+          .catch(error => {
+            console.log(`Error is ${error}`)
+          })
+        this.genericDialog = !this.genericDialog
+        // console.log(`All ok, clearing buffer.`)
+      }
+    },
+    deleteCategoryFromStore () {
+      return new Promise(resolve => { // do you really need this?
+        let payload = {
+          collectionIndex: this.buffer.collectionIndex,
+          id: this.genericDialogData.id
+        }
+        this.$store.commit('deleteCategory', payload)
+        resolve()
+      })
+    },
+    deleteCategoryFromDB (id, collectionRef) {
+      console.log(`Deleting category from firestore`)
+      db.collection(`${collectionRef}`).doc(id)
+        .delete().then(() => {
+          console.log(`Document successfully deleted!`)
+        }).catch(error => {
+          console.error(`Error removing document: `, error)
+        })
+    },
+    //
+    // add category
+    //
+    handleAddCategory (collectionIndex, collectionName) {
+      console.log(`Adding category dialog opens...`)
+      if (!this.genericDialog) {
+        let dialogSettings = {
+          renameString: false,
+          renameCategory: false,
+          deleteCategory: false,
+          addCategory: true,
+          delete: false,
+          addString: false,
+          title: 'Додати категорію',
+          id: null,
+          inputFieldValue: null,
+          inputFieldLabel: `Введіть назву категорії`,
+          itemToRenameIndex: null
+        }
+        this.buffer.collectionIndex = collectionIndex // should be in dialog by now
+        this.buffer.collectionRef = collectionName
+        this.genericDialogData = dialogSettings
+        this.genericDialog = true
+      } else if (this.priceEditingFormValid) {
+        console.log(`Adding category`)
+        db.collection(`${this.buffer.collectionRef}`).add({
+          header: this.genericDialogData.inputFieldValue,
+          order: this.getAllPricesLength + 1,
+          services: []
+        })
+          .then((docRef) => {
+            console.log(`Document successfully written! id is ${docRef.id}`)
+            let payload = {
+              collectionIndex: this.buffer.collectionIndex,
+              header: this.genericDialogData.inputFieldValue,
+              order: this.getAllPricesLength + 1, // length + 1
+              services: [], // empty array for now
+              id: docRef.id
+            }
+            this.$store.commit('addCategory', payload)
+            this.genericDialog = false
+          })
+          .catch(error => {
+            console.error('Error writing document: ', error)
+          })
+      } else {
+        console.log(`Check input.`)
+      }
+    },
+    //
     // rename price string
     //
-    handleRenameSingleStringPriceItem (id, currentValue, collectionName, collectionIndex) {
+    handleRenameSingleStringPriceItem (id, currentValue, collectionName, collectionIndex, itemToRenameIndex) {
       if (!this.genericDialog) {
         console.log(`Preparing dialog for renaming single price string`)
         // prepare the dialog
         let dialogSettings = {
-          rename: true,
+          renameString: true,
+          renameCategory: false,
+          deleteCategory: false,
+          addCategory: false,
           delete: false,
           addString: false,
           title: 'Перейменувати позицію',
           id: id,
           inputFieldValue: currentValue,
-          inputFieldLabel: currentValue
+          inputFieldLabel: currentValue,
+          itemToRenameIndex: itemToRenameIndex
         }
         this.genericDialogData = dialogSettings
         this.genericDialog = true
         this.buffer.collectionRef = collectionName
         this.buffer.collectionIndex = collectionIndex
-      } else {
+      } else if (this.priceEditingFormValid) {
         console.log(`Renaming single price string`)
-        console.log(`From ${this.genericDialogData.inputFieldLabel} to ${this.genericDialogData.inputFieldValue}`)
+        this.renamePriceStringInStore().then(() => {
+          let updatedArray = this.$store.getters.getUpdatedArray(this.buffer.collectionIndex, this.genericDialogData.id)
+          this.renamePriceStringInDB(this.genericDialogData.id, this.buffer.collectionRef, updatedArray)
+        })
+          .then(() => {
+            this.genericDialog = false
+          })
+          .catch(error => {
+            console.log(`Error is ${error}`)
+          })
+      } else {
+        console.log(`Check input.`)
+      }
+    },
+    renamePriceStringInStore () {
+      return new Promise(resolve => { // do you really need this?
         let payload = {
           id: this.genericDialogData.id,
-          collectionName: this.buffer.collectionRef,
           collectionIndex: this.buffer.collectionIndex,
-          stringValue: this.genericDialogData.inputFieldValue
+          inputFieldValue: this.genericDialogData.inputFieldValue,
+          itemToRenameIndex: this.genericDialogData.itemToRenameIndex
         }
-        this.$store.commit('addSingleStringPriceItem', payload)
-        this.addSingleStringPriceValueToDB(payload.id, payload.stringValue, payload.collectionName)
-      }
+        this.$store.commit('renamePriceString', payload)
+        resolve()
+      })
+    },
+    /*
+    // doc id
+    // collection reference
+    // whole updated array from store
+    */
+    renamePriceStringInDB (id, collectionRef, updatedArray) {
+      console.log(`Renaming in DB`)
+      db.collection(`${collectionRef}`).doc(id)
+        .update({ 'services': updatedArray })
     },
     //
     // add single price string
@@ -314,24 +571,24 @@ export default {
       // console.log(`Handling add service item to collection ${collectionName} doc is: ${id}`)
       if (!this.genericDialog) {
         let dialogSettings = {
-          rename: false, // modify the origin, not overwrite it
+          renameString: false, // modify the origin, not overwrite it
+          renameCategory: false,
+          deleteCategory: false,
+          addCategory: false,
           delete: false, // modify the origin, not overwrite it
           addString: true,
           title: 'Додати цінову позицію',
           id: id,
           inputFieldValue: '',
-          inputFieldLabel: `Введіть назву запису`
+          inputFieldLabel: `Введіть назву запису`,
+          itemToRenameIndex: ''
         }
         this.genericDialogData = dialogSettings
         this.buffer.collectionRef = collectionName
         this.buffer.collectionIndex = collectionIndex
         this.buffer.docID = id // ?
         this.genericDialog = true
-      } else {
-        /* console.log(`Adding to collection doc id ${this.buffer.docID},
-          collection name ${this.buffer.collectionRef},
-          dialog input data is ${this.genericDialogData.inputFieldValue},
-          with index of ${this.buffer.collectionIndex}`) */
+      } else if (this.priceEditingFormValid) {
         let payload = {
           id: this.buffer.docID,
           collectionName: this.buffer.collectionRef,
@@ -342,6 +599,8 @@ export default {
         this.addSingleStringPriceValueToDB(payload.id, payload.stringValue, payload.collectionName)
         // close dialog
         this.genericDialog = false
+      } else {
+        console.log(`Check input.`)
       }
     },
     // Delete one string from price 'sting:uah'
@@ -350,7 +609,10 @@ export default {
         // console.log(`Check if is it safe with id ${docID}`)
         this.genericDialog = true
         let dialogSettings = {
-          rename: false,
+          renameString: false,
+          renameCategory: false,
+          deleteCategory: false,
+          addCategory: false,
           delete: true,
           addString: false,
           title: 'Видалення',
@@ -441,16 +703,20 @@ export default {
       this.$store.commit('toggleReviewApproved', id)
       // db.collection("data").doc("one").set({foo:'bar'})
     },
-    moveItem (id, direction) {
-      console.log(`Moving item with id ${id} up.`)
+    moveItem (id, direction, collectionName, collectionIndex) {
+      console.log(`Moving item with id ${id}
+        direction: ${direction},
+        collection name ${collectionName},
+        collection index ${collectionIndex}.`)
       // get current order from state
+      /*
       let payload = {
         id: id,
         direction: direction
-      }
-      this.$store.commit('changePriceItemsOrder', payload)
-      this.sortServiceItemsArray()
-      this.syncOrderOfItemsInDB()
+      } */
+      // this.$store.commit('changePriceItemsOrder', payload)
+      // this.sortServiceItemsArray()
+      // this.syncOrderOfItemsInDB()
       // let itemToUpdate = this.serviceItemsFromDB.find(serviceItem => serviceItem.id === id)
       // this.syncPricesInDB(id, itemToUpdate)
       // console.log(`Result from getter is ${temp}`)
@@ -566,18 +832,6 @@ export default {
         }
       })
     },
-    handleEditServiceItemName (id, header) {
-      console.log(`Displaying service item name edit dialog. Doc id is ${id}`)
-      let data = {
-        type: 'save',
-        title: 'Змінити назву категорії',
-        inputFieldValue: header,
-        id: id,
-        inputFieldLabel: header
-      }
-      this.genericDialogData = data
-      this.genericDialog = !this.genericDialog
-    },
     editServiceItemName () {
       console.log(`Renaming service item. Doc id is ${this.genericDialogData.id}`)
       this.buttonLoadingState = !this.buttonLoadingState
@@ -630,10 +884,6 @@ export default {
       } else {
         console.log(`Check input.`)
       }
-    },
-    handleAddCategory () {
-      console.log(`Adding category`)
-      this.addCategoryDialog = true
     },
     addCategoryToDb () {
       // return new Promise((resolve, reject) => {
