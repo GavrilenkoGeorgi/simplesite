@@ -2,8 +2,8 @@ export default {
   getContent (state) {
     return state.content
   },
-  getPrices (state) {
-    return state.pricesXp
+  getAllPrices (state) {
+    return state.allPrices
   },
   getAllPricesLength (state) {
     return state.allPrices.length
@@ -26,15 +26,14 @@ export default {
   getPriceItemsCollectionToLoad (state) {
     return state.priceItemsCollectionsToLoad
   },
-  getAllPrices (state) {
-    return state.allPrices
-  },
-  someMethod: (state) => (id) => {
-    return state.things.find(thing => thing.id === id)
-  },
   getUpdatedArray: (state) => (collectionIndex, docId) => {
     let collection = state.allPrices[collectionIndex]
     let doc = collection.find(doc => doc.id === docId)
     return doc.services
+  },
+  getCollectionLengthPlusOne: (state) => (collectionIndex) => {
+    console.log(`Collection length`)
+    let length = state.allPrices[collectionIndex].length
+    return length + 1
   }
 }

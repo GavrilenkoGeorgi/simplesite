@@ -89,21 +89,11 @@ export default {
       console.log(`Login page mounted.`)
       if (this.getUserState.isAuthenticated) {
         console.log(`User is authenticated, loading editor`)
-        this.$router.push('cms')
+        this.$router.push('priceeditor')
       }
     })
   },
   methods: {
-    /*
-    login () {
-      if (this.valid) {
-        console.log(`Loggin in.`)
-        this.$router.push('/cms')
-      } else {
-        console.log(`Check input.`)
-      }
-    },
-    */
     setLoginLoadingState () {
       this.logginIn = !this.logginIn
       return true
@@ -125,7 +115,7 @@ export default {
                 // name: tempName
               }
               this.$store.commit('setUser', newUser)
-              this.$router.push('/cms')
+              this.$router.push('/priceeditor')
             },
             err => {
               console.log(err.message)

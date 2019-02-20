@@ -5,9 +5,11 @@ export default {
   setPrices (state, payload) { // grooming prices
     state.allPrices.push(payload)
   },
+  /*
   setTrainingPrices (state, payload) {
     state.trainingPrices = payload
   },
+  */
   setReviews (state, payload) {
     state.reviewsForEditing = payload
   },
@@ -92,7 +94,7 @@ export default {
     let serviceIndexToUpdate = state.pricesXp.findIndex(service => service.id === payload.id)
     state.pricesXp[serviceIndexToUpdate].services.push(payload.value)
   },
-  setUser (state, payload) {
+  setUser (state, payload) { // .... ??? )
     state.userState = payload
   },
   deleteReview (state, id) {
@@ -110,20 +112,22 @@ export default {
   changePriceItemsOrder (state, payload) {
     if (payload.direction) {
       state.itemsWhichOrderHasChanged = []
-      state.pricesXp.find((item) => {
+      // we need collection now
+      let collection = state.allPrices[payload.collectionIndex]
+      collection.find((item) => {
         if (item.id === payload.id) {
           // check if it's on top
-          console.log(`type of item.order is ${typeof item.order}`)
-          console.log(`Item order is ${item.order}`)
+          // console.log(`type of item.order is ${typeof item.order}`)
+          // console.log(`Item order is ${item.order}`)
           if (item.order === 1 && payload.direction === 'up') { // it's already at the top
             console.log(`It's at the top already!`)
           } else if (payload.direction === 'up') {
             // find the element at the top by current elements order
             // current item order is 'item.order'
-            state.pricesXp.find((topItem) => {
+            collection.find((topItem) => {
               if (topItem.order === item.order - 1) {
                 topItem.order = item.order
-                console.log(`Top item updated, its id is ${topItem.id}`)
+                // console.log(`Top item updated, its id is ${topItem.id}`)
                 state.itemsWhichOrderHasChanged.push(topItem)
               }
             })
@@ -131,17 +135,17 @@ export default {
             item.order = item.order - 1
             state.itemsWhichOrderHasChanged.push(item)
             return true
-          } else if (payload.direction === 'down' && item.order < state.pricesXp.length) {
-            state.pricesXp.find((lowerItem) => {
+          } else if (payload.direction === 'down' && item.order < collection.length) {
+            collection.find((lowerItem) => {
               if (lowerItem.order === item.order + 1) {
                 // set its order to current item order,
                 // the are now both on the same place
                 lowerItem.order = item.order
-                console.log(`Lower item updated, its id is ${lowerItem.id}`)
+                // console.log(`Lower item updated, its id is ${lowerItem.id}`)
                 state.itemsWhichOrderHasChanged.push(lowerItem)
               }
             })
-            // and move the clicked item dowm
+            // and move the clicked item down
             item.order = item.order + 1
             state.itemsWhichOrderHasChanged.push(item)
             return true
@@ -154,6 +158,17 @@ export default {
     } else {
       console.log(`Set direction!`)
       return false
+    }
+  },
+  sortItemsArrayInStore (state, collectionIndex) {
+    console.log(`Sorting items array in store.`)
+    let array = state.allPrices[collectionIndex]
+    if (!array) {
+      console.log(`Nothing to sort`)
+    } else {
+      array = array.sort((a, b) => (a.order > b.order) ? 1 : ((b.order > a.order) ? -1 : 0))
+      state.allPrices[collectionIndex] = array
+      return array
     }
   }
 }

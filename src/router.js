@@ -37,8 +37,8 @@ export default new Router({
     },
     {
       path: '/consultform',
-      name: 'consultform',
-      component: () => import(/* webpackChunkName: "consultform" */ './views/ConsultForm.vue')
+      name: 'consultForm',
+      component: () => import(/* webpackChunkName: "consultForm" */ './views/ConsultForm.vue')
     },
     {
       path: '/philosophy',
@@ -66,9 +66,9 @@ export default new Router({
       component: () => import(/* webpackChunkName: "register" */ './views/Register.vue')
     },
     {
-      path: '/cms',
-      name: 'cms',
-      component: () => import(/* webpackChunkName: "cms" */ './views/Cms.vue')
+      path: '/priceeditor',
+      name: 'priceEditor',
+      component: () => import(/* webpackChunkName: "priceEditor" */ './views/PriceEditor.vue')
     }
   ]
 })

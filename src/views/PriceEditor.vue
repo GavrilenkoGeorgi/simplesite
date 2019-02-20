@@ -31,8 +31,8 @@
                           <v-flex xs7 class="text-xs-right py-4 pr-1">
 <!-- Edit, up, down and delete service item buttons (four buttons in a row) -->
                             <v-btn icon small @click="handleRenameCategory(doc.id, doc.header, pricePosition.collectionName, collectionIndex)"><v-icon color="green">create</v-icon></v-btn>
-                            <v-btn icon small @click="moveItem(doc.id, 'up', pricePosition.collectionName, collectionIndex)"><v-icon color="blue darken-1">arrow_upward</v-icon></v-btn>
-                            <v-btn icon small @click="moveItem(doc.id, 'down', pricePosition.collectionName, collectionIndex)"><v-icon color="blue darken-1">arrow_downward</v-icon></v-btn>
+                            <v-btn icon small @click="movePriceCategory('up', doc.id, pricePosition.collectionName, collectionIndex)"><v-icon color="blue darken-1">arrow_upward</v-icon></v-btn>
+                            <v-btn icon small @click="movePriceCategory('down', doc.id, pricePosition.collectionName, collectionIndex)"><v-icon color="blue darken-1">arrow_downward</v-icon></v-btn>
                             <v-btn icon small @click="handleDeleteCategory(doc.id, doc.header, pricePosition.collectionName, collectionIndex)"><v-icon color="red">delete</v-icon></v-btn>
                           </v-flex>
                         </v-layout>
@@ -88,7 +88,7 @@
       <v-flex class="text-xs-center">
         <v-dialog
           v-model="genericDialog"
-          v-on:input="safeToDelete = $event"
+          v-on:input="genericDialog = $event"
           width="500">
           <v-card>
             <v-card-title
@@ -212,15 +212,16 @@
 <script>
 import { mapGetters } from 'vuex'
 import firebase from 'firebase/app'
-// import * as firebase from 'firebase'
 import db from '@/components/firebaseInit'
 
 export default {
   data: () => ({
-    header: 'Редагувати',
-    helpMessage: `Двокрапка відокремлює назву послуги від ціни, потрібно для правильного відображення цін на сайті.`,
+    header: 'Редактор цін',
+    helpMessage: `Двокрапка відокремлює
+      назву послуги від ціни,
+      потрібно для правильного
+      відображення цін на сайті.`,
     allPrices: [],
-    trainingPrices: [],
     buttonLoadingState: false,
     genericDialog: false,
     genericDialogData: {
@@ -255,61 +256,23 @@ export default {
       v => !!v || 'Необхідно ввести назву та ціну',
       v => (v && v.length <= 70) || 'Позиція повинна бути менше 70 символів'
     ],
-    headerRules: [
-      v => !!v || 'Необхідно ввести назву',
-      v => (v && v.length <= 30) || 'Назва повинна бути менше 30 символів'
-    ],
-    serviceItemRules: [
-      v => !!v || 'Необхідно ввести назву',
-      v => (v && v.length <= 70) || 'Назва повинна бути менше 70 символів'
-    ],
-    editPriceDialog: false,
-    addServiceItemDialog: false,
-    addServiceItemFormValid: false,
-    deleteServiceItemFormValid: false,
-    deleteServiceItemDialog: false,
-    deleteWarningDialog: false,
-    deleteCommentDialog: false,
-    addCategoryDialog: false,
-    addCategoryFormValid: false,
-    safeToDelete: false,
-    serviceItemsRef: db.collection('services'),
     reviewsItemsRef: db.collection('reviews'),
-    trainingItemsRef: db.collection('trainingPrices'),
-    serviceItemsFromDB: [],
-    serviceItemsDisplayOrder: [],
     reviewsItemsFromDB: []
   }),
   computed: {
     ...mapGetters([
-      'getPrices',
-      'getReviews',
       'getUserState',
       'getAllPrices',
       'getItemsWhichOrderHasChanged',
       'getPriceItemsCollectionToLoad',
       'getUpdatedArray',
-      'getAllPricesLength'
-    ]),
-    getUpdatedArray (collectionIndex) {
-      let collection = this.$store.state.allPrices[collectionIndex]
-      return collection
-    }
+      'getCollectionLengthPlusOne'
+    ])
   },
   mounted () {
     this.$nextTick(() => {
-      // console.log(`Kind of cms mounted.`)
-      if (this.getUserState.isAuthenticated) {
-        console.log(`Loading prices`)
-        if (this.getAllPrices.length === 0) {
-          this.loadAllPrices()
-        } else {
-          console.log(`Prices are set in the state already`)
-        }
-      } else {
-        console.log(`Login first or GTFO`)
-        this.$router.push('login')
-      }
+      // console.log(`Price editor mounted.`)
+      this.loadAllPrices()
     })
   },
   methods: {
@@ -337,6 +300,7 @@ export default {
           })
       }
     },
+    // From the top left
     //
     // Rename category
     //
@@ -398,6 +362,52 @@ export default {
         .update({ 'header': newValue })
     },
     //
+    // Move category up or down
+    //
+    movePriceCategory (direction, id, collectionName, collectionIndex) {
+      let payload = {
+        id: id,
+        direction: direction,
+        collectionIndex: collectionIndex
+      }
+      this.changePriceCategoryOrderInStore(payload).then(() => {
+        this.$store.commit('sortItemsArrayInStore', collectionIndex)
+      })
+        .then(() => {
+          console.log(`Syncing in firestore`)
+          this.syncOrderOfCategoriesInDB(collectionName)
+        })
+        .catch(error => {
+          console.log(`Error is ${error}`)
+        })
+    },
+    //
+    // Changing price category order in store
+    //
+    changePriceCategoryOrderInStore (payload) {
+      return new Promise(resolve => {
+        this.$store.commit('changePriceItemsOrder', payload)
+        resolve()
+      })
+    },
+    //
+    // Changing price category order in firestore
+    //
+    syncOrderOfCategoriesInDB (collectionName) {
+      console.log(`Syncing order of prices in db. Index ${collectionName}`)
+      // !!!!!!!!!!!!! this
+      console.log(this.getItemsWhichOrderHasChanged)
+      for (let item of this.getItemsWhichOrderHasChanged) {
+        db.collection(`${collectionName}`).doc(item.id).update({
+          order: item.order
+        }).then(() => {
+          console.log('Document successfully written!')
+        }).catch(error => {
+          console.error('Error writing document: ', error)
+        })
+      }
+    },
+    //
     // Delete category
     //
     handleDeleteCategory (id, header, collectionName, collectionIndex) {
@@ -421,8 +431,6 @@ export default {
         this.genericDialog = true
       } else {
         // it's ok to delete
-        // console.log(`All set, deleting from store.`)
-        // console.log(`Deleting from collection index ${this.buffer.collectionIndex} doc with id ${this.buffer.docID} value ${this.buffer.priceValue}`)
         this.deleteCategoryFromStore().then(() => {
           console.log(`Syncing with db..`)
           this.deleteCategoryFromDB(this.genericDialogData.id, this.buffer.collectionRef)
@@ -431,9 +439,11 @@ export default {
             console.log(`Error is ${error}`)
           })
         this.genericDialog = !this.genericDialog
-        // console.log(`All ok, clearing buffer.`)
       }
     },
+    //
+    // Delete price category from store
+    //
     deleteCategoryFromStore () {
       return new Promise(resolve => { // do you really need this?
         let payload = {
@@ -444,6 +454,9 @@ export default {
         resolve()
       })
     },
+    //
+    // Delete price category from firestore
+    //
     deleteCategoryFromDB (id, collectionRef) {
       console.log(`Deleting category from firestore`)
       db.collection(`${collectionRef}`).doc(id)
@@ -480,7 +493,8 @@ export default {
         console.log(`Adding category`)
         db.collection(`${this.buffer.collectionRef}`).add({
           header: this.genericDialogData.inputFieldValue,
-          order: this.getAllPricesLength + 1,
+          // order!
+          order: this.$store.getters.getCollectionLengthPlusOne(this.buffer.collectionIndex),
           services: []
         })
           .then((docRef) => {
@@ -488,7 +502,7 @@ export default {
             let payload = {
               collectionIndex: this.buffer.collectionIndex,
               header: this.genericDialogData.inputFieldValue,
-              order: this.getAllPricesLength + 1, // length + 1
+              order: this.$store.getters.getCollectionLengthPlusOne(this.buffer.collectionIndex),
               services: [], // empty array for now
               id: docRef.id
             }
@@ -503,7 +517,7 @@ export default {
       }
     },
     //
-    // rename price string
+    // rename single price string
     //
     handleRenameSingleStringPriceItem (id, currentValue, collectionName, collectionIndex, itemToRenameIndex) {
       if (!this.genericDialog) {
@@ -542,6 +556,9 @@ export default {
         console.log(`Check input.`)
       }
     },
+    //
+    // Rename single price string in store
+    //
     renamePriceStringInStore () {
       return new Promise(resolve => { // do you really need this?
         let payload = {
@@ -558,6 +575,7 @@ export default {
     // doc id
     // collection reference
     // whole updated array from store
+    // rename single price string in firestore
     */
     renamePriceStringInDB (id, collectionRef, updatedArray) {
       console.log(`Renaming in DB`)
@@ -567,8 +585,7 @@ export default {
     //
     // add single price string
     //
-    handleAddSingleStringPriceItem (id, collectionName, collectionIndex) { // ????
-      // console.log(`Handling add service item to collection ${collectionName} doc is: ${id}`)
+    handleAddSingleStringPriceItem (id, collectionName, collectionIndex) {
       if (!this.genericDialog) {
         let dialogSettings = {
           renameString: false, // modify the origin, not overwrite it
@@ -603,10 +620,19 @@ export default {
         console.log(`Check input.`)
       }
     },
+    //
+    // Add single string to a price category
+    //
+    addSingleStringPriceValueToDB (id, value, collectionRef) {
+      console.log(`Adding to db`)
+      db.collection(`${collectionRef}`).doc(id)
+        .update({ 'services': firebase.firestore.FieldValue.arrayUnion(value) })
+    },
+    //
     // Delete one string from price 'sting:uah'
+    //
     handleDeletePriceString (docID, priceValue, collectionName, collectionIndex) {
       if (!this.genericDialog) {
-        // console.log(`Check if is it safe with id ${docID}`)
         this.genericDialog = true
         let dialogSettings = {
           renameString: false,
@@ -627,19 +653,18 @@ export default {
         this.buffer.collectionIndex = collectionIndex
       } else {
         // it's ok to delete
-        // console.log(`All set, deleting from store.`)
-        // console.log(`Deleting from collection index ${this.buffer.collectionIndex} doc with id ${this.buffer.docID} value ${this.buffer.priceValue}`)
         this.deletePriceStringFromStore().then(() => {
-          // console.log(`Syncing with db..`)
           this.deleteSingleStringPriceValueFromDB(this.buffer.docID, this.buffer.priceValue, this.buffer.collectionRef)
         })
           .catch(error => {
             console.log(`Error is ${error}`)
           })
         this.genericDialog = !this.genericDialog
-        // console.log(`All ok, clearing buffer.`)
       }
     },
+    //
+    // Delete single price string from store
+    //
     deletePriceStringFromStore () {
       return new Promise(resolve => { // do you really need this?
         let payload = {
@@ -651,42 +676,15 @@ export default {
         resolve()
       })
     },
+    //
+    // Delete single price string from firestore
+    //
     deleteSingleStringPriceValueFromDB (id, value, collectionRef) {
       console.log(`Removing from db`)
       db.collection(`${collectionRef}`).doc(id)
         .update({ 'services': firebase.firestore.FieldValue.arrayRemove(value) })
     },
-    addPriceStringToStore () {
-      return new Promise(resolve => {
-        let payload = {
-          collectionIndex: this.buffer.collectionIndex,
-          value: this.buffer.priceValue,
-          id: this.buffer.docID
-        }
-        this.$store.commit('deleteSinglePriceString', payload)
-        resolve()
-      })
-    },
-    addSingleStringPriceValueToDB (id, value, collectionRef) {
-      console.log(`Adding to db`)
-      db.collection(`${collectionRef}`).doc(id)
-        .update({ 'services': firebase.firestore.FieldValue.arrayUnion(value) })
-    },
-    changeServiceItemOrder () {
-      console.log(`Changing order`)
-    },
-    clearBuffer () {
-      this.buffer = {
-        docHeader: '',
-        priceValue: '',
-        valueForLabel: '',
-        header: '',
-        collectionIndex: null,
-        docID: null,
-        collectionRef: null,
-        currentServiceItemOrder: null
-      }
-    },
+    // -------------------- Comments section --------------------
     approveComment (id) {
       console.log(`Setting 'approved' to comment with id: ${id}`)
       // const update = {}
@@ -702,373 +700,6 @@ export default {
       db.collection('reviews').doc(id).update({ approved: false })
       this.$store.commit('toggleReviewApproved', id)
       // db.collection("data").doc("one").set({foo:'bar'})
-    },
-    moveItem (id, direction, collectionName, collectionIndex) {
-      console.log(`Moving item with id ${id}
-        direction: ${direction},
-        collection name ${collectionName},
-        collection index ${collectionIndex}.`)
-      // get current order from state
-      /*
-      let payload = {
-        id: id,
-        direction: direction
-      } */
-      // this.$store.commit('changePriceItemsOrder', payload)
-      // this.sortServiceItemsArray()
-      // this.syncOrderOfItemsInDB()
-      // let itemToUpdate = this.serviceItemsFromDB.find(serviceItem => serviceItem.id === id)
-      // this.syncPricesInDB(id, itemToUpdate)
-      // console.log(`Result from getter is ${temp}`)
-      // check if it already on top
-      //
-      // get affected document id
-      //
-      // change in store
-      //
-      // sync with db
-      /*
-      let docRef = db.collection('serviceItems').doc(id)
-      console.dir(docRef)
-      docRef.get().then(doc => {
-        if (doc.exists) {
-          console.log('Document data:', doc.data())
-        } else {
-          // doc.data() will be undefined in this case
-          console.log('No such document!')
-        }
-      }).catch(error => {
-        console.log('Error getting document:', error)
-      })
-      */
-    }, /*
-    addServiceItem () {
-      return new Promise(resolve => {
-        console.log(`Adding service item ${this.buffer.priceValue}`)
-        // let itemToUpdate = this.serviceItemsFromDB.find(serviceItem => serviceItem.id === this.buffer.docID)
-        let payload = {
-          id: this.buffer.docID,
-          value: 'Some string'
-        }
-        this.$store.commit('addServiceItem', payload)
-        // this.$store.commit('deletePrice', payload)
-        // this.syncPricesInDB()
-        resolve()
-        // this.deleteWarningDialog = !this.deleteWarningDialog
-      })
-    }, */
-    handleDeleteComment (id) {
-      if (!this.safeToDelete && id) {
-        console.log(`Dialog...`)
-        console.log(`Deleting comment with id ${id}`)
-        this.safeToDelete = !this.safeToDelete
-        this.buffer.docID = id
-        this.deleteCommentDialog = !this.deleteCommentDialog
-      } else {
-        console.log(`Deleting comment with id ${this.buffer.docID}`)
-        db.collection('reviews').doc(this.buffer.docID).delete().then(() => {
-          console.log('Document successfully deleted!')
-        }).catch(error => {
-          console.error('Error removing document: ', error)
-        })
-        this.$store.commit('deleteReview', this.buffer.docID)
-        this.deleteCommentDialog = !this.deleteCommentDialog
-        this.safeToDelete = !this.safeToDelete
-        this.clearBuffer()
-      }
-    },
-    handleDeleteServiceItem (id, header, collectionRef) {
-      if (!this.safeToDelete && id) {
-        console.log(`Deleting doc with id ${id}.`)
-        this.safeToDelete = !this.safeToDelete
-        console.log(`Setting safe to delete to ${this.safeToDelete}`)
-        this.deleteServiceItemDialog = !this.deleteServiceItemDialog
-        console.log(`Setting delete service item dialog to ${this.deleteServiceItemDialog}`)
-        console.log(`Setting buffer doc id to ${id}`)
-        this.buffer.docID = id
-        this.buffer.collectionRef = collectionRef
-        this.buffer.docHeader = header
-      } else {
-        console.log(`Its safe to delete buffer id is ${this.buffer.docID}`)
-        db.collection(`${collectionRef}`).doc(this.buffer.docID).delete().then(() => {
-          console.log(`Document successfully deleted`)
-          // this.buffer.docID = null
-          let payload = {
-            id: this.buffer.docID
-          }
-          this.$store.commit('deleteCategory', payload)
-          this.safeToDelete = !this.safeToDelete
-          this.deleteServiceItemDialog = !this.deleteServiceItemDialog
-        }).catch((error) => {
-          console.log(`Error removing document ${error}`)
-        })
-      }
-    },
-    saveEdit () {
-      return new Promise((resolve, reject) => {
-        console.log('Saving data.')
-        // console.dir(this.buffer)
-        if (this.priceEditingFormValid) { // better check what you are sending
-          // console.log(`Saving to db type of this.serviceItemsFromDb is ${this.serviceItemsFromDB[0].services}.`)
-          let itemToUpdate = this.serviceItemsFromDB.find(serviceItem => serviceItem.id === this.buffer.docID)
-          console.log(`Item to update is ${itemToUpdate.services[this.buffer.index]}`)
-          // const updateRef = db.collection('serviceItems').doc(this.buffer.docID)
-          // console.dir(this.serviceItemsFromDB)
-          // let dataToSave = this.serviceItemsFromDB
-          // this.serviceItemsFromDB.services[this.buffer.index] = this.buffer.priceValue
-          console.log(`Data to save is ${this.buffer.priceValue}`)
-          itemToUpdate.services[this.buffer.index] = this.buffer.priceValue
-          // console.log(`Item after update is ${itemToUpdate.services[this.buffer.index]}`)
-          console.log(`This was sent to store ->`)
-          console.log(itemToUpdate)
-          this.$store.commit('updatePrices', itemToUpdate, this.buffer.docID)
-          this.editPriceDialog = !this.editPriceDialog
-          this.syncPricesInDB(this.buffer.docID, itemToUpdate)
-          resolve()
-        } else {
-          console.log(`Nothing to update`)
-          let error = `Nothing to update`
-          reject(error)
-        }
-      })
-    },
-    editServiceItemName () {
-      console.log(`Renaming service item. Doc id is ${this.genericDialogData.id}`)
-      this.buttonLoadingState = !this.buttonLoadingState
-      console.log(`Saving this header: ${this.genericDialogData.inputFieldValue}`)
-      const serviceItemToUpdateRef = db.collection(`services`).doc(this.genericDialogData.id)
-      return serviceItemToUpdateRef.update({
-        header: this.genericDialogData.inputFieldValue
-      })
-        .then(() => {
-          console.log(`Document successfully updated!`)
-          this.buttonLoadingState = !this.buttonLoadingState
-          this.genericDialog = !this.genericDialog
-          let data = {
-            id: this.genericDialogData.id,
-            header: this.genericDialogData.inputFieldValue
-          }
-          this.$store.commit('updateServiceItemName', data)
-        })
-        .catch((error) => {
-          // The document probably doesn't exist.
-          console.error(`Error updating document: `, error)
-        })
-    },
-    addServiceItemToDb () {
-      console.log(`Adding service item to db`)
-      if (this.addServiceItemFormValid) {
-        console.log(`Adding to firebase...`)
-        console.log(`Adding to doc with id ${this.buffer.docID}`)
-        console.log(`Adding with value of ${this.buffer.priceValue}`)
-        console.log(`Collection reference is ${this.buffer.collectionRef}`)
-        // this.serviceItemsRef.doc(this.buffer.docID).update({ 'services': firebase.firestore.FieldValue.arrayUnion(this.buffer.priceValue) })
-        db.collection(`${this.buffer.collectionRef}`)
-          .doc(this.buffer.docID).update({
-            'services': firebase.firestore.FieldValue.arrayUnion(this.buffer.priceValue)
-          })
-          .then(() => {
-            console.log('Document successfully written!')
-            this.addServiceItemDialog = false
-            let payload = {
-              collection: this.buffer.collectionRef,
-              id: this.buffer.docID,
-              value: this.buffer.priceValue
-            }
-            this.$store.commit('addTrainingItem', payload)
-            this.buffer.priceValue = ''
-          })
-          .catch(error => {
-            console.error('Error writing document: ', error)
-          })
-      } else {
-        console.log(`Check input.`)
-      }
-    },
-    addCategoryToDb () {
-      // return new Promise((resolve, reject) => {
-      console.log(`Adding category to fb`)
-      // this.addCategoryDialog = true
-      // console.dir(this.buffer)
-      if (this.addCategoryFormValid) { // better check what you are sending
-        // let header = 'Header'
-        // let order = 99
-        let order = this.serviceItemsFromDB.length
-        // let services = ['Something small 120', 'Bigger ones 400', 'Huge 760']
-        let services = []
-        this.serviceItemsRef.add({
-          header: this.buffer.header,
-          order: order,
-          services: services
-        })
-          .then((docRef) => {
-            console.log(`Document successfully written! id is ${docRef.id}`)
-            this.buffer.docID = docRef.id
-            console.log(`Buffer id set to ${this.buffer.docID}`)
-            let payload = {
-              header: this.buffer.header,
-              order: order,
-              services: services,
-              id: docRef.id
-            }
-            this.$store.commit('addCategory', payload)
-            this.addCategoryDialog = false
-          })
-          .catch(error => {
-            console.error('Error writing document: ', error)
-          })
-        // console.log(`Saving to db type of this.serviceItemsFromDb is ${this.serviceItemsFromDB[0].services}.`)
-        /*
-        let itemToUpdate = this.serviceItemsFromDB.find(serviceItem => serviceItem.id === this.buffer.docID)
-        console.log(`Item to update is ${itemToUpdate.services[this.buffer.index]}`)
-        // const updateRef = db.collection('serviceItems').doc(this.buffer.docID)
-        // console.dir(this.serviceItemsFromDB)
-        // let dataToSave = this.serviceItemsFromDB
-        // this.serviceItemsFromDB.services[this.buffer.index] = this.buffer.priceValue
-        console.log(`Data to save is ${this.buffer.priceValue}`)
-        itemToUpdate.services[this.buffer.index] = this.buffer.priceValue
-        // console.log(`Item after update is ${itemToUpdate.services[this.buffer.index]}`)
-        console.log(`This was sent to store ->`)
-        console.log(itemToUpdate)
-        this.$store.commit('updatePrices', itemToUpdate, this.buffer.docID)
-        this.dialog = !this.dialog
-        this.syncPricesInDB(this.buffer.docID, itemToUpdate) */
-        /*
-        resolve()
-      } else {
-        console.log(`Nothing to add`)
-        let error = `Nothing to add`
-        reject(error) */
-      }
-      // })
-    },
-    editPrice (priceValue, index, docID, docHeader) {
-      console.log(`Editing price with index ${index} and id ${docID}`)
-      this.editPriceDialog = !this.editPriceDialog
-      console.dir(priceValue)
-      this.buffer = {
-        docHeader: docHeader,
-        priceValue: priceValue,
-        valueForLabel: priceValue,
-        index: index,
-        docID: docID
-      }
-      console.log(`Id in buffer supposed to be ${this.buffer.docID}`)
-      // this.$store.commit('setUserState', user)
-      // console.log(event)
-      // let newProp = this.$parent.$el.dataset.productId
-      // console.log(`Editing price ${event.target.value}`)
-      // console.log(`Id is ${event.target}`)
-      // let data = event.target.$parent.$el.dataset.productId
-      /*
-      const services = []
-
-      const price = {
-        header: 'Собаки: полный комплекс',
-        services: services
-      }
-      prices.push(price)
-      this.$store.commit('setPrices', prices) */
-    },
-    syncOrderOfItemsInDB () {
-      console.log(`Syncing order of prices in db.`)
-      console.dir(this.getItemsWhichOrderHasChanged)
-
-      for (let item of this.getItemsWhichOrderHasChanged) {
-        this.serviceItemsRef.doc(item.id).update({
-          order: item.order
-        }).then(() => {
-          console.log('Document successfully written!')
-        }).catch(error => {
-          console.error('Error writing document: ', error)
-        })
-      }
-    },
-    sortServiceItemsArray () {
-      console.log(`Sorting service items array <-- remove this`)
-      this.serviceItemsFromDB = this.serviceItemsFromDB.sort((a, b) => (a.order > b.order) ? 1 : ((b.order > a.order) ? -1 : 0))
-    },
-    sortItemsArray (array) {
-      if (!array) {
-        console.log(`Nothing to sort`)
-      } else {
-        array = array.sort((a, b) => (a.order > b.order) ? 1 : ((b.order > a.order) ? -1 : 0))
-        return array
-      }
-    },
-    loadTrainingPrices () {
-      console.log('Loading training prices..')
-      this.trainingItemsRef.get()
-        .then(querySnapshot => {
-          querySnapshot.forEach(doc => {
-            this.trainingPrices.push({
-              id: doc.id,
-              order: doc.data().order,
-              header: doc.data().header,
-              services: doc.data().services
-            })
-          })
-          this.trainingPrices = this.sortItemsArray(this.trainingPrices)
-          return true
-        })
-        .then(() => {
-          // this.allServiceItems = serviceItemsFromDB
-          console.log(`Training items ready.`)
-          // console.log(this.allServiceItems)
-          this.$store.commit('setTrainingPrices', this.trainingPrices)
-        })
-        .catch(error => {
-          console.log('Error getting documents: ', error)
-        })
-    },
-    loadPrices () {
-      console.log('Loading prices..')
-      // db.collection('serviceItems') // .where('starsRating', '==', 5)
-      this.serviceItemsRef.get()
-        .then(querySnapshot => {
-          // let serviceItemsFromDB = []
-          querySnapshot.forEach(doc => {
-            // doc.data() is never undefined for query doc snapshots
-            /*
-            console.log(doc.id, ' => ', doc.data().name)
-            let serviceItem = {
-              header: doc.data().header,
-              services: doc.data().services,
-              id: doc.id
-            } */
-            this.serviceItemsFromDB.push({
-              id: doc.id,
-              order: doc.data().order,
-              header: doc.data().header,
-              services: doc.data().services
-            })
-          })
-          this.sortServiceItemsArray()
-          // this.serviceItemsFromDB = this.serviceItemsFromDB.sort((a, b) => (a.order > b.order) ? 1 : ((b.order > a.order) ? -1 : 0))
-          // console.log(`Sorted array -->`)
-          // console.log(this.serviceItemsFromDB)
-          // default order
-          /*
-          function compare(currentItem, nextItem) {
-            if (currentItem.order < b.last_nom)
-              return -1;
-            if (a.last_nom > b.last_nom)
-              return 1;
-            return 0;
-          }
-
-          objs.sort(compare);
-          */
-          return true
-        })
-        .then(() => {
-          // this.allServiceItems = serviceItemsFromDB
-          // console.log(this.allServiceItems)
-          this.$store.commit('setPrices', this.serviceItemsFromDB)
-        })
-        .catch(function (error) {
-          console.log('Error getting documents: ', error)
-        })
     },
     loadReviews () {
       console.log('Loading comments..')
@@ -1093,14 +724,20 @@ export default {
         })
     },
     cancelAction () {
-      this.toggleSafeCheck()
-      this.clearBuffer()
       this.genericDialog = !this.genericDialog
     },
-    toggleSafeCheck () {
-      this.safeToDelete = !this.safeToDelete
-      // this.genericDialog = !this.genericDialog
+    //
+    // Sorting array of items by 'order' property
+    //
+    sortItemsArray (array) {
+      console.log(`Sorting items array.`)
+      if (!array) {
+        console.log(`Nothing to sort`)
+      } else {
+        array = array.sort((a, b) => (a.order > b.order) ? 1 : ((b.order > a.order) ? -1 : 0))
+        return array
+      }
     }
   }
-}
+} // too long
 </script>
