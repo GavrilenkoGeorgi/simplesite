@@ -26,28 +26,59 @@
                         <!-- hr class="divider" /-->
                         <v-layout>
                           <v-flex xs5 d-flex align-center class="py-4 pl-2">
-                            <h4 class="orange--text subheading">{{ doc.header }}</h4>
+                            <h4 class="orange--text subheading">
+                              {{ doc.header }}
+                            </h4>
                           </v-flex>
                           <v-flex xs7 class="text-xs-right py-4 pr-1">
 <!-- Edit, up, down and delete service item buttons (four buttons in a row) -->
-                            <v-btn icon small @click="handleRenameCategory(doc.id, doc.header, pricePosition.collectionName, collectionIndex)"><v-icon color="green">create</v-icon></v-btn>
-                            <v-btn icon small @click="movePriceCategory('up', doc.id, pricePosition.collectionName, collectionIndex)"><v-icon color="blue darken-1">arrow_upward</v-icon></v-btn>
-                            <v-btn icon small @click="movePriceCategory('down', doc.id, pricePosition.collectionName, collectionIndex)"><v-icon color="blue darken-1">arrow_downward</v-icon></v-btn>
-                            <v-btn icon small @click="handleDeleteCategory(doc.id, doc.header, pricePosition.collectionName, collectionIndex)"><v-icon color="red">delete</v-icon></v-btn>
+                            <v-btn icon small
+                              @click="handleRenameCategory(
+                              doc.id,
+                              doc.header,
+                              pricePosition.collectionName,
+                              collectionIndex)">
+                              <v-icon color="green">create</v-icon>
+                            </v-btn>
+                            <v-btn icon small
+                              @click="movePriceCategory(
+                              'up',
+                              doc.id, pricePosition.collectionName,
+                              collectionIndex)">
+                              <v-icon color="blue darken-1">arrow_upward</v-icon>
+                            </v-btn>
+                            <v-btn icon small
+                              @click="movePriceCategory(
+                              'down',
+                              doc.id,
+                              pricePosition.collectionName,
+                              collectionIndex)">
+                              <v-icon color="blue darken-1">arrow_downward</v-icon>
+                            </v-btn>
+                            <v-btn icon small
+                              @click="handleDeleteCategory(
+                              doc.id,
+                              doc.header,
+                              pricePosition.collectionName,
+                              collectionIndex)">
+                              <v-icon color="red">delete</v-icon>
+                            </v-btn>
                           </v-flex>
                         </v-layout>
                       </v-flex>
-                      <v-flex xs12 v-for="(priceValue, itemIndex) in doc.services" :key="itemIndex">
+                      <v-flex xs12
+                        v-for="(priceValue, itemIndex)
+                          in doc.services" :key="itemIndex">
                         <v-layout row align-center>
 <!-- Edit single price string button -->
                           <v-flex class="text-xs-right">
                             <v-btn icon small fab
                               @click="handleRenameSingleStringPriceItem(
-                                doc.id,
-                                priceValue,
-                                pricePosition.collectionName,
-                                collectionIndex,
-                                itemIndex)">
+                              doc.id,
+                              priceValue,
+                              pricePosition.collectionName,
+                              collectionIndex,
+                              itemIndex)">
                               <v-icon small color="green">create</v-icon>
                             </v-btn>
                           </v-flex>
@@ -56,7 +87,12 @@
                           </v-flex>
 <!-- Delete single string button -->
                           <v-flex xs2 class="text-xs-right">
-                            <v-btn icon small fab @click="handleDeletePriceString(doc.id, priceValue, pricePosition.collectionName, collectionIndex)">
+                            <v-btn icon small fab
+                              @click="handleDeletePriceString(
+                              doc.id,
+                              priceValue,
+                              pricePosition.collectionName,
+                              collectionIndex)">
                               <v-icon small color="red">delete</v-icon>
                             </v-btn>
                           </v-flex>
@@ -64,9 +100,11 @@
                       </v-flex>
 <!-- Add single price string button -->
                       <v-flex xs12 class="text-xs-right">
-                        <v-btn
-                          @click="handleAddSingleStringPriceItem(doc.id, pricePosition.collectionName, collectionIndex)"
-                          flat outline
+                        <v-btn flat outline
+                          @click="handleAddSingleStringPriceItem(
+                          doc.id,
+                          pricePosition.collectionName,
+                          collectionIndex)"
                           color="green">
                           <v-icon medium color="orange">add</v-icon>
                             Додаті
@@ -77,7 +115,11 @@
 <!-- Big add category button -->
                   <v-layout>
                     <v-flex align-center d-flex py-4>
-                      <v-btn flat outline color="orange" @click="handleAddCategory(collectionIndex, pricePosition.collectionName)">додати категорію</v-btn>
+                      <v-btn flat outline color="orange"
+                        @click="handleAddCategory(collectionIndex,
+                        pricePosition.collectionName)">
+                        додати категорію
+                      </v-btn>
                     </v-flex>
                   </v-layout>
             </v-card>
@@ -99,10 +141,14 @@
               genericDialogData.renameCategory,
               red: genericDialogData.delete ||
               genericDialogData.deleteCategory }">
-              <h4 class="white--text subheading">{{ genericDialogData.title }}</h4>
+              <h4 class="white--text subheading">
+                {{ genericDialogData.title }}
+              </h4>
             </v-card-title>
             <v-card-text>
-              <v-flex v-if="genericDialogData.delete || genericDialogData.deleteCategory" class="text-xs-left">
+              <v-flex v-if="genericDialogData.delete ||
+                genericDialogData.deleteCategory"
+                class="text-xs-left">
                 {{ genericDialogData.inputFieldLabel }}
               </v-flex>
               <v-form ref="generic-edit-input"
@@ -467,7 +513,7 @@ export default {
         })
     },
     //
-    // add category
+    // Add category
     //
     handleAddCategory (collectionIndex, collectionName) {
       console.log(`Adding category dialog opens...`)
@@ -517,7 +563,7 @@ export default {
       }
     },
     //
-    // rename single price string
+    // Rename single price string
     //
     handleRenameSingleStringPriceItem (id, currentValue, collectionName, collectionIndex, itemToRenameIndex) {
       if (!this.genericDialog) {
@@ -606,6 +652,27 @@ export default {
         this.buffer.docID = id // ?
         this.genericDialog = true
       } else if (this.priceEditingFormValid) {
+        this.buttonLoadingState = true
+        this.addPriceStringToStore().then(() => {
+          this.addSingleStringPriceValueToDB(this.genericDialogData.id,
+            this.genericDialogData.inputFieldValue,
+            this.buffer.collectionRef)
+          this.genericDialog = false
+          this.buttonLoadingState = false
+          console.log(`All ok, closing dialog.`)
+        }) /*
+          .then(() => {
+          }) */
+          .catch(error => {
+            this.genericDialog = true
+            this.buttonLoadingState = false
+            console.log(`Error is ${error}`)
+            return error
+          })
+      } else {
+        console.log(`Check input.`)
+      }
+      /*
         let payload = {
           id: this.buffer.docID,
           collectionName: this.buffer.collectionRef,
@@ -618,10 +685,25 @@ export default {
         this.genericDialog = false
       } else {
         console.log(`Check input.`)
-      }
+      } */
     },
     //
-    // Add single string to a price category
+    // Add single price string to store
+    //
+    addPriceStringToStore () {
+      return new Promise(resolve => { // do you really need this?
+        let payload = {
+          id: this.genericDialogData.id,
+          collectionName: this.buffer.collectionRef,
+          collectionIndex: this.buffer.collectionIndex,
+          stringValue: this.genericDialogData.inputFieldValue
+        }
+        this.$store.commit('addSingleStringPriceItem', payload)
+        resolve()
+      })
+    },
+    //
+    // Add single price string to a category
     //
     addSingleStringPriceValueToDB (id, value, collectionRef) {
       console.log(`Adding to db`)
@@ -725,6 +807,10 @@ export default {
     },
     cancelAction () {
       this.genericDialog = !this.genericDialog
+    },
+    toggleButtonLoadingState () {
+      console.log(`Toggling button loading state.`)
+      this.buttonLoadingState = !this.buttonLoadingState
     },
     //
     // Sorting array of items by 'order' property

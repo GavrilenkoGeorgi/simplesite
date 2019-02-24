@@ -14,6 +14,7 @@ import firebaseConfig from './components/firebaseConfig'
 import './components/firebaseInit'
 import firebase from 'firebase/app'
 import 'firebase/auth'
+import 'intersection-observer'
 
 // Vue.use(VueAxios, axios)
 Vue.use(VueObserveVisibility)

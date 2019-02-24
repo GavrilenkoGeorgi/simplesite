@@ -76,8 +76,8 @@ const getDefaultState = () => {
     ],
     trainingTypeLinks: {
       links: [
-        { text: `Помощь и консультации`, path: `/`, image: 'SAA_3738_1024x678.jpg', name: 'help' },
         { text: `Защита`, path: `/`, image: 'protection.jpg', name: 'protection' },
+        { text: `Помощь и консультации`, path: `/`, image: 'SAA_3738_1024x678.jpg', name: 'help' },
         { text: `Социализация`, path: `/`, image: 'socialization.jpg', name: 'socialisation' },
         { text: `Трюковая дрессировка`, path: `/`, image: 'tricks.jpg', name: 'tricks' },
         { text: `Послушание`, path: `/`, image: 'obedience.jpg', name: 'obedience' }
