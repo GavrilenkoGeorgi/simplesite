@@ -34,12 +34,12 @@
           </v-flex>
           <v-flex xs10 sm8 md6>
             <v-form
-              ref="form"
-              v-model="form"
+              ref="addReviewForm"
+              v-model="addReviewForm"
               class="mt-4">
               <v-text-field
                 v-model="name"
-                :rules="[rules.nameLength(10)]"
+                :rules="[rules.validateStringLength(10)]"
                 required
                 box
                 color="blue-grey"
@@ -48,38 +48,16 @@
                 style="min-height: 96px"
                 type="user-name">
               </v-text-field>
-              <v-flex mb-3>
+              <v-flex py-2 class="blue--text">
+                {{ formMessage }}
+              </v-flex>
+              <v-flex py-2>
                 <v-icon id="ratingStar" v-for="star in 5" :key="star" @click="setRating">grade</v-icon>
               </v-flex>
-              <!--v-text-field
-                v-model="password"
-                :rules="[rules.password, rules.length(6)]"
-                box
-                color="deep-purple"
-                counter="6"
-                label="Password"
-                style="min-height: 96px"
-                type="password"
-              ></v-text-field>
-              <v-text-field
-                v-model="phone"
-                box
-                color="deep-purple"
-                label="Phone number"
-                mask="phone"
-              ></v-text-field>
-              <v-text-field
-                v-model="email"
-                :rules="[rules.email]"
-                box
-                color="deep-purple"
-                label="Email address"
-                type="email"
-              ></v-text-field-->
               <v-textarea
                 v-model="formReviewText"
                 required
-                :rules="[rules.reviewLength(200)]"
+                :rules="[rules.validateStringLength(200)]"
                 auto-grow
                 box
                 counter="200"
@@ -87,32 +65,73 @@
                 label="Отзыв"
                 rows="5"
               ></v-textarea>
-              <!--v-checkbox
-                v-model="agreement"
-                :rules="[rules.required]"
-                color="deep-purple"
-              >
-                <template slot="label">
-                  I agree to the&nbsp;
-                  <a href="#" @click.stop.prevent="dialog = true">Terms of Service</a>
-                  &nbsp;and&nbsp;
-                  <a href="#" @click.stop.prevent="dialog = true">Privacy Policy</a>*
-                </template>
-              </v-checkbox-->
             </v-form>
           </v-flex>
           <v-flex xs12 ma-4>
               <v-btn color="blue-grey lighten-4"
-                @click="$refs.form.reset()">
-                ОЧИСТИТЬ
+                @click="$refs.addReviewForm.reset()">
+                очистить
               </v-btn>
               <v-btn @click="addReview"
-                :disabled="!this.form"
-                color="blue-grey lighten-2">отправить</v-btn>
+                :disabled="!this.addReviewForm"
+                color="blue darken-1"
+                class="white--text"
+              >
+                отправить
+              </v-btn>
               <!-- listen to verify event emited by the recaptcha component -->
               <!--recaptcha ref="recaptcha" @verify="getScore"></recaptcha-->
         </v-flex>
       </v-layout>
+    </v-layout>
+<!-- Review added dialog -->
+    <v-layout row justify-center>
+      <!--v-btn
+        color="primary"
+        dark
+        @click.stop="reviewAddedDialog = true"
+      >
+        Open Dialog
+      </v-btn-->
+
+      <v-dialog
+        v-model="reviewAddedDialog"
+        max-width="290"
+      >
+        <v-card>
+          <v-card-title class="subheading">
+            Спасибо за ваш отзыв, после одобрения
+            администратора он появится на сайте.
+          </v-card-title>
+
+          <!--v-card-text>
+            Спасибо за ваш отзыв, после одобрения
+            администратора он появится на сайте.
+          </v-card-text-->
+
+          <v-card-actions>
+            <v-flex
+              d-flex
+              justify-center
+            >
+            <v-btn
+              color="blue darken-1"
+              dark
+              @click="reviewAddedDialog = false"
+            >
+              OK
+            </v-btn>
+            </v-flex>
+            <!--v-btn
+              color="green darken-1"
+              flat="flat"
+              @click="reviewAddedDialog = false"
+            >
+              Agree
+            </v-btn-->
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-layout>
   </v-container>
 </template>
@@ -131,6 +150,7 @@ export default {
     token: null,
     pageTitle: 'отзывы',
     quoteFormatting: '— ',
+    reviewAddedDialog: false,
     /*
     allReviews: [
       { id: 'review5', author: 'Edna', stars: 5, content: `Some notes about dogs and cats and even more stuff
@@ -144,39 +164,54 @@ export default {
     ], */
     allReviewsXP: [],
     agreement: false,
-    formReviewText: 'Напишите нам что-нибудь хорошее...',
+    name: ``,
+    formReviewText: ``,
+    formMessage: `Поставьте нам пять звёзд и напишите что-нибудь хорошее.`,
     starsRating: undefined,
     userScore: undefined,
     dialog: false,
     email: undefined,
-    form: false,
+    addReviewForm: false,
     isLoading: false,
-    name: undefined,
     password: undefined,
     phone: undefined,
     rules: {
-      // email: v => (v || '').match(/@/) || 'Please enter a valid email',
-      // length: len => v => (v || '').length >= len || `Invalid character length, required ${len}`,
-      nameLength: len => value => (value && value.length <= len) || `Name must be less than ${len} and longer than 1`,
-      reviewLength: len => value => (value && value.length <= len) || `Review must be less than ${len} and longer than 1`,
-      // nameLengthXp: value => value.length <= 20 || 'Max 20 characters',
-      // password: v => (v || '').match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/) ||
-      //  'Password must contain an upper case letter, a numeric character, and a special character',
+      validateStringLength: len => value => {
+        if (value === ``) {
+          return ``
+        } else if (value && value.length <= len) {
+          // return `value.length <= len`
+          return true
+        } else return `Менее ${len} символов, пожалуйста.`
+      },
       required: v => !!v || 'This field is required'
     }
   }),
   components: {
     Recaptcha
   },
+  mounted () {
+    this.$nextTick(function () {
+      console.log('Reviews page mounted')
+      this.getReviews()
+      // console.log('Getting recaptcha score...')
+      // this.executeRecaptcha()
+      // setTimeout(this.getScore(), 3000)
+      // setTimeout(console.log(this.userScore), 3000)
+      /*
+      this.$recaptcha('login').then((token) => {
+        console.log(token) // Will print the token
+        this.token = token
+      })
+      */
+    })
+  },
   methods: {
     addReview () {
       console.log('Adding review..')
       // Add a new document with a generated id.
-      // console.log(`Name to add is ${this.name}`)
-      // console.log(`Review to add is ${this.formReviewText}`)
-      // console.log(`Stars quantity is ${this.starsRating}`)
-      if (this.form) {
-        console.log(`Form is: ${this.form}, adding to database, stars are ${this.starsRating}`)
+      if (this.addReviewForm) {
+        console.log(`Form is: ${this.addReviewForm}, adding to database, stars are ${this.starsRating}`)
         if (!this.starsRating) {
           // one star in case user forgets to set rating
           // make it required maybe?
@@ -188,30 +223,19 @@ export default {
           review: this.formReviewText,
           approved: false
         })
-          .then(function (docRef) {
+          .then(docRef => {
             console.log('Document written with ID: ', docRef.id)
+            this.reviewAddedDialog = true
+            this.$refs.addReviewForm.reset()
           })
-          .catch(function (error) {
+          .catch(error => {
             console.error('Error adding document: ', error)
           })
       } else {
-        console.log(`Check your form it is: ${this.form}`)
+        console.log(`Check your form it is: ${this.addReviewForm}`)
       }
-      /*
-      db.collection('reviews').add({
-        name: this.name,
-        starsRating: this.starsRating,
-        review: this.formReviewText
-      })
-        .then(function (docRef) {
-          console.log('Document written with ID: ', docRef.id)
-        })
-        .catch(function (error) {
-          console.error('Error adding document: ', error)
-        }) */
     },
     setRating (event) {
-      // console.log(`Setting rating ${event.target}`)
       let child = event.target
       const parent = child.parentNode
       let index = Array.prototype.indexOf.call(parent.children, child) + 1
@@ -231,7 +255,6 @@ export default {
     },
     // send your recaptcha token to the server to verify it
     getScore (response) {
-      // console.log(response)
       this.$http.post(`https://cors-anywhere.herokuapp.com/https://www.google.com/recaptcha/api/siteverify?secret=${secret.recaptchaSecret}&response=${response}`)
         .then(response => {
           this.userScore = response.body.score
@@ -245,7 +268,6 @@ export default {
             console.log(`Your score is too low: ${this.userScore}, try again`)
             // console.log(`Type of score is ${typeof this.userScore}`)
           }
-          // this.addReview()
         })
     },
     // execute the recaptcha widget
@@ -290,22 +312,6 @@ export default {
           console.log('Error getting documents: ', error)
         })
     }
-  },
-  mounted () {
-    this.$nextTick(function () {
-      console.log('Reviews page mounted')
-      this.getReviews()
-      // console.log('Getting recaptcha score...')
-      // this.executeRecaptcha()
-      // setTimeout(this.getScore(), 3000)
-      // setTimeout(console.log(this.userScore), 3000)
-      /*
-      this.$recaptcha('login').then((token) => {
-        console.log(token) // Will print the token
-        this.token = token
-      })
-      */
-    })
   }
 }
 </script>
