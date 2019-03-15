@@ -82,7 +82,7 @@
       <v-layout justify-space-around column fill-height>
               <hr class="divider"/>
         <v-flex d-flex py-1>
-          <v-layout row align-center justify-center style="border: 1px solid pink">
+          <v-layout row align-center justify-center>
             <v-flex d-flex align-center xs4 sm2 md1
               v-for="(item, index) in this.socialIcons"
               :key="index">
