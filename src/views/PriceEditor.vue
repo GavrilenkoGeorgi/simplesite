@@ -3,8 +3,8 @@
   <v-container fill-height fluid pa-0 v-if="this.getUserState.isAuthenticated">
     <v-layout row>
       <v-flex xs12 sm6 offset-sm3>
-<!-- Header -->
-        <h1 class="py-2">{{ header }}</h1>
+<!-- Prices header -->
+        <h1 class="py-2">{{ pricesHeader }}</h1>
 <!-- Prices section -->
         <v-expansion-panel
           v-for="(pricePosition, collectionIndex)
@@ -125,6 +125,67 @@
             </v-card>
           </v-expansion-panel-content>
         </v-expansion-panel>
+<!-- Reviews header -->
+        <h1 class="py-2">{{ reviewsHeader }}</h1>
+        <v-expansion-panel>
+          <v-expansion-panel-content
+          >
+            <template v-slot:header>
+              <h4 class="panel-title">Редагувати</h4>
+            </template>
+            <!-- Review items to approve -->
+            <v-card>
+              <v-card-text
+                v-for="reviewItem in getReviews"
+                :key="reviewItem.id"
+                :class="{ approved: reviewItem.approved }"
+              >
+              <v-layout>
+                <h3 class="reviewer-name pr-2"> {{ reviewItem.name}} </h3>
+                <v-btn
+                  v-if="reviewItem.approved"
+                  @click="toggleApproveReview(reviewItem.id)"
+                  flat
+                  icon
+                >
+                  <v-icon
+                    color="green"
+                  >
+                    favorite
+                  </v-icon>
+                </v-btn>
+                <v-spacer />
+                <v-btn
+                  v-if="!reviewItem.approved"
+                  @click="toggleApproveReview(reviewItem.id)"
+                  icon
+                  small
+                >
+                  <v-icon
+                    color="grey lighten-2"
+                  >
+                    favorite
+                  </v-icon>
+                </v-btn>
+                <v-btn
+                  @click="handleDeleteReview(reviewItem.id, reviewItem.review)"
+                  icon
+                  small
+                >
+                  <v-icon
+                    color="red"
+                  >
+                    delete
+                  </v-icon>
+                </v-btn>
+              </v-layout>
+                  <p class="mb-0">
+                    {{ reviewItem.review }}
+                  </p>
+              </v-card-text>
+            </v-card>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
       </v-flex>
 <!-- Generic dialog -->
       <v-flex class="text-xs-center">
@@ -132,7 +193,8 @@
           v-model="genericDialog"
           v-on:input="genericDialog = $event"
           width="500">
-          <v-card>
+          <v-card
+            class="dialog">
             <v-card-title
               v-bind:class="{ 'blue darken-1':
               genericDialogData.renameString ||
@@ -140,14 +202,17 @@
               genericDialogData.addCategory ||
               genericDialogData.renameCategory,
               red: genericDialogData.delete ||
-              genericDialogData.deleteCategory }">
+              genericDialogData.deleteCategory ||
+              genericDialogData.deleteReview }">
               <h4 class="white--text subheading">
                 {{ genericDialogData.title }}
               </h4>
             </v-card-title>
-            <v-card-text>
-              <v-flex v-if="genericDialogData.delete ||
-                genericDialogData.deleteCategory"
+            <v-card-text
+              v-if="genericDialogData.delete ||
+              genericDialogData.deleteCategory"
+            >
+              <v-flex
                 class="text-xs-left">
                 {{ genericDialogData.inputFieldLabel }}
               </v-flex>
@@ -167,6 +232,11 @@
                   :label="genericDialogData.inputFieldLabel">
                 </v-text-field>
               </v-form>
+            </v-card-text>
+            <v-card-text
+              v-if="genericDialogData.deleteReview"
+            >
+              {{ this.genericDialogData.inputFieldValue }}
             </v-card-text>
 
             <v-divider></v-divider>
@@ -225,6 +295,17 @@
                 @click="handleDeletePriceString">
                 видалити
               </v-btn>
+<!-- Confirm delete review button -->
+              <v-btn
+                v-if="genericDialogData.deleteReview"
+                :loading="buttonLoadingState"
+                :disabled="buttonLoadingState"
+                color="red"
+                outline
+                flat
+                @click="handleDeleteReview">
+                видалити
+              </v-btn>
 <!-- Confirm add single string button -->
               <v-btn
                 v-if="genericDialogData.addString"
@@ -262,7 +343,8 @@ import db from '@/components/firebaseInit'
 
 export default {
   data: () => ({
-    header: 'Редактор цін',
+    pricesHeader: 'Редактор цін',
+    reviewsHeader: `Відгуки`,
     helpMessage: `Двокрапка відокремлює
       назву послуги від ціни,
       потрібно для правильного
@@ -303,7 +385,8 @@ export default {
       v => (v && v.length <= 70) || 'Позиція повинна бути менше 70 символів'
     ],
     reviewsItemsRef: db.collection('reviews'),
-    reviewsItemsFromDB: []
+    reviewsItemsFromDB: [],
+    reviewIsOkToDelete: false
   }),
   computed: {
     ...mapGetters([
@@ -312,13 +395,15 @@ export default {
       'getItemsWhichOrderHasChanged',
       'getPriceItemsCollectionToLoad',
       'getUpdatedArray',
-      'getCollectionLengthPlusOne'
+      'getCollectionLengthPlusOne',
+      'getReviews'
     ])
   },
   mounted () {
     this.$nextTick(() => {
       // console.log(`Price editor mounted.`)
       this.loadAllPrices()
+      this.loadReviews()
     })
   },
   methods: {
@@ -356,6 +441,7 @@ export default {
           renameString: false,
           renameCategory: true,
           deleteCategory: false,
+          deleteReview: false,
           addCategory: false,
           delete: false,
           addString: false,
@@ -462,6 +548,7 @@ export default {
           renameString: false,
           renameCategory: false,
           deleteCategory: true,
+          deleteReview: false,
           addCategory: false,
           delete: false,
           addString: false,
@@ -521,6 +608,7 @@ export default {
         let dialogSettings = {
           renameString: false,
           renameCategory: false,
+          deleteReview: false,
           deleteCategory: false,
           addCategory: true,
           delete: false,
@@ -572,6 +660,7 @@ export default {
         let dialogSettings = {
           renameString: true,
           renameCategory: false,
+          deleteReview: false,
           deleteCategory: false,
           addCategory: false,
           delete: false,
@@ -636,6 +725,7 @@ export default {
         let dialogSettings = {
           renameString: false, // modify the origin, not overwrite it
           renameCategory: false,
+          deleteReview: false,
           deleteCategory: false,
           addCategory: false,
           delete: false, // modify the origin, not overwrite it
@@ -719,6 +809,7 @@ export default {
         let dialogSettings = {
           renameString: false,
           renameCategory: false,
+          deleteReview: false,
           deleteCategory: false,
           addCategory: false,
           delete: true,
@@ -767,21 +858,88 @@ export default {
         .update({ 'services': firebase.firestore.FieldValue.arrayRemove(value) })
     },
     // -------------------- Comments section --------------------
-    approveComment (id) {
-      console.log(`Setting 'approved' to comment with id: ${id}`)
-      // const update = {}
-      // update[`approved.${id}`] = true
-      db.collection('reviews').doc(id).update({ approved: true })
-      // db.collection("data").doc("one").set({foo:'bar'})
-      this.$store.commit('toggleReviewApproved', id)
+    toggleApproveReview (id) {
+      console.log(`Setting 'approved' to review with id: ${id}`)
+      let reviewItem = db.collection('reviews').doc(id)
+      let currentApprovalState
+      reviewItem.get().then(doc => {
+        if (doc.exists) {
+          console.log('Document data:', doc.data())
+          currentApprovalState = doc.data().approved
+        } else {
+          // doc.data() will be undefined in this case
+          console.log('No such document!')
+        }
+      }).catch(error => {
+        console.log('Error getting document:', error)
+      })
+      db.collection('reviews').doc(id).update({ approved: !currentApprovalState })
+      this.$store.commit('toggleApproveReview', id)
     },
-    disapproveComment (id) {
-      console.log(`Setting 'disapproved' to comment with id: ${id}`)
-      // const update = {}
-      // update[`approved.${id}`] = true
-      db.collection('reviews').doc(id).update({ approved: false })
-      this.$store.commit('toggleReviewApproved', id)
-      // db.collection("data").doc("one").set({foo:'bar'})
+    //
+    // Delete review from firestore
+    //
+    deleteReviewFromDB (id) {
+      console.log(`Deleting review from firestore`)
+      db.collection(`reviews`).doc(id)
+        .delete().then(() => {
+          console.log(`Document successfully deleted!`)
+        }).catch(error => {
+          console.error(`Error removing document: `, error)
+        })
+    },
+    //
+    // Delete review from store
+    //
+    deleteReviewFromStore (id) {
+      return new Promise(resolve => { // do you really need this?
+        // let payload = {
+        // id: id
+        // collectionIndex: this.buffer.collectionIndex,
+        // inputFieldValue: this.genericDialogData.inputFieldValue
+        // }
+        this.$store.commit('deleteReviewFromStore', id)
+        resolve()
+      })
+    },
+    handleDeleteReview (id, reviewText) {
+      if (!this.genericDialog) {
+        let dialogSettings = {
+          // looks really strange
+          renameString: false,
+          renameCategory: false,
+          deleteReview: true,
+          deleteCategory: false,
+          addCategory: false,
+          delete: false,
+          addString: false,
+          title: 'Видалити огляд?',
+          id: id,
+          inputFieldValue: reviewText,
+          inputFieldLabel: null,
+          itemToRenameIndex: null
+        }
+        // this.buffer.collectionIndex = collectionIndex // should be in dialog by now
+        // this.buffer.docId = id
+        this.genericDialogData = dialogSettings
+        this.reviewIsOkToDelete = true
+        this.genericDialog = true
+      } else if (this.reviewIsOkToDelete) {
+        console.log(`Deleting review.`)
+        this.deleteReviewFromStore(this.genericDialogData.id).then(() => {
+          console.log(`Syncing in firestore`)
+          this.deleteReviewFromDB(this.genericDialogData.id)
+        })
+          .then(() => {
+            this.genericDialog = false
+            this.reviewIsOkToDelete = false
+          })
+          .catch(error => {
+            console.log(`Error is ${error}`)
+          })
+      } else {
+        console.log(`Check input`)
+      }
     },
     loadReviews () {
       console.log('Loading comments..')
@@ -827,3 +985,21 @@ export default {
   }
 } // too long
 </script>
+
+<style lang="scss" scoped>
+.dialog {
+  font-size: 1.6em;
+}
+.panel-title {
+  font-size: 1.5em;
+}
+.approved {
+  background-color: #E8F5E9;
+  transition: background-color 1s ease-in;
+}
+.reviewer-name {
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+</style>

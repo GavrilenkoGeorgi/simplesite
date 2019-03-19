@@ -97,12 +97,12 @@ export default {
   setUser (state, payload) { // .... ??? )
     state.userState = payload
   },
-  deleteReview (state, id) {
+  deleteReviewFromStore (state, id) {
     console.log(`Deleteing review from store with id ${id}`)
-    let indexOfCommentToDelete = state.reviewsForEditing.findIndex(review => review.id === id)
-    state.reviewsForEditing.splice(indexOfCommentToDelete, 1)
+    let indexOfReviewToDelete = state.reviewsForEditing.findIndex(review => review.id === id)
+    state.reviewsForEditing.splice(indexOfReviewToDelete, 1)
   },
-  toggleReviewApproved (state, id) {
+  toggleApproveReview (state, id) {
     console.log(`Approving in store with id of ${id}`)
     let reviewToApprove = state.reviewsForEditing.find(review => review.id === id)
     console.log(`Review to approve is ${reviewToApprove}`)
