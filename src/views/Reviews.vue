@@ -287,7 +287,7 @@ export default {
     },
     getReviews () {
       console.log('Getting reviews..')
-      db.collection('reviews') // .where('starsRating', '==', 5)
+      db.collection('reviews').where('approved', '==', true)
         .get()
         .then(function (querySnapshot) {
           let reviewsFromDB = []

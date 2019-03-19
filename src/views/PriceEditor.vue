@@ -750,32 +750,15 @@ export default {
           this.genericDialog = false
           this.buttonLoadingState = false
           console.log(`All ok, closing dialog.`)
-        }) /*
-          .then(() => {
-          }) */
-          .catch(error => {
-            this.genericDialog = true
-            this.buttonLoadingState = false
-            console.log(`Error is ${error}`)
-            return error
-          })
+        }).catch(error => {
+          this.genericDialog = true
+          this.buttonLoadingState = false
+          console.log(`Error is ${error}`)
+          return error
+        })
       } else {
         console.log(`Check input.`)
       }
-      /*
-        let payload = {
-          id: this.buffer.docID,
-          collectionName: this.buffer.collectionRef,
-          collectionIndex: this.buffer.collectionIndex,
-          stringValue: this.genericDialogData.inputFieldValue
-        }
-        this.$store.commit('addSingleStringPriceItem', payload)
-        this.addSingleStringPriceValueToDB(payload.id, payload.stringValue, payload.collectionName)
-        // close dialog
-        this.genericDialog = false
-      } else {
-        console.log(`Check input.`)
-      } */
     },
     //
     // Add single price string to store
@@ -858,22 +841,17 @@ export default {
         .update({ 'services': firebase.firestore.FieldValue.arrayRemove(value) })
     },
     // -------------------- Comments section --------------------
+    //
+    // Toggle approve review
+    //
     toggleApproveReview (id) {
-      console.log(`Setting 'approved' to review with id: ${id}`)
       let reviewItem = db.collection('reviews').doc(id)
-      let currentApprovalState
       reviewItem.get().then(doc => {
-        if (doc.exists) {
-          console.log('Document data:', doc.data())
-          currentApprovalState = doc.data().approved
-        } else {
-          // doc.data() will be undefined in this case
-          console.log('No such document!')
-        }
+        let approved = doc.data().approved
+        db.collection('reviews').doc(id).update({ 'approved': !approved })
       }).catch(error => {
         console.log('Error getting document:', error)
       })
-      db.collection('reviews').doc(id).update({ approved: !currentApprovalState })
       this.$store.commit('toggleApproveReview', id)
     },
     //
@@ -892,12 +870,7 @@ export default {
     // Delete review from store
     //
     deleteReviewFromStore (id) {
-      return new Promise(resolve => { // do you really need this?
-        // let payload = {
-        // id: id
-        // collectionIndex: this.buffer.collectionIndex,
-        // inputFieldValue: this.genericDialogData.inputFieldValue
-        // }
+      return new Promise(resolve => {
         this.$store.commit('deleteReviewFromStore', id)
         resolve()
       })
