@@ -1,19 +1,36 @@
 <template>
   <v-container id="videoBackground" pa-0 ma-0 fluid>
-    <!--div class="video-container-box"-->
     <v-layout row fill-height>
       <v-flex class="manual">
-      <video autoplay muted loop id="doggyVideo" poster="../assets/video/maxdogAdBg-1200x720p.jpg">
-        <source src="../assets/video/maxdogAd-1200x720p.mp4" type="video/mp4" media="all and (max-width: 768px)" alt="Video clip">
-        <!--source src="../assets/video/Puppy1280.mp4" type="video/mp4" media="all and (min-width: 768px)"-->
-        <!--source src="../assets/video/Puppy640.webm" type="video/webm"-->
+      <video
+        autoplay
+        muted
+        loop
+        id="doggyVideo"
+        poster="../assets/video/maxdogAd-1280x544p.jpg"
+        alt="Video of cats and dogs being trained."
+      >
+        <source src="../assets/video/maxdogAd-640x272p.webm"
+          type="video/webm"
+          media="all and (max-width: 414px)"
+        >
+        <source src="../assets/video/maxdogAd-640x272p.mp4"
+          type="video/mp4"
+          media="all and (max-width: 414px)"
+        >
+        <source src="../assets/video/maxdogAd-1280x544p.webm"
+          type="video/webm"
+          media="all and (max-width: 768px)"
+        >
+        <source src="../assets/video/maxdogAd-1280x544p.mp4"
+          type="video/mp4"
+          media="all and (max-width: 768px)"
+        >
+         <p>Your browser does not support the video element.</p>
       </video>
         <!-- button class="play-pause-button paused" v-on:click="playPauseVideo"></button-->
         <h1 class="video-overlay">Дрессировка собак в Киеве и Киевской области</h1>
       </v-flex>
-        <!-- Use a button to pause/play the video with JavaScript -->
-        <!--button id="myBtn" onclick="myFunction()">1</button-->
-    <!--/div-->
     </v-layout>
   </v-container>
 </template>
@@ -22,19 +39,8 @@
 
 export default {
   name: 'videoBackground',
-  /*
-  props: {
-    msg: String
-  },
-  mounted: function () {
-    // console.log('Mounted.')
-    // this.showSlides(1)
-  },
-  */
   methods: {
     playPauseVideo: function (event) {
-      // console.log(`Play/pause video.`)
-      // console.log(`${event.currentTarget}`)
       let video = document.getElementById('doggyVideo')
       if (video.paused) {
         video.play()
