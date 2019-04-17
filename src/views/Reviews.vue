@@ -69,6 +69,7 @@
           </v-flex>
           <v-flex xs12 ma-4>
               <v-btn color="blue-grey lighten-4"
+                aria-label="Clear form"
                 @click="$refs.addReviewForm.reset()">
                 очистить
               </v-btn>
@@ -76,6 +77,7 @@
                 :disabled="!this.addReviewForm"
                 color="blue darken-1"
                 class="white--text"
+                aria-label="Add review"
               >
                 отправить
               </v-btn>
@@ -117,6 +119,7 @@
             <v-btn
               color="blue darken-1"
               dark
+              aria-label="Close review add dialog"
               @click="reviewAddedDialog = false"
             >
               OK
@@ -180,7 +183,6 @@ export default {
         if (value === ``) {
           return ``
         } else if (value && value.length <= len) {
-          // return `value.length <= len`
           return true
         } else return `Менее ${len} символов, пожалуйста.`
       },
@@ -191,8 +193,7 @@ export default {
     Recaptcha
   },
   mounted () {
-    this.$nextTick(function () {
-      console.log('Reviews page mounted')
+    this.$nextTick(() => {
       this.getReviews()
       // console.log('Getting recaptcha score...')
       // this.executeRecaptcha()
@@ -208,10 +209,10 @@ export default {
   },
   methods: {
     addReview () {
-      console.log('Adding review..')
+      // console.log('Adding review..')
       // Add a new document with a generated id.
       if (this.addReviewForm) {
-        console.log(`Form is: ${this.addReviewForm}, adding to database, stars are ${this.starsRating}`)
+        // console.log(`Form is: ${this.addReviewForm}, adding to database, stars are ${this.starsRating}`)
         if (!this.starsRating) {
           // one star in case user forgets to set rating
           // make it required maybe?
@@ -239,7 +240,7 @@ export default {
       let child = event.target
       const parent = child.parentNode
       let index = Array.prototype.indexOf.call(parent.children, child) + 1
-      console.log(`Setting rating to ${index}`)
+      // console.log(`Setting rating to ${index}`)
       this.userStarRating = index
       let starsToHighlight = parent.children
       // clear all stars if some of them are set
@@ -286,14 +287,14 @@ export default {
       */
     },
     getReviews () {
-      console.log('Getting reviews..')
+      // console.log('Getting reviews..')
       db.collection('reviews').where('approved', '==', true)
         .get()
         .then(function (querySnapshot) {
           let reviewsFromDB = []
           querySnapshot.forEach(function (doc) {
             // doc.data() is never undefined for query doc snapshots
-            console.log(doc.id, ' => ', doc.data().name)
+            // console.log(doc.id, ' => ', doc.data().name)
             let review = {
               author: doc.data().name,
               text: doc.data().review,
@@ -306,7 +307,7 @@ export default {
         })
         .then((reviewsFromDB) => {
           this.allReviewsXP = reviewsFromDB
-          console.log(this.allReviewsXP)
+          // console.log(this.allReviewsXP)
         })
         .catch(function (error) {
           console.log('Error getting documents: ', error)
@@ -324,12 +325,10 @@ h1 {
 }
 
 h2 {
-  // font-size: .6em;
   color: $alt-color-primary-even-darker;
 }
 
 .contact-info {
-  // color: red;
   font-size: 1.6em;
   font-family: $text-font;
 }
@@ -339,16 +338,13 @@ h2 {
 }
 
 .subtitle {
-  // color: red;
   font-size: 2em;
   text-align: left;
 }
+
 .address {
-  // padding: 0;
   margin: 0;
-  // font-size: 1.6em;
   text-align: left;
-  // color:red;
   font-family: $alt-font-1;
 }
 .phone-number {
@@ -364,8 +360,6 @@ h2 {
 }
 
 .icon-box {
-  // border: 1px solid pink;
-  // padding-top: .7em;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -373,29 +367,20 @@ h2 {
 }
 
 .email-link {
-  // color: red;
   font-size: 1.3em;
-}
-
-.border {
-   border: 1px solid pink;
 }
 
 .reviews {
    box-shadow: none;
    font-size: 2em;
    font-family: $text-font;
-   // border: 1px solid lime;
-}
-
-.border-black {
-   border: 1px solid black;
 }
 
 .author-name {
   font-weight: 700;
   line-height: 2;
 }
+
 .shadow {
       box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
 }

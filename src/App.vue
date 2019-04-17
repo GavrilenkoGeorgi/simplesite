@@ -10,7 +10,7 @@
           <v-list-tile-title class="nav-drawer-title">
             <router-link to="/"> {{ getContent.logo.text }} </router-link>
           </v-list-tile-title>
-          <v-btn icon @click="sideNav = !sideNav">
+          <v-btn aria-label="Open side menu" icon @click="sideNav = !sideNav">
             <v-icon color="#005cac">{{ closeIconNavDrawer }}</v-icon>
           </v-btn>
         </v-list-tile>
@@ -36,11 +36,13 @@
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-sm-and-down">
         <v-btn flat v-for="link in getContent.navLinks"
+          :aria-label="`Navigation link to ${link.title}`"
           :key="link.path" :to="link.path">
           {{ link.title }}
         </v-btn>
       </v-toolbar-items>
       <v-toolbar-side-icon @click="sideNav = !sideNav"
+        aria-label="Open side menu"
         class="hidden-md-and-up">
       </v-toolbar-side-icon>
     </v-toolbar>
@@ -74,6 +76,7 @@
             v-show="fab"
             fab dark small
             fixed bottom right
+            aria-label="Back to top"
             @click="toTop">
       <v-icon>keyboard_arrow_up</v-icon>
     </v-btn>
@@ -87,8 +90,11 @@
               v-for="(item, index) in this.socialIcons"
               :key="index">
               <svg class="social-network-icon">
-                <a :href="item.link">
-                <use v-bind="{'xlink:href':'#' + item.icon}"></use>
+                <a
+                  :href="item.link"
+                  :aria-label="`Link to our ${item.humanReadableName}`"
+                >
+                  <use v-bind="{'xlink:href':'#' + item.icon}"></use>
                 </a>
               </svg>
             </v-flex>
@@ -127,9 +133,9 @@ export default {
     return {
       fab: false,
       socialIcons: [
-        { icon: 'icon-facebook', link: 'https://facebook.com' },
-        { icon: 'icon-instagram', link: 'https://www.instagram.com/maxdog.ua/' },
-        { icon: 'icon-youtube', link: 'https://youtube.com' }
+        { icon: 'icon-facebook', link: 'https://facebook.com', humanReadableName: 'facebook' },
+        { icon: 'icon-instagram', link: 'https://www.instagram.com/maxdog.ua/', humanReadableName: 'instagram' },
+        { icon: 'icon-youtube', link: 'https://youtube.com', humanReadableName: 'youtube' }
       ],
       sideNav: false,
       titleNavDrawer: 'maxdog',
@@ -169,10 +175,11 @@ h1, h2, h3 {
   color: $alt-color-primary-darkest;
   font-size-adjust: 1;
 }
+
 h2 {
   font-size: 2em;
-  // color: red;
 }
+
 h3 {
   font-size: 1.6em;
 }
@@ -189,6 +196,7 @@ h3 {
     height: 400px;
   }
 }
+
 .toolbar-logo {
   display: flex;
   flex-direction: column;
@@ -201,43 +209,36 @@ h3 {
   font-size: 2.2em;
   line-height: .8em;
   text-transform: uppercase;
-  // vertical-align: middle;
-  // text-decoration: none;
-  // color: $alt-color-primary-darkest;
   font-family: $logo-font;
   font-weight: 700;
-  // color: red;
   display: block;
-  // border: 1px solid green;
 }
+
 .lower-logo-text {
   text-transform: uppercase;
-  // border: 1px solid red;
   font-size: .912em;
-  // color: $alt-color-primary-darkest;
   color: black;
   font-weight: 700;
 }
+
 .nav-drawer-title {
-  // border: 1px solid pink;
-    a {
-  color: $alt-color-primary-darkest;
-  // font-weight: 700;
-  // color: red;
-  font-family: $logo-font;
-  font-size: 2em;
+  a {
+    color: $alt-color-primary-darkest;
+    font-family: $logo-font;
+    font-size: 2em;
   }
 }
+
 .quote {
   font-size: 2em;
-  // padding: 0;
 }
+
 .footer-quote {
   font-family: $text-font;
   font-size: 1.5em;
-  // color: red;
   line-height: 1.1;
 }
+
 .social-network-icon {
   height: 1.6em;
   fill: $alt-color-primary-darker;
@@ -250,12 +251,15 @@ h3 {
     color: $alt-color-primary-darker;
   }
 }
+
 .footer {
   background-color: $alt-color-primary-light;
 }
+
 .social-network-icon:hover {
   fill: $color-link-hover;
 }
+
 .phone-number {
   a {
     font-size: 1.7em;
@@ -268,6 +272,7 @@ h3 {
     color: $color-link-hover;
   }
 }
+
 .footer-logo {
   text-transform: uppercase;
   font-size: 1em;

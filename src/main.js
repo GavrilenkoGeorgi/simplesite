@@ -33,10 +33,11 @@ const initializeAuth = new Promise(resolve => {
     if (user) {
       authService.setUser(user)
       resolve(user)
-    } else {
+    }
+    /* else {
       console.log(`No user!`)
       // this.userName = this.getDefaultUserName
-    }
+    } */
   })
 })
 
