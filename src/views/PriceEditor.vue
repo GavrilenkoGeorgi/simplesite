@@ -12,7 +12,7 @@
           :key="collectionIndex">
           <v-expansion-panel-content>
             <div slot="header" class="title">
-              {{ pricePosition.humanReadableTitle }}
+              <h4>{{ pricePosition.humanReadableTitle }}</h4>
             </div>
             <v-card>
               <v-card-text class="blue-grey--text">
@@ -216,12 +216,11 @@
                 class="text-xs-left">
                 {{ genericDialogData.inputFieldLabel }}
               </v-flex>
-              <v-form ref="generic-edit-input"
-                v-if="genericDialogData.renameString ||
-                genericDialogData.addString ||
-                genericDialogData.addCategory ||
-                genericDialogData.renameCategory"
-                v-model="priceEditingFormValid">
+            </v-card-text>
+            <v-card-text v-else>
+              <v-form
+                v-model="priceEditingFormValid"
+                ref="generic-edit-input">
                 <v-text-field
                   v-model="genericDialogData.inputFieldValue"
                   :rules="priceStringRules"
@@ -654,7 +653,7 @@ export default {
     // Rename single price string
     //
     handleRenameSingleStringPriceItem (id, currentValue, collectionName, collectionIndex, itemToRenameIndex) {
-      if (!this.genericDialog) {
+      if (this.genericDialog === false) {
         console.log(`Preparing dialog for renaming single price string`)
         // prepare the dialog
         let dialogSettings = {
@@ -675,6 +674,7 @@ export default {
         this.genericDialog = true
         this.buffer.collectionRef = collectionName
         this.buffer.collectionIndex = collectionIndex
+        console.log(dialogSettings)
       } else if (this.priceEditingFormValid) {
         console.log(`Renaming single price string`)
         this.renamePriceStringInStore().then(() => {
