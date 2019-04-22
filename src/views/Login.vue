@@ -2,12 +2,12 @@
   <v-layout wrap>
     <v-flex xs12>
       <v-layout row wrap>
-        <v-flex class="text-xs-right">
-<!-- Register button -->
+        <!-- Register button -->
+        <!--v-flex class="text-xs-right">
           <v-btn fab flat large color="grey darken-1" to="/register">
             <v-icon>vpn_key</v-icon>
           </v-btn>
-        </v-flex>
+        </v-flex-->
 <!-- Header -->
         <v-flex xs12>
           <h1>Логін</h1>
@@ -42,7 +42,11 @@
             </v-flex>
 <!-- Buttons -->
             <v-flex xs12 sm3 my-4>
-              <v-btn @click="login">
+              <v-btn
+                :loading="logginIn"
+                :disabled="logginIn"
+                @click="login"
+              >
                 <v-icon>done</v-icon>
                   логін
               </v-btn>
@@ -67,6 +71,7 @@ export default {
   data: () => ({
     valid: false,
     logginIn: false,
+
     errorMessage: null,
     email: '',
     emailRules: [
@@ -85,7 +90,7 @@ export default {
     ])
   },
   mounted () {
-    this.$nextTick(function () {
+    this.$nextTick(() => {
       console.log(`Login page mounted.`)
       if (this.getUserState.isAuthenticated) {
         console.log(`User is authenticated, loading editor`)
