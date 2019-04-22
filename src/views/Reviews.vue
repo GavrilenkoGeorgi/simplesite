@@ -73,8 +73,10 @@
                 @click="$refs.addReviewForm.reset()">
                 очистить
               </v-btn>
-              <v-btn @click="addReview"
-                :disabled="!this.addReviewForm"
+              <v-btn
+                @click="addReview"
+                :loading="addingReview"
+                :disabled="addingReview"
                 color="blue darken-1"
                 class="white--text"
                 aria-label="Add review"
@@ -88,14 +90,6 @@
     </v-layout>
 <!-- Review added dialog -->
     <v-layout row justify-center>
-      <!--v-btn
-        color="primary"
-        dark
-        @click.stop="reviewAddedDialog = true"
-      >
-        Open Dialog
-      </v-btn-->
-
       <v-dialog
         v-model="reviewAddedDialog"
         max-width="290"
@@ -105,12 +99,6 @@
             Спасибо за ваш отзыв, после одобрения
             администратора он появится на сайте.
           </v-card-title>
-
-          <!--v-card-text>
-            Спасибо за ваш отзыв, после одобрения
-            администратора он появится на сайте.
-          </v-card-text-->
-
           <v-card-actions>
             <v-flex
               d-flex
@@ -125,13 +113,6 @@
               OK
             </v-btn>
             </v-flex>
-            <!--v-btn
-              color="green darken-1"
-              flat="flat"
-              @click="reviewAddedDialog = false"
-            >
-              Agree
-            </v-btn-->
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -154,17 +135,7 @@ export default {
     pageTitle: 'отзывы',
     quoteFormatting: '— ',
     reviewAddedDialog: false,
-    /*
-    allReviews: [
-      { id: 'review5', author: 'Edna', stars: 5, content: `Some notes about dogs and cats and even more stuff
-                                  about cats and dogs and even their owners,
-                                  so it happens to be the longest review written on
-                                  this site, so here how it looks like.` },
-      { id: 'review', stars: 1, author: 'Homer Simpson', content: 'Some notes about dogs and cats' },
-      { id: 'review2', stars: 2, author: 'Bart', content: 'Some notes about dogs and cats and such' },
-      { id: 'review3', stars: 3, author: 'Mr Flanders', content: 'Some notes about dogs and cats and something else' },
-      { id: 'review4', stars: 4, author: 'Apu', content: 'Some notes about dogs and cats and even more stuff about cats and dogs' }
-    ], */
+    addingReview: false,
     allReviewsXP: [],
     agreement: false,
     name: ``,
@@ -210,6 +181,7 @@ export default {
   methods: {
     addReview () {
       // console.log('Adding review..')
+      this.toggleAddingReviewState()
       // Add a new document with a generated id.
       if (this.addReviewForm) {
         // console.log(`Form is: ${this.addReviewForm}, adding to database, stars are ${this.starsRating}`)
@@ -228,13 +200,19 @@ export default {
             console.log('Document written with ID: ', docRef.id)
             this.reviewAddedDialog = true
             this.$refs.addReviewForm.reset()
+            this.toggleAddingReviewState()
           })
           .catch(error => {
+            this.toggleAddingReviewState()
             console.error('Error adding document: ', error)
           })
       } else {
         console.log(`Check your form it is: ${this.addReviewForm}`)
+        this.toggleAddingReviewState()
       }
+    },
+    toggleAddingReviewState () {
+      this.addingReview = !this.addingReview
     },
     setRating (event) {
       let child = event.target
