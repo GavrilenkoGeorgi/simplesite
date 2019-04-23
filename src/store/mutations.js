@@ -21,7 +21,7 @@ export default {
   },
   addCategory (state, payload) {
     console.log(`Adding category to store.`)
-    console.log(payload)
+    // console.log(payload)
     let newCategory = {
       header: payload.header,
       id: payload.id,
@@ -33,7 +33,7 @@ export default {
   deleteCategory (state, payload) {
     console.log(`Deleting category from store ${payload.collectionIndex}`)
     console.log(`Deleting doc with id ${payload.id}`)
-    console.log(state.allPrices[payload.collectionIndex])
+    // console.log(state.allPrices[payload.collectionIndex])
     let collectionToModify = state.allPrices[payload.collectionIndex]
     let indexOfCategoryToRemove = collectionToModify.findIndex(doc => doc.id === payload.id)
     collectionToModify.splice(indexOfCategoryToRemove, 1)
@@ -105,9 +105,9 @@ export default {
   toggleApproveReview (state, id) {
     console.log(`Approving in store with id of ${id}`)
     let reviewToApprove = state.reviewsForEditing.find(review => review.id === id)
-    console.log(`Review to approve is ${reviewToApprove}`)
+    // console.log(`Review to approve is ${reviewToApprove}`)
     reviewToApprove.approved = !reviewToApprove.approved
-    console.log(reviewToApprove)
+    // console.log(reviewToApprove)
   },
   changePriceItemsOrder (state, payload) {
     if (payload.direction) {

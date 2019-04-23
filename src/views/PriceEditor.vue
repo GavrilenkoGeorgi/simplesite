@@ -210,12 +210,20 @@
             </v-card-title>
             <v-card-text
               v-if="genericDialogData.delete ||
-              genericDialogData.deleteCategory"
+              genericDialogData.deleteCategory ||
+              genericDialogData.deleteReview"
             >
+              <!-- Delete string -->
               <v-flex
                 class="text-xs-left">
-                {{ genericDialogData.inputFieldLabel }}
+                <span v-if="genericDialogData.deleteReview">
+                  {{ genericDialogData.inputFieldValue }}
+                </span>
+                <span v-else>
+                  {{ genericDialogData.inputFieldLabel }}
+                </span>
               </v-flex>
+              <!-- Delete review -->
             </v-card-text>
             <v-card-text v-else>
               <v-form
@@ -232,11 +240,11 @@
                 </v-text-field>
               </v-form>
             </v-card-text>
-            <v-card-text
+            <!--v-card-text
               v-if="genericDialogData.deleteReview"
             >
               {{ this.genericDialogData.inputFieldValue }}
-            </v-card-text>
+            </v-card-text-->
 
             <v-divider></v-divider>
 
