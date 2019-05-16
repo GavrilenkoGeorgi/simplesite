@@ -21,7 +21,7 @@
         class="animated groupTraining hidden">
         <h3 class="mb-4">{{ getContent.mainPageText.groupTraining.header }}</h3>
         <v-img :src="require('@/assets/img/mainPage/group_training.jpg')" class="training-section-image" contain></v-img>
-        <p class="simple-text-block"> {{ getContent.mainPageText.groupTraining.text }} </p>
+        <p class="simple-text-block" v-html="getContent.mainPageText.groupTraining.text"></p>
       </v-flex>
       <v-flex xs12 sm8 md5 v-observe-visibility="{ callback: visibilityChanged, throttle: 500 }"
         class="animated individualTraining hidden">
@@ -35,7 +35,7 @@
           </v-img>
           </v-flex>
           <v-flex d-flex justify-center>
-            <p class="simple-text-block">{{ getContent.mainPageText.individualTraining.text }}</p>
+            <p class="simple-text-block" v-html="getContent.mainPageText.individualTraining.text"></p>
           </v-flex>
         </v-layout>
       </v-flex>
