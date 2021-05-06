@@ -2,30 +2,34 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store/store'
-// import axios from 'axios'
-// import VueAxios from 'vue-axios'
 import '../node_modules/vuetify/dist/vuetify.min.css'
-// import { VueReCaptcha } from 'vue-recaptcha-v3'
 
 import VueObserveVisibility from 'vue-observe-visibility'
 import Vuetify from 'vuetify'
 
-import firebaseConfig from './components/firebaseConfig'
 import './components/firebaseInit'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'intersection-observer'
 
-// Vue.use(VueAxios, axios)
 Vue.use(VueObserveVisibility)
 Vue.use(Vuetify)
 
 Vue.config.productionTip = false
 
+const firebaseConfig = {
+  apiKey: process.env.VUE_APP_FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.FIREBASE_DB_URL,
+  projectId: process.env.VUE_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID
+}
+
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig)
 }
-firebase.firestore().settings({ timestampsInSnapshots: true })
+firebase.firestore()
 
 const initializeAuth = new Promise(resolve => {
   // this adds a hook for the initial auth-change event

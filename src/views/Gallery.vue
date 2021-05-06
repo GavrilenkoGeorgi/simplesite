@@ -14,7 +14,7 @@
 
 <script>
 import Instafeed from '../../node_modules/instafeed.js/instafeed.min.js'
-import { userId, accessToken } from '../js/instagramCreds.js'
+// import { userId, accessToken } from '../js/instagramCreds.js'
 
 export default {
   name: 'Gallery',
@@ -27,8 +27,8 @@ export default {
     this.$nextTick(() => {
       var feed = new Instafeed({
         get: 'user',
-        userId: userId,
-        accessToken: accessToken,
+        userId: process.env.VUE_APP_INSTAGRAM_USER_ID,
+        accessToken: process.env.VUE_APP_INSTAGRAM_ACCESS_TOKEN,
         resolution: 'standard_resolution',
         template: '<v-flex class="pa-4"><a href="{{link}}" target="_blank" id="{{id}}"><img class="instagram-img" src="{{image}}" /></a></v-flex>',
         sortBy: 'most-recent',

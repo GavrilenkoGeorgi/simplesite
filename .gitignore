@@ -8,12 +8,8 @@ selenium-debug.log
 /components/
 footer.bak.vue
 
-/src/store/recaptcha.js
-/src/components/firebaseConfig.js
-
-/src/js/instagramCreds.js
-
 # local env files
+.env
 .env.local
 .env.*.local
 

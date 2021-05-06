@@ -124,7 +124,7 @@
 import Vue from 'vue'
 import VueResource from 'vue-resource'
 import Recaptcha from '@/components/Recaptcha.vue'
-import secret from '@/store/recaptcha.js'
+// import secret from '@/store/recaptcha.js'
 import db from '@/components/firebaseInit'
 
 Vue.use(VueResource)
@@ -234,7 +234,7 @@ export default {
     },
     // send your recaptcha token to the server to verify it
     getScore (response) {
-      this.$http.post(`https://cors-anywhere.herokuapp.com/https://www.google.com/recaptcha/api/siteverify?secret=${secret.recaptchaSecret}&response=${response}`)
+      this.$http.post(`https://cors-anywhere.herokuapp.com/https://www.google.com/recaptcha/api/siteverify?secret=${process.env.VUE_APP_RECAPTCHA_SECRET}&response=${response}`)
         .then(response => {
           this.userScore = response.body.score
           console.log(`Score is: ${response.body.score}`)
